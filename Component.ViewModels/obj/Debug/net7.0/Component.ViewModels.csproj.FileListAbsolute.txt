@@ -1,0 +1,12 @@
+D:\FU_Hub\SP24_CapstoneProject\Project\Capstone_EatRightify\Component.ViewModels\bin\Debug\net7.0\Component.ViewModels.deps.json
+D:\FU_Hub\SP24_CapstoneProject\Project\Capstone_EatRightify\Component.ViewModels\bin\Debug\net7.0\Component.ViewModels.dll
+D:\FU_Hub\SP24_CapstoneProject\Project\Capstone_EatRightify\Component.ViewModels\bin\Debug\net7.0\Component.ViewModels.pdb
+D:\FU_Hub\SP24_CapstoneProject\Project\Capstone_EatRightify\Component.ViewModels\obj\Debug\net7.0\Component.ViewModels.csproj.AssemblyReference.cache
+D:\FU_Hub\SP24_CapstoneProject\Project\Capstone_EatRightify\Component.ViewModels\obj\Debug\net7.0\Component.ViewModels.GeneratedMSBuildEditorConfig.editorconfig
+D:\FU_Hub\SP24_CapstoneProject\Project\Capstone_EatRightify\Component.ViewModels\obj\Debug\net7.0\Component.ViewModels.AssemblyInfoInputs.cache
+D:\FU_Hub\SP24_CapstoneProject\Project\Capstone_EatRightify\Component.ViewModels\obj\Debug\net7.0\Component.ViewModels.AssemblyInfo.cs
+D:\FU_Hub\SP24_CapstoneProject\Project\Capstone_EatRightify\Component.ViewModels\obj\Debug\net7.0\Component.ViewModels.csproj.CoreCompileInputs.cache
+D:\FU_Hub\SP24_CapstoneProject\Project\Capstone_EatRightify\Component.ViewModels\obj\Debug\net7.0\Component.ViewModels.dll
+D:\FU_Hub\SP24_CapstoneProject\Project\Capstone_EatRightify\Component.ViewModels\obj\Debug\net7.0\refint\Component.ViewModels.dll
+D:\FU_Hub\SP24_CapstoneProject\Project\Capstone_EatRightify\Component.ViewModels\obj\Debug\net7.0\Component.ViewModels.pdb
+D:\FU_Hub\SP24_CapstoneProject\Project\Capstone_EatRightify\Component.ViewModels\obj\Debug\net7.0\ref\Component.ViewModels.dll
