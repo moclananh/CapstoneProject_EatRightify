@@ -41,6 +41,9 @@ namespace Component.Data.EF
             modelBuilder.ApplyConfiguration(new AppRoleConfiguration());
             modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
             modelBuilder.ApplyConfiguration(new SlideConfiguration());
+            modelBuilder.ApplyConfiguration(new BlogConfiguration());
+            modelBuilder.ApplyConfiguration(new ResultConfiguration());
+            modelBuilder.ApplyConfiguration(new CommentConfiguration());
 
             //config for IdentityDbContext
             modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
@@ -83,5 +86,8 @@ namespace Component.Data.EF
         public DbSet<Slide> Slides { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<AppUserDetails> AppUserDetails { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<Result> Results { get; set; }
+        public DbSet<Comment> Comments { get; set; }
     }
 }
