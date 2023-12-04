@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Component.Data.Extensions;
 
 namespace Component.Data.EF
 {
@@ -54,7 +55,7 @@ namespace Component.Data.EF
             modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserTokens").HasKey(x => x.UserId);
 
             //Data seeding
-           // modelBuilder.Seed(); // mockdata
+            modelBuilder.Seed(); // mockdata
             //base.OnModelCreating(modelBuilder);
         }
 
