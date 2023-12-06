@@ -26,3 +26,17 @@ D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\capstone_eatrightify\Component.Dat
 D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.pdb
 D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.genruntimeconfig.cache
 D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\capstone_eatrightify\Component.Data\obj\Debug\net7.0\ref\Component.Data.dll
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\New\capstone_eatrightify\Component.Data\bin\Debug\net7.0\Component.Data.deps.json
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\New\capstone_eatrightify\Component.Data\bin\Debug\net7.0\Component.Data.runtimeconfig.json
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\New\capstone_eatrightify\Component.Data\bin\Debug\net7.0\Component.Data.dll
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\New\capstone_eatrightify\Component.Data\bin\Debug\net7.0\Component.Data.pdb
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\New\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.csproj.AssemblyReference.cache
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\New\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.GeneratedMSBuildEditorConfig.editorconfig
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\New\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.AssemblyInfoInputs.cache
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\New\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.AssemblyInfo.cs
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\New\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.csproj.CoreCompileInputs.cache
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\New\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.dll
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\New\capstone_eatrightify\Component.Data\obj\Debug\net7.0\refint\Component.Data.dll
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\New\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.pdb
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\New\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.genruntimeconfig.cache
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\New\capstone_eatrightify\Component.Data\obj\Debug\net7.0\ref\Component.Data.dll

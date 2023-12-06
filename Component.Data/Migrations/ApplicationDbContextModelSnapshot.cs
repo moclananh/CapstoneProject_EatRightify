@@ -180,7 +180,7 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ade241be-d444-4ddf-af98-5a9db16205d6",
+                            ConcurrencyStamp = "c8477fb8-42a3-49fe-b8c2-d258c3319d3b",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -190,7 +190,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@admin.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEI1L/rjEqx8FQBKiHBvyDsaxqKzOyfWrjombTvjikQ13XYOouo1WU0Wdxepware8jA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJeZ9zq10SAbYp0fEkTKvLPHVWiMck4Lo0oFg3rpNjawd928a/dncc/M46dXwT2V2A==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -200,7 +200,7 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "66c54c3f-c4a6-40b6-9ccf-68c3c41b5033",
+                            ConcurrencyStamp = "86d30d3e-1c70-4ee2-bf81-12efb4937fee",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "manager@manager.com",
                             EmailConfirmed = true,
@@ -210,7 +210,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "manager@manager.com",
                             NormalizedUserName = "manager",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMu7lPPwRktrE8QGhP7VJd4YwTOEVTIeZCj2o418cl4+antkD+8ueuS2jC/nPGBavg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEL9OEase97aJ/Rvtrl+XnhwFU2inWOvgDBNpic1XMbsCT4K8bkf93fhJTDkWjva+0w==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -220,7 +220,7 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3f6001e6-b76d-45f9-a381-10b0eb387b9c",
+                            ConcurrencyStamp = "a79156e8-12be-4dee-92da-d793baec4788",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "confirm@confim.com",
                             EmailConfirmed = true,
@@ -230,7 +230,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "confirm@confim.com",
                             NormalizedUserName = "confiminator",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKYlTX3lrTURiw5kM5eomJw6tJ758J1mDlvvp51lVfyKc65zeYeZziQkFvklJDzQ+A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAED2sXzZqkVgEKmHpDy+YLT+iOw4+D8Dd9r2/LMqOc4/uLfGtkqbeKiYxuz2IX3orjg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -727,7 +727,7 @@ namespace Component.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2023, 12, 6, 10, 58, 17, 887, DateTimeKind.Local).AddTicks(4326),
+                            DateCreated = new DateTime(2023, 12, 6, 17, 10, 11, 167, DateTimeKind.Local).AddTicks(8057),
                             OriginalPrice = 255m,
                             Price = 199m,
                             Stock = 100,
