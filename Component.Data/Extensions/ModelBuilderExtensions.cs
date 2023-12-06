@@ -92,11 +92,11 @@ namespace Component.Data.Extensions
                 );
 
             // any guid
-            var roleId = new Guid("8D04DCE2-969A-435D-BBA4-DF3F325983DC");
-            var adminId = new Guid("69BD714F-9576-45BA-B5B7-F00649BE00DE");
+            var adminRoleId = new Guid("46f889a9-662d-4969-84f3-6ff4e199ecf5");
+            var adminId = new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38");
             modelBuilder.Entity<AppRole>().HasData(new AppRole
             {
-                Id = roleId,
+                Id = adminRoleId,
                 Name = "admin",
                 NormalizedName = "admin",
                 Description = "Administrator role"
@@ -120,8 +120,74 @@ namespace Component.Data.Extensions
 
             modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
             {
-                RoleId = roleId,
+                RoleId = adminRoleId,
                 UserId = adminId
+            });
+
+            // any guid
+            var managerRoleId = new Guid("05dc0e15-0df0-4b67-b76e-47ee37791bd4");
+            var managerId = new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806");
+            modelBuilder.Entity<AppRole>().HasData(new AppRole
+            {
+                Id = managerRoleId,
+                Name = "manager",
+                NormalizedName = "managger",
+                Description = "Manager role"
+            });
+
+            var hasherManager = new PasswordHasher<AppUser>();
+            modelBuilder.Entity<AppUser>().HasData(new AppUser
+            {
+                Id = managerId,
+                UserName = "manager",
+                NormalizedUserName = "manager",
+                Email = "manager@manager.com",
+                NormalizedEmail = "manager@manager.com",
+                EmailConfirmed = true,
+                PasswordHash = hasherManager.HashPassword(null, "manager"),
+                SecurityStamp = string.Empty,
+                FirstName = "Manager",
+                LastName = "minator",
+                Dob = new DateTime(2023, 01, 01)
+            });
+
+            modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
+            {
+                RoleId = managerRoleId,
+                UserId = managerId
+            });
+
+            // any guid
+            var confirminatorRoleId = new Guid("07ad9a53-bb09-4d2a-ae06-89131aa9751b");
+            var confiminatorId = new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c");
+            modelBuilder.Entity<AppRole>().HasData(new AppRole
+            {
+                Id = confirminatorRoleId,
+                Name = "confiminator",
+                NormalizedName = "confiminator",
+                Description = "Confiminator role"
+            });
+
+            var hasherConfirm = new PasswordHasher<AppUser>();
+            modelBuilder.Entity<AppUser>().HasData(new AppUser
+            {
+                Id = confiminatorId,
+                UserName = "confirm",
+                NormalizedUserName = "confiminator",
+                Email = "confirm@confim.com",
+                NormalizedEmail = "confirm@confim.com",
+                EmailConfirmed = true,
+                PasswordHash = hasherConfirm.HashPassword(null, "confirm"),
+                SecurityStamp = string.Empty,
+                FirstName = "Confirm",
+                LastName = "minator",
+                Dob = new DateTime(2023, 01, 01)
+            });
+
+            modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
+            {
+                RoleId = confirminatorRoleId,
+                UserId = confiminatorId
             });
 
             modelBuilder.Entity<Slide>().HasData(

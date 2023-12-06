@@ -80,10 +80,24 @@ namespace Component.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
+                            Id = new Guid("46f889a9-662d-4969-84f3-6ff4e199ecf5"),
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("05dc0e15-0df0-4b67-b76e-47ee37791bd4"),
+                            Description = "Manager role",
+                            Name = "manager",
+                            NormalizedName = "managger"
+                        },
+                        new
+                        {
+                            Id = new Guid("07ad9a53-bb09-4d2a-ae06-89131aa9751b"),
+                            Description = "Confiminator role",
+                            Name = "confiminator",
+                            NormalizedName = "confiminator"
                         });
                 });
 
@@ -164,9 +178,9 @@ namespace Component.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
+                            Id = new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "193edf18-8a96-4a3b-b8bd-9bc073c3d2a3",
+                            ConcurrencyStamp = "ade241be-d444-4ddf-af98-5a9db16205d6",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -176,11 +190,51 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@admin.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAELwN7AoNfYw4jy1+GVSO+zOGM3zRuWOlirbb3kiEBO+UBLz+rBXNeaiHDYEl8Ry47Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEI1L/rjEqx8FQBKiHBvyDsaxqKzOyfWrjombTvjikQ13XYOouo1WU0Wdxepware8jA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
                             UserName = "admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "66c54c3f-c4a6-40b6-9ccf-68c3c41b5033",
+                            Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "manager@manager.com",
+                            EmailConfirmed = true,
+                            FirstName = "Manager",
+                            IsBanned = false,
+                            LastName = "minator",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "manager@manager.com",
+                            NormalizedUserName = "manager",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMu7lPPwRktrE8QGhP7VJd4YwTOEVTIeZCj2o418cl4+antkD+8ueuS2jC/nPGBavg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "manager"
+                        },
+                        new
+                        {
+                            Id = new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "3f6001e6-b76d-45f9-a381-10b0eb387b9c",
+                            Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "confirm@confim.com",
+                            EmailConfirmed = true,
+                            FirstName = "Confirm",
+                            IsBanned = false,
+                            LastName = "minator",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "confirm@confim.com",
+                            NormalizedUserName = "confiminator",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKYlTX3lrTURiw5kM5eomJw6tJ758J1mDlvvp51lVfyKc65zeYeZziQkFvklJDzQ+A==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "confirm"
                         });
                 });
 
@@ -673,7 +727,7 @@ namespace Component.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2023, 12, 4, 13, 19, 24, 491, DateTimeKind.Local).AddTicks(8753),
+                            DateCreated = new DateTime(2023, 12, 6, 10, 58, 17, 887, DateTimeKind.Local).AddTicks(4326),
                             OriginalPrice = 255m,
                             Price = 199m,
                             Stock = 100,
@@ -1116,8 +1170,18 @@ namespace Component.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
-                            RoleId = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc")
+                            UserId = new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"),
+                            RoleId = new Guid("46f889a9-662d-4969-84f3-6ff4e199ecf5")
+                        },
+                        new
+                        {
+                            UserId = new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"),
+                            RoleId = new Guid("05dc0e15-0df0-4b67-b76e-47ee37791bd4")
+                        },
+                        new
+                        {
+                            UserId = new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"),
+                            RoleId = new Guid("07ad9a53-bb09-4d2a-ae06-89131aa9751b")
                         });
                 });
 
