@@ -34,3 +34,15 @@ D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\New\capstone_eatrightify\Component
 D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\New\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\refint\Component.Utilities.dll
 D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\New\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\Component.Utilities.pdb
 D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\New\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\ref\Component.Utilities.dll
+D:\Study\DoAn\CloneBanCuaThanh\capstone_eatrightify\Component.Utilities\bin\Debug\net7.0\Component.Utilities.deps.json
+D:\Study\DoAn\CloneBanCuaThanh\capstone_eatrightify\Component.Utilities\bin\Debug\net7.0\Component.Utilities.dll
+D:\Study\DoAn\CloneBanCuaThanh\capstone_eatrightify\Component.Utilities\bin\Debug\net7.0\Component.Utilities.pdb
+D:\Study\DoAn\CloneBanCuaThanh\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\Component.Utilities.GeneratedMSBuildEditorConfig.editorconfig
+D:\Study\DoAn\CloneBanCuaThanh\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\Component.Utilities.AssemblyInfoInputs.cache
+D:\Study\DoAn\CloneBanCuaThanh\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\Component.Utilities.AssemblyInfo.cs
+D:\Study\DoAn\CloneBanCuaThanh\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\Component.Utilities.csproj.CoreCompileInputs.cache
+D:\Study\DoAn\CloneBanCuaThanh\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\Component.Utilities.sourcelink.json
+D:\Study\DoAn\CloneBanCuaThanh\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\Component.Utilities.dll
+D:\Study\DoAn\CloneBanCuaThanh\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\refint\Component.Utilities.dll
+D:\Study\DoAn\CloneBanCuaThanh\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\Component.Utilities.pdb
+D:\Study\DoAn\CloneBanCuaThanh\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\ref\Component.Utilities.dll
