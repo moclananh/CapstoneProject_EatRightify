@@ -1,4 +1,5 @@
-﻿using Component.ViewModels.Catalog.ProductImages;
+﻿using Component.Data.Entities;
+using Component.ViewModels.Catalog.ProductImages;
 using Component.ViewModels.Catalog.Products;
 using Component.ViewModels.Common;
 using System;
@@ -11,7 +12,7 @@ namespace Component.Application.Catalog.Products
 {
     public interface IProductService
     {
-        Task<int> Create(ProductCreateRequest request);
+        Task<Product> Create(ProductCreateRequest request);
 
         Task<int> Update(ProductUpdateRequest request);
 

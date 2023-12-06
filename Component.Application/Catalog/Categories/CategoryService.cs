@@ -24,7 +24,7 @@ namespace Component.Application.Catalog.Categories
             _storageService = storageService;
         }
 
-        public async Task<int> Create(CategoryCreateRequest request)
+        public async Task<Category> Create(CategoryCreateRequest request)
         {
             var languages = _context.Languages;
             var translations = new List<CategoryTranslation>();
@@ -64,7 +64,7 @@ namespace Component.Application.Catalog.Categories
 
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
-            return category.Id;
+            return category;
         }
 
         public async Task<int> Update(CategoryUpdateRequest request)

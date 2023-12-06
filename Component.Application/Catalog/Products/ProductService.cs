@@ -55,7 +55,7 @@ namespace Component.Application.Catalog.Products
             await _context.SaveChangesAsync();
         }
 
-        public async Task<int> Create(ProductCreateRequest request)
+        public async Task<Product> Create(ProductCreateRequest request)
         {
             var languages = _context.Languages;
             var translations = new List<ProductTranslation>();
@@ -113,7 +113,7 @@ namespace Component.Application.Catalog.Products
             }
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
-            return product.Id;
+            return product;
         }
 
         public async Task<int> Delete(int productId)
@@ -141,7 +141,7 @@ namespace Component.Application.Catalog.Products
                         from c in picc.DefaultIfEmpty()
                         join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
                         from pi in ppi.DefaultIfEmpty()
-                        where pt.LanguageId == request.LanguageId && pi.IsDefault == true
+                        where pt.LanguageId == request.LanguageId 
                         select new ProductVm()
                         {
                             Id = p.Id,

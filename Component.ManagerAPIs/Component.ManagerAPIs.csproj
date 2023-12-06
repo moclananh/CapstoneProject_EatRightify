@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Images\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Component.Application\Component.Application.csproj" />
     <ProjectReference Include="..\Component.Utilities\Component.Utilities.csproj" />
     <ProjectReference Include="..\Component.ViewModels\Component.ViewModels.csproj" />

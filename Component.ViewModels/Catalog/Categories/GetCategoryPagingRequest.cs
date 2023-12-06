@@ -9,7 +9,7 @@ namespace Component.ViewModels.Catalog.Categories
 {
     public class GetCategoryPagingRequest : PagingRequestBase
     {
-        public string Keyword { get; set; }
+        public string? Keyword { get; set; }
 
         public string LanguageId { get; set; }
 
