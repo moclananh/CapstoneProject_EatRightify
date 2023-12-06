@@ -25,7 +25,7 @@ namespace Component.ManagerAPIs.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _userService.Authencate(request);
+            var result = await _userService.Authencate(request, new List<string> { "manager" });
 
             if (string.IsNullOrEmpty(result.ResultObj))
             {

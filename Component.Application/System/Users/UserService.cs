@@ -33,7 +33,7 @@ namespace Component.Application.System.Users
             _config = config;
         }
 
-        public async Task<LoginRespone<string>> Authencate(LoginRequest request, bool verifyRole = true)
+        public async Task<LoginRespone<string>> Authencate(LoginRequest request, IEnumerable<string> validRoles)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null) return new LoginErrorRespone<string>("Tài khoản không tồn tại");
@@ -43,23 +43,30 @@ namespace Component.Application.System.Users
             {
                 return new LoginErrorRespone<string>("Đăng nhập không đúng");
             }
+
             var roles = await _userManager.GetRolesAsync(user);
-            if (verifyRole && (roles.Count == 0 || !roles.Contains("admin")))
+            if (roles == null || !roles.Any())
+            {
+                roles = new List<string> { "User" };
+            }
+
+            if (validRoles.Any() && !roles.Any(role => validRoles.Contains(role)))
             {
                 return new LoginErrorRespone<string>("Tài khoản không được phép đăng nhập");
             }
+
             var claims = new[]
             {
-                new Claim(ClaimTypes.Email,user.Email),
-                new Claim(ClaimTypes.GivenName,user.FirstName),
-                new Claim(ClaimTypes.Role, string.Join(";",roles)),
-                new Claim(ClaimTypes.Name, request.UserName),
-                new Claim(ClaimTypes.Dsa, user.Id.ToString()),
-            };
+        new Claim(ClaimTypes.Email, user.Email),
+        new Claim(ClaimTypes.GivenName, user.FirstName),
+        new Claim(ClaimTypes.Role, string.Join(";", roles)),
+        new Claim(ClaimTypes.Name, request.UserName),
+        new Claim(ClaimTypes.Dsa, user.Id.ToString()),
+    };
+
             var loginResult = new LoginResult
             {
                 ID = user.Id,
-
             };
             Guid id = loginResult.ID;
 

@@ -10,7 +10,7 @@ namespace Component.Application.System.Users
 {
     public interface IUserService
     {
-        Task<LoginRespone<string>> Authencate(LoginRequest request, bool verifyRole = true);
+        Task<LoginRespone<string>> Authencate(LoginRequest request, IEnumerable<string> validRoles);
 
         Task<ApiResult<bool>> Register(RegisterRequest request);
 
