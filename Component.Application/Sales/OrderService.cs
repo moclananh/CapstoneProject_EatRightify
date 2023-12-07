@@ -27,45 +27,71 @@ namespace Component.Application.Sales
 
         public async Task<Order> Create(CheckoutRequest request)
         {
-
-            var order = new Order()
+            using (var transaction = await _context.Database.BeginTransactionAsync())
             {
-                OrderDate = DateTime.Now,
-                UserId = request.UserId,
-                ShipName = request.Name,
-                ShipAddress = request.Address,
-                ShipEmail = request.Email,
-                ShipPhoneNumber = request.PhoneNumber,
-                Status = OrderStatus.InProgress,
-                OrderDetails = new List<OrderDetail>() { }
-
-            };
-
-            foreach (var orderDetailVm in request.OrderDetails)
-            {
-                var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == orderDetailVm.ProductId);
-
-                if (product != null)
+                try
                 {
-                    var orderDetail = new OrderDetail()
+                    var order = new Order()
                     {
-                        ProductId = product.Id,
-                        Quantity = orderDetailVm.Quantity,
-                        Price = product.Price * orderDetailVm.Quantity  // Set the price based on the product's price
+                        OrderDate = DateTime.Now,
+                        UserId = request.UserId,
+                        ShipName = request.Name,
+                        ShipAddress = request.Address,
+                        ShipEmail = request.Email,
+                        ShipPhoneNumber = request.PhoneNumber,
+                        Status = OrderStatus.InProgress,
+                        OrderDetails = new List<OrderDetail>() { }
                     };
 
-                    order.OrderDetails.Add(orderDetail);
+                    foreach (var orderDetailVm in request.OrderDetails)
+                    {
+                        var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == orderDetailVm.ProductId);
+
+                        if (product != null)
+                        {
+                            var orderDetail = new OrderDetail()
+                            {
+                                ProductId = product.Id,
+                                Quantity = orderDetailVm.Quantity,
+                                Price = product.Price * orderDetailVm.Quantity
+                            };
+
+                            if (orderDetail.Quantity <= product.Stock)
+                            {
+                                order.OrderDetails.Add(orderDetail);
+                                await UpdateStockCheckout(product.Id, orderDetailVm.Quantity);
+                            }
+                            else
+                            {
+                                // If any product has a quantity greater than stock, rollback the transaction
+                                transaction.Rollback();
+                                return null;
+                            }
+                        }
+                        else
+                        {
+                            // If any product is not found, rollback the transaction
+                            transaction.Rollback();
+                            throw new Exception($"Product with ID {orderDetailVm.ProductId} not found.");
+                        }
+                    }
+
+                    // If all products are valid, save the changes
+                    _context.Orders.Add(order);
+                    await _context.SaveChangesAsync();
+
+                    // Commit the transaction
+                    transaction.Commit();
+
+                    return order;
                 }
-                else
+                catch (Exception ex)
                 {
-                    throw new Exception($"Product with ID {orderDetailVm.ProductId} not found.");
+                    // Handle exceptions here if needed
+                    transaction.Rollback();
+                    throw;
                 }
             }
-
-
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
-            return order;
         }
 
 
@@ -268,6 +294,12 @@ namespace Component.Application.Sales
 
             return await _context.SaveChangesAsync();
         }
-
+        public async Task<bool> UpdateStockCheckout(int productId, int quantity)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            if (product == null) throw new EShopException($"Cannot find a product with id: {productId}");
+            product.Stock -= quantity;
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

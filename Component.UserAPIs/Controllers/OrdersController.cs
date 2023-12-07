@@ -16,6 +16,9 @@ namespace Component.UserAPIs.Controllers
             _orderService = productService;
         }
 
+        public class CustomErrorDetails : ProblemDetails
+        {
+        }
         [HttpPost]
 
         public async Task<IActionResult> Create([FromBody] CheckoutRequest request)
@@ -27,12 +30,17 @@ namespace Component.UserAPIs.Controllers
             var result = await _orderService.Create(request);
             if (result == null)
             {
-                return BadRequest();
+                var errorDetails = new CustomErrorDetails
+                {
+                    Type = "Error",
+                    Title = "Cannot purchase greater than product quantity",
+                    Status = 400,
+                    Detail = "One or more products in the shopping cart exceed the number of products in stock",
+                    Instance = HttpContext.Request.Path
+                };
+
+                return BadRequest(errorDetails);
             }
-
-            // var product = await _orderService.GetById(productId, request.LanguageId);
-
-
             return Ok(request);
         }
 
