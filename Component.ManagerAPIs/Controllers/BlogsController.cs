@@ -72,6 +72,11 @@ namespace Component.ManagerAPIs.Controllers
                 return BadRequest(ModelState);
             }
             request.Id = blogId;
+            var checkBlogExist = await _blogService.GetById(blogId);
+            if (checkBlogExist == null)
+            {
+                return BadRequest();
+            }
             var affectedResult = await _blogService.Update(request);
             if (affectedResult == 0)
                 return BadRequest();

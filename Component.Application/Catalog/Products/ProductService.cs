@@ -179,7 +179,7 @@ namespace Component.Application.Catalog.Products
             foreach (var productVm in query)
             {
                 // Check if the product with the same ID is already in the distinctProducts list
-                if (!distinctProducts.Any(p => p.Id == productVm.Id) && !(productVm.Name == "N/A"))
+                if (!distinctProducts.Any(p => p.Id == productVm.Id) /*&& !(productVm.Name == "N/A")*/)
                 {
                     distinctProducts.Add(productVm);
                 }

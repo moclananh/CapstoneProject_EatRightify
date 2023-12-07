@@ -5,11 +5,6 @@ using Component.Utilities.Exceptions;
 using Component.ViewModels.Catalog.Categories;
 using Component.ViewModels.Common;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Component.Application.Catalog.Categories
 {
@@ -151,7 +146,7 @@ namespace Component.Application.Catalog.Categories
             foreach (var categoryVm in query)
             {
                 // Check if the product with the same ID is already in the distinctProducts list
-                if (!distinctCategory.Any(p => p.Id == categoryVm.Id) && !(categoryVm.Name == "N/A"))
+                if (!distinctCategory.Any(p => p.Id == categoryVm.Id) /*&& !(categoryVm.Name == "N/A")*/)
                 {
                     distinctCategory.Add(categoryVm);
                 }

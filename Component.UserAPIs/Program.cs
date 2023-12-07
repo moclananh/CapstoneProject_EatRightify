@@ -6,6 +6,7 @@ using Component.Application.Statistical;
 using Component.Application.System.Languages;
 using Component.Application.System.Roles;
 using Component.Application.System.Users;
+using Component.Application.Utilities.Blogs;
 using Component.Application.Utilities.Slides;
 using Component.Data.EF;
 using Component.Data.Entities;
@@ -40,6 +41,7 @@ builder.Services.AddTransient<IStorageService, FileStorageService>();
 
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddTransient<IBlogService, BlogService>();
 
 builder.Services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
 builder.Services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();

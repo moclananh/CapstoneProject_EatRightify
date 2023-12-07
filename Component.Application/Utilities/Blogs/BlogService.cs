@@ -108,6 +108,7 @@ namespace Component.Application.Utilities.Blogs
         public async Task<BlogVm> GetById(int id)
         {
             var query = from b in _context.Blogs
+                        where b.Id == id
                         select new { b };
             return await query.Select(x => new BlogVm()
             {
