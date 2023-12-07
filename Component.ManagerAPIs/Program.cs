@@ -6,6 +6,7 @@ using Component.Application.Statistical;
 using Component.Application.System.Languages;
 using Component.Application.System.Roles;
 using Component.Application.System.Users;
+using Component.Application.Utilities.Blogs;
 using Component.Application.Utilities.Slides;
 using Component.Data.EF;
 using Component.Data.Entities;
@@ -46,6 +47,7 @@ builder.Services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
 builder.Services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
 builder.Services.AddTransient<ILanguageService, LanguageService>();
 builder.Services.AddTransient<ISlideService, SlideService>();
+builder.Services.AddTransient<IBlogService, BlogService>();
 
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IUserService, UserService>();
