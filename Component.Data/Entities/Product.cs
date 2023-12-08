@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Component.Data.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace Component.Data.Entities
         public int Stock { set; get; }
         public int ViewCount { set; get; }
         public DateTime DateCreated { set; get; }
-
+        public Status Status { set; get; }
         public bool? IsFeatured { get; set; }
 
         public List<ProductInCategory> ProductInCategories { get; set; }

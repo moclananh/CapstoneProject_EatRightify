@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Component.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231206101011_newMigration")]
-    partial class newMigration
+    [Migration("20231208165301_DbUpdate")]
+    partial class DbUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -183,7 +183,7 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c8477fb8-42a3-49fe-b8c2-d258c3319d3b",
+                            ConcurrencyStamp = "23e747f0-fa30-4418-83f1-48fda12ed688",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -193,7 +193,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@admin.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJeZ9zq10SAbYp0fEkTKvLPHVWiMck4Lo0oFg3rpNjawd928a/dncc/M46dXwT2V2A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOVBUeuxSM4X5NwYxEGWlodTPY/e5I8PFb5XDTzcvPdBoo42B2g7zo+hyi5kQtqC+A==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -203,7 +203,7 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "86d30d3e-1c70-4ee2-bf81-12efb4937fee",
+                            ConcurrencyStamp = "c0f17f0c-0aaf-41a1-9a04-b1743dcdbdd1",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "manager@manager.com",
                             EmailConfirmed = true,
@@ -213,7 +213,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "manager@manager.com",
                             NormalizedUserName = "manager",
-                            PasswordHash = "AQAAAAIAAYagAAAAEL9OEase97aJ/Rvtrl+XnhwFU2inWOvgDBNpic1XMbsCT4K8bkf93fhJTDkWjva+0w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPoTFnrqWRxbS14ks6g5yrCrZfYCtFEqGN/MkUxN+6iKoHv6W8pFvgLks6Gb6HihoQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -223,7 +223,7 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a79156e8-12be-4dee-92da-d793baec4788",
+                            ConcurrencyStamp = "ef26c2cc-87cf-43cf-a9a7-2fb50193740d",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "confirm@confim.com",
                             EmailConfirmed = true,
@@ -233,7 +233,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "confirm@confim.com",
                             NormalizedUserName = "confiminator",
-                            PasswordHash = "AQAAAAIAAYagAAAAED2sXzZqkVgEKmHpDy+YLT+iOw4+D8Dd9r2/LMqOc4/uLfGtkqbeKiYxuz2IX3orjg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEM7eF15+RvjiSNyMtQTWafan2mxwYV7jSqEH8P7LwkdK6GZ9CcZWfXndj2PzthLgwQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -533,12 +533,6 @@ namespace Component.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("NumberOfDisLike")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NumberOfLike")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
@@ -634,6 +628,9 @@ namespace Component.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<Guid>("OrderCode")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
@@ -712,6 +709,9 @@ namespace Component.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<int>("Stock")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
@@ -730,9 +730,10 @@ namespace Component.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2023, 12, 6, 17, 10, 11, 167, DateTimeKind.Local).AddTicks(8057),
+                            DateCreated = new DateTime(2023, 12, 8, 23, 53, 0, 952, DateTimeKind.Local).AddTicks(6772),
                             OriginalPrice = 255m,
                             Price = 199m,
+                            Status = 1,
                             Stock = 100,
                             ViewCount = 0
                         });

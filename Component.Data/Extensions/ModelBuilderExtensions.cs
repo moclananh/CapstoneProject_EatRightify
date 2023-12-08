@@ -73,6 +73,7 @@ namespace Component.Data.Extensions
                Price = 199,
                Stock = 100,
                ViewCount = 0,
+               Status = Status.Active,
            });
             modelBuilder.Entity<ProductTranslation>().HasData(
                  new ProductTranslation()

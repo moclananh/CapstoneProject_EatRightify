@@ -1,4 +1,5 @@
 ﻿using Component.Data.Entities;
+using Component.Data.Enums;
 using Component.ViewModels.Utilities.Comments;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace Component.ViewModels.Catalog.Products
 
         public string ThumbnailImage { get; set; }
         public int? CategoryId { set; get; }
+        public Status Status { set; get; }
 
         public List<string> Categories { get; set; } = new List<string>();
         public List<Comment> CommentsList { get; set; } = new List<Comment>();

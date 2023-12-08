@@ -180,7 +180,7 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0e164dfe-0385-4775-942d-f28e749cd19c",
+                            ConcurrencyStamp = "23e747f0-fa30-4418-83f1-48fda12ed688",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -190,7 +190,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@admin.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHE5h6N88ldspsS4ftFN+E/EAUlnHHj8ahYfIZDI5WVB7o9XAOeFpXBGUQKW/MshRw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOVBUeuxSM4X5NwYxEGWlodTPY/e5I8PFb5XDTzcvPdBoo42B2g7zo+hyi5kQtqC+A==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -200,7 +200,7 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c4d63fca-1fa2-4aee-a41c-56d2116bc814",
+                            ConcurrencyStamp = "c0f17f0c-0aaf-41a1-9a04-b1743dcdbdd1",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "manager@manager.com",
                             EmailConfirmed = true,
@@ -210,7 +210,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "manager@manager.com",
                             NormalizedUserName = "manager",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFNp4FRBVxAXPPiFLnPqVi3glGsYRRHKEEe6MRbfRm34S+uyoXoK8i/XPkzCTdWbAg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPoTFnrqWRxbS14ks6g5yrCrZfYCtFEqGN/MkUxN+6iKoHv6W8pFvgLks6Gb6HihoQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -220,7 +220,7 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cfb3bd83-c757-41d3-8636-5b96e6e7a3ae",
+                            ConcurrencyStamp = "ef26c2cc-87cf-43cf-a9a7-2fb50193740d",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "confirm@confim.com",
                             EmailConfirmed = true,
@@ -230,7 +230,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "confirm@confim.com",
                             NormalizedUserName = "confiminator",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDSJdNvQ21kCGVeLuEA6/AtHQr6mpg6U4wR8bwyDL2CZ9el1oYZwEP9X9aVZhrpYQQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEM7eF15+RvjiSNyMtQTWafan2mxwYV7jSqEH8P7LwkdK6GZ9CcZWfXndj2PzthLgwQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -706,6 +706,9 @@ namespace Component.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<int>("Stock")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
@@ -724,9 +727,10 @@ namespace Component.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2023, 12, 8, 16, 41, 42, 898, DateTimeKind.Local).AddTicks(4046),
+                            DateCreated = new DateTime(2023, 12, 8, 23, 53, 0, 952, DateTimeKind.Local).AddTicks(6772),
                             OriginalPrice = 255m,
                             Price = 199m,
+                            Status = 1,
                             Stock = 100,
                             ViewCount = 0
                         });

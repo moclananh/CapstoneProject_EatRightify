@@ -93,7 +93,8 @@ namespace Component.Application.Catalog.Products
                 ViewCount = 0,
                 DateCreated = DateTime.Now,
                 IsFeatured = request.IsFeatured,
-                ProductTranslations = translations
+                ProductTranslations = translations,
+                Status = Data.Enums.Status.Active
             };
             //Save image
             if (request.ThumbnailImage != null)
@@ -159,6 +160,7 @@ namespace Component.Application.Catalog.Products
                             ViewCount = p.ViewCount,
                             IsFeatured = p.IsFeatured,
                             ThumbnailImage = pi.ImagePath,
+                            Status= p.Status,
                             CategoryId = pic.CategoryId // Add CategoryId to ProductVm
                         };
 
@@ -239,6 +241,7 @@ namespace Component.Application.Catalog.Products
                 SeoTitle = productTranslation != null ? productTranslation.SeoTitle : null,
                 Stock = product.Stock,
                 ViewCount = product.ViewCount,
+                Status = product.Status,
                 Categories = categories,
                 CommentsList = comments,
                 IsFeatured = product.IsFeatured,
@@ -307,6 +310,7 @@ namespace Component.Application.Catalog.Products
             productTranslations.Description = request.Description;
             productTranslations.Details = request.Details;
             product.IsFeatured = request.IsFeatured;
+            product.Status = request.Status;
 
             //Save image
             if (request.ThumbnailImage != null)
@@ -396,7 +400,8 @@ namespace Component.Application.Catalog.Products
                     SeoTitle = x.pt.SeoTitle,
                     Stock = x.p.Stock,
                     IsFeatured = x.p.IsFeatured,
-                    ViewCount = x.p.ViewCount
+                    ViewCount = x.p.ViewCount,
+                    Status= x.p.Status,
                 }).ToListAsync();
 
             //4. Select and projection
@@ -486,6 +491,7 @@ namespace Component.Application.Catalog.Products
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
                     IsFeatured = x.p.IsFeatured,
+                    Status= x.p.Status,
                     ThumbnailImage = x.pi.ImagePath
                 }).Where(x => x.Name != "N/A").Distinct().ToListAsync();
 
@@ -523,6 +529,7 @@ namespace Component.Application.Catalog.Products
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
                     IsFeatured = x.p.IsFeatured,
+                    Status= x.p.Status,
                     ThumbnailImage = x.pi.ImagePath
                 }).Where(x => x.Name != "N/A").Distinct().ToListAsync();
 

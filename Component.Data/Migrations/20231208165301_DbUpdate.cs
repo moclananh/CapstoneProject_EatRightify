@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Component.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class newMigration : Migration
+    public partial class DbUpdate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -217,6 +217,7 @@ namespace Component.Data.Migrations
                     Stock = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     ViewCount = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     IsFeatured = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
@@ -309,7 +310,8 @@ namespace Component.Data.Migrations
                     ShipAddress = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     ShipEmail = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     ShipPhoneNumber = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    OrderCode = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -442,8 +444,6 @@ namespace Component.Data.Migrations
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NumberOfLike = table.Column<int>(type: "int", nullable: true),
-                    NumberOfDisLike = table.Column<int>(type: "int", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -605,9 +605,9 @@ namespace Component.Data.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "AccumulatedPoints", "ConcurrencyStamp", "Dob", "Email", "EmailConfirmed", "FirstName", "IsBanned", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "VIP" },
                 values: new object[,]
                 {
-                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), 0, null, "a79156e8-12be-4dee-92da-d793baec4788", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "confirm@confim.com", true, "Confirm", false, "minator", false, null, "confirm@confim.com", "confiminator", "AQAAAAIAAYagAAAAED2sXzZqkVgEKmHpDy+YLT+iOw4+D8Dd9r2/LMqOc4/uLfGtkqbeKiYxuz2IX3orjg==", null, false, "", false, "confirm", null },
-                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), 0, null, "86d30d3e-1c70-4ee2-bf81-12efb4937fee", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAEL9OEase97aJ/Rvtrl+XnhwFU2inWOvgDBNpic1XMbsCT4K8bkf93fhJTDkWjva+0w==", null, false, "", false, "manager", null },
-                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), 0, null, "c8477fb8-42a3-49fe-b8c2-d258c3319d3b", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAEJeZ9zq10SAbYp0fEkTKvLPHVWiMck4Lo0oFg3rpNjawd928a/dncc/M46dXwT2V2A==", null, false, "", false, "admin", null }
+                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), 0, null, "ef26c2cc-87cf-43cf-a9a7-2fb50193740d", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "confirm@confim.com", true, "Confirm", false, "minator", false, null, "confirm@confim.com", "confiminator", "AQAAAAIAAYagAAAAEM7eF15+RvjiSNyMtQTWafan2mxwYV7jSqEH8P7LwkdK6GZ9CcZWfXndj2PzthLgwQ==", null, false, "", false, "confirm", null },
+                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), 0, null, "c0f17f0c-0aaf-41a1-9a04-b1743dcdbdd1", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAEPoTFnrqWRxbS14ks6g5yrCrZfYCtFEqGN/MkUxN+6iKoHv6W8pFvgLks6Gb6HihoQ==", null, false, "", false, "manager", null },
+                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), 0, null, "23e747f0-fa30-4418-83f1-48fda12ed688", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAEOVBUeuxSM4X5NwYxEGWlodTPY/e5I8PFb5XDTzcvPdBoo42B2g7zo+hyi5kQtqC+A==", null, false, "", false, "admin", null }
                 });
 
             migrationBuilder.InsertData(
@@ -632,8 +632,8 @@ namespace Component.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "DateCreated", "IsFeatured", "OriginalPrice", "Price", "Stock" },
-                values: new object[] { 1, new DateTime(2023, 12, 6, 17, 10, 11, 167, DateTimeKind.Local).AddTicks(8057), null, 255m, 199m, 100 });
+                columns: new[] { "Id", "DateCreated", "IsFeatured", "OriginalPrice", "Price", "Status", "Stock" },
+                values: new object[] { 1, new DateTime(2023, 12, 8, 23, 53, 0, 952, DateTimeKind.Local).AddTicks(6772), null, 255m, 199m, 1, 100 });
 
             migrationBuilder.InsertData(
                 table: "Slides",
