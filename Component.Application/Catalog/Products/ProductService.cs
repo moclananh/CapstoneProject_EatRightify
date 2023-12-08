@@ -214,6 +214,14 @@ namespace Component.Application.Catalog.Products
                                     where pic.ProductId == productId && ct.LanguageId == languageId
                                     select ct.Name).ToListAsync();
 
+            var comments = await (from cmt in _context.Comments
+                                  join p in _context.Products on cmt.ProductId equals p.Id into pcmt
+                                  from p in pcmt.DefaultIfEmpty()
+                                  join u in _context.AppUsers on cmt.UserId equals u.Id into ucmt
+                                  from u in ucmt.DefaultIfEmpty()
+                                  where p.Id == productId
+                                  select cmt).AsNoTracking().AsQueryable().ToListAsync(); // phai co asNoTracking de ignore vong lap vo hang
+
             var image = await _context.ProductImages.Where(x => x.ProductId == productId && x.IsDefault == true).FirstOrDefaultAsync();
 
             var productViewModel = new ProductVm()
@@ -232,6 +240,7 @@ namespace Component.Application.Catalog.Products
                 Stock = product.Stock,
                 ViewCount = product.ViewCount,
                 Categories = categories,
+                CommentsList = comments,
                 IsFeatured = product.IsFeatured,
                 ThumbnailImage = image != null ? image.ImagePath : "no-image.jpg"
             };
