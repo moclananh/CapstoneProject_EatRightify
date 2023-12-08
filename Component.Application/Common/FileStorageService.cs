@@ -43,7 +43,7 @@ namespace Component.Application.Common
 
         public async Task<string> SaveImageAsync(IFormFile image)
         {
-            var hostUrl = "https://localhost:5001";
+            var hostUrl = "https://localhost:5002";
             string folder = "Images";
             string filename = image.FileName;
             string filePath = Path.Combine(folder, Guid.NewGuid().ToString() + filename);
