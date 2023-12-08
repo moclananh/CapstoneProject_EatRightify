@@ -1,3 +1,4 @@
+using Component.Application.AI;
 using Component.Application.Catalog.Categories;
 using Component.Application.Catalog.Products;
 using Component.Application.Common;
@@ -41,7 +42,7 @@ builder.Services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
 builder.Services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IUserService, UserService>();
-
+builder.Services.AddTransient<IAIService, AIService>();
 
 //custom swagger
 builder.Services.AddSwaggerGen(c =>
