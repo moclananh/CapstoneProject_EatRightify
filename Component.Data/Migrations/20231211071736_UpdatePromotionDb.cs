@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Component.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class DbUpdate : Migration
+    public partial class UpdatePromotionDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -231,15 +231,13 @@ namespace Component.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    DiscountCode = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FromDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ToDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ApplyForAll = table.Column<bool>(type: "bit", nullable: false),
                     DiscountPercent = table.Column<int>(type: "int", nullable: true),
-                    DiscountAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    ProductIds = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductCategoryIds = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -605,9 +603,9 @@ namespace Component.Data.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "AccumulatedPoints", "ConcurrencyStamp", "Dob", "Email", "EmailConfirmed", "FirstName", "IsBanned", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "VIP" },
                 values: new object[,]
                 {
-                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), 0, null, "ef26c2cc-87cf-43cf-a9a7-2fb50193740d", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "confirm@confim.com", true, "Confirm", false, "minator", false, null, "confirm@confim.com", "confiminator", "AQAAAAIAAYagAAAAEM7eF15+RvjiSNyMtQTWafan2mxwYV7jSqEH8P7LwkdK6GZ9CcZWfXndj2PzthLgwQ==", null, false, "", false, "confirm", null },
-                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), 0, null, "c0f17f0c-0aaf-41a1-9a04-b1743dcdbdd1", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAEPoTFnrqWRxbS14ks6g5yrCrZfYCtFEqGN/MkUxN+6iKoHv6W8pFvgLks6Gb6HihoQ==", null, false, "", false, "manager", null },
-                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), 0, null, "23e747f0-fa30-4418-83f1-48fda12ed688", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAEOVBUeuxSM4X5NwYxEGWlodTPY/e5I8PFb5XDTzcvPdBoo42B2g7zo+hyi5kQtqC+A==", null, false, "", false, "admin", null }
+                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), 0, null, "b4fdb6b6-0bc2-43a3-9e27-a6baeead95a4", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "confirm@confim.com", true, "Confirm", false, "minator", false, null, "confirm@confim.com", "confiminator", "AQAAAAIAAYagAAAAEAoK9a6Xf8KVm2IjUeywgZoFE6sxbbY/eiEa13JxWnumGzykriBV1HNC4RhVHS1Vyg==", null, false, "", false, "confirm", null },
+                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), 0, null, "d814d0b1-f62b-4d0e-ba8d-b1f163151060", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAEBJCJtTlFadb8wxZXoIb2kYOBT0BYz07dHKC3GKfl3QC1gL0la66xTc6xWGr+04G7Q==", null, false, "", false, "manager", null },
+                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), 0, null, "d623af7e-44d8-4b79-abb1-a42c94a3d2b1", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAEHrvmhLRwq6imgvT19Zcghk7Rm3kWhGQiuZLnGiKgsUik1rRlHiVyVWqf3qKqqXB4g==", null, false, "", false, "admin", null }
                 });
 
             migrationBuilder.InsertData(
@@ -633,7 +631,7 @@ namespace Component.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "DateCreated", "IsFeatured", "OriginalPrice", "Price", "Status", "Stock" },
-                values: new object[] { 1, new DateTime(2023, 12, 8, 23, 53, 0, 952, DateTimeKind.Local).AddTicks(6772), null, 255m, 199m, 1, 100 });
+                values: new object[] { 1, new DateTime(2023, 12, 11, 14, 17, 36, 157, DateTimeKind.Local).AddTicks(5630), null, 255m, 199m, 1, 100 });
 
             migrationBuilder.InsertData(
                 table: "Slides",

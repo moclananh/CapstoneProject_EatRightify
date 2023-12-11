@@ -8,6 +8,7 @@ using Component.Application.System.Roles;
 using Component.Application.System.Users;
 using Component.Application.Utilities.Blogs;
 using Component.Application.Utilities.Comments;
+using Component.Application.Utilities.Promotions;
 using Component.Application.Utilities.Slides;
 using Component.Data.EF;
 using Component.Data.Entities;
@@ -43,6 +44,7 @@ builder.Services.AddTransient<IStorageService, FileStorageService>();
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<ICommentService, CommentService>();
+builder.Services.AddTransient<IPromotionService, PromotionService>();
 
 builder.Services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
 builder.Services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();

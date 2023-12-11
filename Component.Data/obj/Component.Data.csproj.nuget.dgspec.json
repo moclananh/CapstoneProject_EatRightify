@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Study\\DoAn\\New\\capstone_eatrightify\\Component.Data\\Component.Data.csproj": {}
+    "D:\\FU_Hub\\SP24_CapstoneProject\\Project\\Gitlab\\Promotion\\capstone_eatrightify\\Component.Data\\Component.Data.csproj": {}
   },
   "projects": {
-    "D:\\Study\\DoAn\\New\\capstone_eatrightify\\Component.Data\\Component.Data.csproj": {
+    "D:\\FU_Hub\\SP24_CapstoneProject\\Project\\Gitlab\\Promotion\\capstone_eatrightify\\Component.Data\\Component.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Study\\DoAn\\New\\capstone_eatrightify\\Component.Data\\Component.Data.csproj",
+        "projectUniqueName": "D:\\FU_Hub\\SP24_CapstoneProject\\Project\\Gitlab\\Promotion\\capstone_eatrightify\\Component.Data\\Component.Data.csproj",
         "projectName": "Component.Data",
-        "projectPath": "D:\\Study\\DoAn\\New\\capstone_eatrightify\\Component.Data\\Component.Data.csproj",
-        "packagesPath": "C:\\Users\\tt\\.nuget\\packages\\",
-        "outputPath": "D:\\Study\\DoAn\\New\\capstone_eatrightify\\Component.Data\\obj\\",
+        "projectPath": "D:\\FU_Hub\\SP24_CapstoneProject\\Project\\Gitlab\\Promotion\\capstone_eatrightify\\Component.Data\\Component.Data.csproj",
+        "packagesPath": "C:\\Users\\Kristino\\.nuget\\packages\\",
+        "outputPath": "D:\\FU_Hub\\SP24_CapstoneProject\\Project\\Gitlab\\Promotion\\capstone_eatrightify\\Component.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\tt\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Kristino\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -90,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }

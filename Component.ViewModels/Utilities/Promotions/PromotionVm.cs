@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Component.Data.Entities
+namespace Component.ViewModels.Utilities.Promotions
 {
-    public class Promotion
+    public class PromotionVm
     {
         public int Id { set; get; }
         public Guid DiscountCode { set; get; }
@@ -17,6 +17,5 @@ namespace Component.Data.Entities
         public Status Status { set; get; }
         public string Name { set; get; }
         public string? Description { set; get; }
-
     }
 }
