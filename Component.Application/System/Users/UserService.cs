@@ -1,4 +1,5 @@
-﻿using Component.Data.Entities;
+﻿using Component.Data.EF;
+using Component.Data.Entities;
 using Component.ViewModels.Common;
 using Component.ViewModels.System.Users;
 using Microsoft.AspNetCore.Identity;
@@ -21,22 +22,26 @@ namespace Component.Application.System.Users
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<AppRole> _roleManager;
         private readonly IConfiguration _config;
+        private readonly ApplicationDbContext _context;
 
         public UserService(UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             RoleManager<AppRole> roleManager,
-            IConfiguration config)
+            IConfiguration config,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _config = config;
+            _context = context;
         }
 
         public async Task<LoginRespone<string>> Authencate(LoginRequest request, IEnumerable<string> validRoles)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null) return new LoginErrorRespone<string>("Tài khoản không tồn tại");
+            if (user.IsBanned == true) return new LoginErrorRespone<string>("Tài khoản đã bị khóa");
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             if (!result.Succeeded)
@@ -230,6 +235,18 @@ namespace Component.Application.System.Users
                 return new ApiSuccessResult<bool>();
             }
             return new ApiErrorResult<bool>("Cập nhật không thành công");
+        }
+
+        public async Task<ApiResult<bool>> BanAccount(Guid id, bool status)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return new ApiErrorResult<bool>("User không tồn tại");
+            }
+            user.IsBanned = status;
+            await _context.SaveChangesAsync();
+            return new ApiSuccessResult<bool>();
         }
     }
 }

@@ -23,5 +23,6 @@ namespace Component.Application.System.Users
         Task<ApiResult<bool>> Delete(Guid id);
 
         Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
+        Task<ApiResult<bool>> BanAccount(Guid id, bool status);
     }
 }

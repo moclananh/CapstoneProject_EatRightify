@@ -70,6 +70,6 @@ namespace Component.UserAPIs.Controllers
         {
             var user = await _userService.GetById(id);
             return Ok(user);
-        }
+        }      
     }
 }

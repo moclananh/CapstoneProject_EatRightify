@@ -98,5 +98,12 @@ namespace Component.AdminAPIs.Controllers
             var result = await _userService.Delete(id);
             return Ok(result);
         }
+
+        [HttpPut("BanAccount/{UserId}/{status}")]
+        public async Task<IActionResult> BanAccount(Guid UserId, bool status)
+        {
+            var result = await _userService.BanAccount(UserId, status);
+            return Ok(result);
+        }
     }
 }

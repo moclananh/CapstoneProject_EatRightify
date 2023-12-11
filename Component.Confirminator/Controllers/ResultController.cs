@@ -41,5 +41,36 @@ namespace Component.ConfirminatorAPIs.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] ResultPagingRequest request)
+        {
+            var products = await _aiService.GetAllPaging(request);
+            return Ok(products);
+        }
+
+        [HttpGet("GetById/{ResultId}")]
+        public async Task<IActionResult> GetResultById(int ResultId)
+        {
+            var result = await _aiService.GetById(ResultId);
+
+            if (result == null)
+            {
+                return BadRequest(); // Return 404 Not Found if the order with the given ID is not found.
+            }
+
+            return Ok(result); // Return the order with a 200 OK status code.
+        }
+
+        [HttpDelete("Delete/{ResultId}")]
+        public async Task<IActionResult> Delete(int ResultId)
+        {
+            var result = await _aiService.Delete(ResultId);
+            if (result == null)
+            {
+                return BadRequest(); // Return 404 Not Found if the order with the given ID is not found.
+            }
+            return Ok(); // Return the order with a 200 OK status code.
+        }
     }
 }
