@@ -14,6 +14,7 @@ namespace Component.Application.Utilities.Promotions
     {
         Task<PagedResult<PromotionVm>> GetAllPaging(GetPromotionPagingRequest request);
         Task<PromotionVm> GetById(int id);
+        Task<PromotionVm> GetByPromotionCode(Guid code);
         Task<Promotion> Create(PromotionCreateRequest request);
         Task<int> Update(PromotionUpdateRequest request);
         Task<int> Delete(int promotionId);

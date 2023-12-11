@@ -103,6 +103,24 @@ namespace Component.Application.Utilities.Promotions
             }).FirstOrDefaultAsync();
         }
 
+        public async Task<PromotionVm> GetByPromotionCode(Guid code)
+        {
+            var query = from p in _context.Promotions
+                        where p.DiscountCode.Equals(code)
+                        select new { p };
+            return await query.Select(x => new PromotionVm()
+            {
+                Id = x.p.Id,
+                DiscountCode = x.p.DiscountCode,
+                FromDate = x.p.FromDate,
+                ToDate = x.p.ToDate,
+                DiscountPercent = x.p.DiscountPercent,
+                Status = x.p.Status,
+                Name = x.p.Name,
+                Description = x.p.Description
+            }).FirstOrDefaultAsync();
+        }
+
         public async Task<int> Update(PromotionUpdateRequest request)
         {
             var promotions = await _context.Promotions.FindAsync(request.Id);
