@@ -6,6 +6,7 @@ using Component.Application.Statistical;
 using Component.Application.System.Languages;
 using Component.Application.System.Roles;
 using Component.Application.System.Users;
+using Component.Application.System.Users.UserDetail;
 using Component.Application.Utilities.Blogs;
 using Component.Application.Utilities.Comments;
 using Component.Application.Utilities.Slides;
@@ -26,7 +27,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers()
-               .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
+               .AddFluentValidation(fv => {
+                   fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>();
+                   fv.RegisterValidatorsFromAssemblyContaining<UserDetailRequestValidator>();
+               });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
@@ -55,6 +59,7 @@ builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddTransient<IStatisticalService, StatisticalService>();
+builder.Services.AddTransient<IUserDetailService, UserDetailService>();
 
 //custom swagger
 builder.Services.AddSwaggerGen(c =>
