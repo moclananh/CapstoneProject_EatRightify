@@ -15,7 +15,7 @@ namespace Component.Application.Sales
         Task<Order> Create(CheckoutRequest request);
 
         Task<Order> GetById(int id);
-
+        Task<BillHistoryDetailVM> GetByCode(Guid code);
         Task<Order> GetLastestOrderId();
 
         Task<PagedResult<OrderVm>> GetAllPaging(OrderPagingRequest request);

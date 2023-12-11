@@ -45,7 +45,7 @@ namespace Component.UserAPIs.Controllers
         }
 
 
-        [HttpGet("{id}")]
+        [HttpGet("getById/{id}")]
         public async Task<IActionResult> GetOrder(int id)
         {
             var order = await _orderService.GetById(id);
@@ -57,6 +57,7 @@ namespace Component.UserAPIs.Controllers
 
             return Ok(order); // Return the order with a 200 OK status code.
         }
+
 
         [HttpGet("GetLastestOrder")]
         public async Task<IActionResult> GetLastestOrder()
@@ -71,14 +72,16 @@ namespace Component.UserAPIs.Controllers
             return Ok(od); // Return the order with a 200 OK status code.
         }
 
-        [HttpGet("GetBillHistory/{id}")]
-        public async Task<IActionResult> GetBillHistory(Guid id)
+        [HttpGet("GetBillHistory/{userId}")]
+        public async Task<IActionResult> GetBillHistory(Guid userId)
         {
-            var billhistory = await _orderService.BillHistory(id);
+            var billhistory = await _orderService.BillHistory(userId);
             if (billhistory == null)
                 return BadRequest("Cannot find bill");
             return Ok(billhistory);
         }
+
+/*        //ham nay de spam ra nen k dung nua, chuyen sang ham phia duoi
         [HttpGet("GetBillById/{id}")]
         public async Task<IActionResult> GetBillById(int id)
         {
@@ -87,5 +90,20 @@ namespace Component.UserAPIs.Controllers
                 return BadRequest("Cannot find bill");
             return Ok(billhistory);
         }
+*/
+
+        [HttpGet("getByOrderCode/{orderCode}")]
+        public async Task<IActionResult> GetOrderbyCode(Guid orderCode)
+        {
+            var order = await _orderService.GetByCode(orderCode);
+
+            if (order == null)
+            {
+                return NotFound(); 
+            }
+
+            return Ok(order);
+        }
+
     }
 }

@@ -2,9 +2,11 @@
 using Component.Data.Entities;
 using Component.Data.Enums;
 using Component.Utilities.Exceptions;
+using Component.ViewModels.Catalog.Products;
 using Component.ViewModels.Common;
 using Component.ViewModels.Sales.Bills;
 using Component.ViewModels.Sales.Orders;
+using Component.ViewModels.Utilities.Promotions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -40,6 +42,7 @@ namespace Component.Application.Sales
                         ShipEmail = request.Email,
                         ShipPhoneNumber = request.PhoneNumber,
                         Status = OrderStatus.InProgress,
+                        OrderCode = Guid.NewGuid(),
                         OrderDetails = new List<OrderDetail>() { }
                     };
 
@@ -137,6 +140,7 @@ namespace Component.Application.Sales
                             ShipEmail = o.ShipEmail,
                             ShipPhoneNumber = o.ShipPhoneNumber,
                             Status = o.Status,
+                            OrderCode = o.OrderCode,
                             OrderDetails = new List<OrderDetail>()
 
                         };
@@ -300,6 +304,39 @@ namespace Component.Application.Sales
             if (product == null) throw new EShopException($"Cannot find a product with id: {productId}");
             product.Stock -= quantity;
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<BillHistoryDetailVM> GetByCode(Guid code)
+        {
+            var result = new BillHistoryDetailVM();
+
+            var query = await (from o in _context.Orders
+                               join a in _context.AppUsers on o.UserId equals a.Id
+                               join od in _context.OrderDetails on o.Id equals od.OrderId
+                               join p in _context.Products on od.ProductId equals p.Id
+                               join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+                               where o.OrderCode == code
+                               select new
+                               {
+                                   ID = o.Id,
+                                   Name = pt.Name,
+                                   Quantity = od.Quantity,
+                                   Price = p.Price,
+                                   Status = o.Status
+                               }).ToListAsync();
+
+            if (query.Any())
+            {
+                result.ID = query.First().ID;
+                result.status = query.First().Status;
+
+                // Populate the lists
+                result.name = query.Select(item => item.Name).ToList();
+                result.quantity = query.Select(item => item.Quantity).ToList();
+                result.price = query.Select(item => item.Price).ToList();
+            }
+
+            return result;
         }
     }
 }

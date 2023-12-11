@@ -17,7 +17,8 @@ namespace Component.ViewModels.Sales.Orders
         public string ShipAddress { set; get; }
         public string ShipEmail { set; get; }
         public string ShipPhoneNumber { set; get; }
+        public Guid OrderCode { set; get; }
         public OrderStatus Status { set; get; }
-        public List<OrderDetail> OrderDetails { get; set; }
+        public List<OrderDetail>? OrderDetails { get; set; }
     }
 }
