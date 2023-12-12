@@ -9,6 +9,7 @@ namespace Component.Application.AI
         Task<UpdateStatusResult> UpdateStatus(int id, UpdateStatusResult status);
         Task<PagedResult<ResultVM>> GetAllPaging(ResultPagingRequest request);
         Task<ResultVM> GetById(int id);
+        Task<ResultVM> GetById(Guid userId);
         Task<int> Delete(int id);
     }
 }

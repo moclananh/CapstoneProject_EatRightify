@@ -1,3 +1,4 @@
+using Component.Application.AI;
 using Component.Application.Catalog.Categories;
 using Component.Application.Catalog.Products;
 using Component.Application.Common;
@@ -62,6 +63,8 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddTransient<IStatisticalService, StatisticalService>();
 builder.Services.AddTransient<IUserDetailService, UserDetailService>();
+builder.Services.AddTransient<IAIService, AIService>();
+
 
 //custom swagger
 builder.Services.AddSwaggerGen(c =>

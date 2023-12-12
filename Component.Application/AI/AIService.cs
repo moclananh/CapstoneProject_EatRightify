@@ -107,5 +107,27 @@ namespace Component.Application.AI
             _context.Results.Remove(result);
             return await _context.SaveChangesAsync();
         }
+
+        public async Task<ResultVM> GetById(Guid userId)
+        {
+            var query = from r in _context.Results
+                        join u in _context.AppUsers on r.UserId equals u.Id
+                        where r.UserId == userId
+                        select new ResultVM
+                        {
+                            Id = r.ResultId,
+                            Email = u.Email,
+                            Title = r.Title,
+                            Description = r.Description,
+                            Status = r.Status,
+                            ResultDate = r.ResultDate,
+                            IsSend = r.IsSended,
+                        };
+
+            // Execute the query and retrieve the result
+            var result = await query.FirstOrDefaultAsync();
+            // Return the result
+            return result;
+        }
     }
 }
