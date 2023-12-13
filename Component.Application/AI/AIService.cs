@@ -117,6 +117,7 @@ namespace Component.Application.AI
             var query = from r in _context.Results
                         join u in _context.AppUsers on r.UserId equals u.Id
                         where r.UserId == userId
+                        orderby r.ResultDate descending
                         select new ResultVM
                         {
                             Id = r.ResultId,
