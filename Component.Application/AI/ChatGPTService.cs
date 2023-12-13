@@ -21,7 +21,7 @@ namespace Component.Application.AI
             var message = new[]
             {
                 new { role = "system", content = "You are a helpful assistant." },
-                new { role = "user", content = "Give me some information about "+request }
+                new { role = "user", content = request }
             };
 
             var data = new
