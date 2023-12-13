@@ -1,5 +1,7 @@
-﻿using Component.ViewModels.AI;
+﻿using Component.Data.Entities;
+using Component.ViewModels.AI;
 using Component.ViewModels.Common;
+using Component.ViewModels.Utilities.Blogs;
 
 namespace Component.Application.AI
 {
@@ -11,5 +13,6 @@ namespace Component.Application.AI
         Task<ResultVM> GetById(int id);
         Task<ResultVM> GetById(Guid userId);
         Task<int> Delete(int id);
+        Task<Result> Create(CreateResultRequest request);
     }
 }

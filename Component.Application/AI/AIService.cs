@@ -1,4 +1,5 @@
 ﻿using Component.Data.EF;
+using Component.Data.Entities;
 using Component.Utilities.Exceptions;
 using Component.ViewModels.AI;
 using Component.ViewModels.Common;
@@ -129,5 +130,25 @@ namespace Component.Application.AI
             // Return the result
             return result;
         }
+
+        public async Task<Result> Create(CreateResultRequest request)
+        {
+            string gptResult = await ChatGPTService.GetGPTResult(request.Description);
+            var result = new Result()
+            {
+                UserId = request.UserId,
+                Title = "Result for " + DateTime.UtcNow,
+                ResultDate = DateTime.UtcNow,
+                Description = gptResult,
+                Status = Data.Enums.ResultStatus.InProgress,
+                IsSended = false
+
+            };
+
+            _context.Results.Add(result);
+            await _context.SaveChangesAsync();
+            return result;
+        }
+        
     }
 }

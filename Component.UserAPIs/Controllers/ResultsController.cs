@@ -1,4 +1,6 @@
 ﻿using Component.Application.AI;
+using Component.ViewModels.AI;
+using Component.ViewModels.Utilities.Blogs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +30,23 @@ namespace Component.UserAPIs.Controllers
             }
 
             return Ok(result); // Return the order with a 200 OK status code.
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Create([FromForm] CreateResultRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var result = await _aiService.Create(request);
+            if (result == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(result);
         }
     }
 }
