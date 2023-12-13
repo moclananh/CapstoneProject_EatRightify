@@ -19,6 +19,13 @@ namespace Component.UserAPIs.Controllers
             _productService = productService;
         }
 
+        [HttpGet("getAll/{languageId}")]
+        public async Task<IActionResult> GetAll(string languageId)
+        {
+            var products = await _productService.GetAll(languageId);
+            return Ok(products);
+        }
+
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request)
         {

@@ -136,7 +136,7 @@ namespace Component.Application.AI
 
         public async Task<Result> Create(CreateResultRequest request)
         {
-            string userDetail = await GetResultByUserIdAsync(request.UserId);
+            string userDetail = await GetResultByUserIdAsync(request.UserId, request.LanguageId);
             string gptResult = await ChatGPTService.GetGPTResult(userDetail);
             var result = new Result()
             {
@@ -156,13 +156,13 @@ namespace Component.Application.AI
 
 
         private const string ResultApiBaseUrl = "https://localhost:5004/api/UserDetail";
-        private const string ProductApiBaseUrl = "https://localhost:5004/api/Products/paging?LanguageId=en&PageIndex=1&PageSize=13";
-        public static async Task<string> GetResultByUserIdAsync(Guid userId)
+        private const string ProductApiBaseUrl = "https://localhost:5004/api/Products/getAll";
+        public static async Task<string> GetResultByUserIdAsync(Guid userId, string languageId)
         {
             using (HttpClient client = new HttpClient())
             {
                 string apiUrl = $"{ResultApiBaseUrl}/{userId}";
-                string productApi = ProductApiBaseUrl;
+                string productApi = $"{ProductApiBaseUrl}/{languageId}";
 
                 var response = await client.GetAsync(apiUrl);
                 var productResponse = await client.GetAsync(productApi);
@@ -173,7 +173,7 @@ namespace Component.Application.AI
                     string ProductResultContent = await productResponse.Content.ReadAsStringAsync();
 
                     var resultData = JsonConvert.DeserializeObject<UserDetailVm>(resultContent);
-                    var ProductResultData = JsonConvert.DeserializeObject<ProductVm>(ProductResultContent);
+                   // var ProductResultData = JsonConvert.DeserializeObject<ProductVm>(ProductResultContent);
 
                     string result = "Gender: " + resultData.Gender.ToString() +
                         ", Age Range is " + resultData.AgeRange.ToString() +

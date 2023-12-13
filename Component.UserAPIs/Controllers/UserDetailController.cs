@@ -67,7 +67,7 @@ namespace Component.UserAPIs.Controllers
 
 
         [HttpGet("{id}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById(Guid id)
         {
             var userId = await _userDetailService.GetById(id);
