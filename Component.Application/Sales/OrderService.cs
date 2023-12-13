@@ -7,6 +7,7 @@ using Component.ViewModels.Common;
 using Component.ViewModels.Sales.Bills;
 using Component.ViewModels.Sales.Orders;
 using Component.ViewModels.Utilities.Promotions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,17 +19,25 @@ namespace Component.Application.Sales
 {
     public class OrderService : IOrderService
     {
+        private readonly UserManager<AppUser> _userManager;
         private readonly ApplicationDbContext _context;
         private const string USER_CONTENT_FOLDER_NAME = "user-content";
 
-        public OrderService(ApplicationDbContext context)
+        public OrderService(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
 
         public async Task<Order> Create(CheckoutRequest request)
         {
+            decimal orderPrice = 0;
+            decimal totalPrice = 0;
+            string BuyerId = "";
+            string vip = "";
+            decimal originalPrice = 0;
+            decimal tmp = 0;
             using (var transaction = await _context.Database.BeginTransactionAsync())
             {
                 try
@@ -52,17 +61,24 @@ namespace Component.Application.Sales
 
                         if (product != null)
                         {
+                            var user = await _userManager.FindByIdAsync(request.UserId.ToString());
+                            vip = user.VIP;
+                            BuyerId = user.Id.ToString();
+                            tmp = product.Price * orderDetailVm.Quantity;
+                            totalPrice = await PriceCalculator(product.Price, orderDetailVm.Quantity, vip);
                             var orderDetail = new OrderDetail()
                             {
                                 ProductId = product.Id,
                                 Quantity = orderDetailVm.Quantity,
-                                Price = product.Price * orderDetailVm.Quantity
+                                Price = totalPrice
                             };
 
                             if (orderDetail.Quantity <= product.Stock)
                             {
                                 order.OrderDetails.Add(orderDetail);
                                 await UpdateStockCheckout(product.Id, orderDetailVm.Quantity);
+                                orderPrice += orderDetail.Price; //gia tong tien tat ca sp da qua discount
+                                originalPrice += tmp;// gia tong tien tat ca sp ban dau
                             }
                             else
                             {
@@ -84,8 +100,13 @@ namespace Component.Application.Sales
                     await _context.SaveChangesAsync();
 
                     // Commit the transaction
+                    var test = await AccumulatedPoints(BuyerId, originalPrice);
                     transaction.Commit();
-
+                    /*Console.WriteLine("Vip: " + vip);
+                    Console.WriteLine("Gia goc: " + originalPrice.ToString());
+                    Console.WriteLine("Gia co discount: " + orderPrice.ToString());
+                    Console.WriteLine(BuyerId);
+                    Console.WriteLine("Diem tich luy: " + test);*/
                     return order;
                 }
                 catch (Exception ex)
@@ -321,7 +342,7 @@ namespace Component.Application.Sales
                                    ID = o.Id,
                                    Name = pt.Name,
                                    Quantity = od.Quantity,
-                                   Price = p.Price,
+                                   Price = od.Price,
                                    Status = o.Status
                                }).ToListAsync();
 
@@ -337,6 +358,83 @@ namespace Component.Application.Sales
             }
 
             return result;
+        }
+        public async Task<decimal> PriceCalculator(decimal price, int quantity, string vip)
+        {
+            decimal totalPrice = 0;
+            decimal discount = 0;
+            if (vip == null)
+            {
+                totalPrice = price * quantity;
+            }
+            if (vip == "Vip 1")
+            {
+                discount = price * 0.015m;
+                totalPrice = (price - discount) * quantity;
+            }
+            if (vip == "Vip 2")
+            {
+                discount = price * 0.03m;
+                totalPrice = (price - discount) * quantity;
+            }
+            if (vip == "Vip 3")
+            {
+                discount = price * 0.06m;
+                totalPrice = (price - discount) * quantity;
+            }
+            if (vip == "Vip 4")
+            {
+                discount = price * 0.09m;
+                totalPrice = (price - discount) * quantity;
+            }
+            if (vip == "Vip 5")
+            {
+                discount = price * 0.12m;
+                totalPrice = (price - discount) * quantity;
+            }
+            return totalPrice; // gia tien da giam gia cua 1 san pham
+        }
+
+        public async Task<decimal> AccumulatedPoints(string uid, decimal price)
+        {
+            var user = await _userManager.FindByIdAsync(uid);
+            var userPoint = user.AccumulatedPoints;
+            userPoint = price * 0.01m;
+            user.AccumulatedPoints += userPoint;
+
+            if (user.AccumulatedPoints > 0)
+            {
+                await Vip(uid, (int)user.AccumulatedPoints);
+            }
+            await _context.SaveChangesAsync();
+            return (decimal)userPoint;
+        }
+
+        public async Task<int> Vip(string uid, int point)
+        {
+            var user = await _userManager.FindByIdAsync(uid);
+            var userPoint = point;
+            if (userPoint >= 100 && userPoint < 300) // tu 100 den 299
+            {
+                user.VIP = "Vip 1";
+            }
+            if (userPoint >= 300 && userPoint < 600) // tu 300 den 599
+            {
+                user.VIP = "Vip 2";
+            }
+            if (userPoint >= 600 && userPoint < 1200) // tu 600 den 1199
+            {
+                user.VIP = "Vip 3";
+            }
+            if (userPoint >= 1200 && userPoint < 2400) // tu 1200 den 2399
+            {
+                user.VIP = "Vip 4";
+            }
+            if (userPoint >= 2400) // tu 2400 tro len
+            {
+                user.VIP = "Vip 5";
+            }
+            return await _context.SaveChangesAsync();
         }
     }
 }

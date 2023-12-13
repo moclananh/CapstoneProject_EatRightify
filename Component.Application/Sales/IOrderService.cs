@@ -24,6 +24,9 @@ namespace Component.Application.Sales
         Task<List<BillHistoryVM>> BillHistory(Guid id);
 
         Task<int> UpdateStatus(UpdateStatusRequest request);
+        Task<decimal> PriceCalculator(decimal price, int quantity, string vip); // tinh gia san pham co discount
+        Task<decimal> AccumulatedPoints(string uid, decimal price); // cong diem tich luy
+        Task<int> Vip(string uid, int point); // set trang thai vip
 
     }
 }
