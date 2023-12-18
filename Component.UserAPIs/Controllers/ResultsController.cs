@@ -34,7 +34,7 @@ namespace Component.UserAPIs.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> Create([FromForm] CreateResultRequest request)
         {
             if (!ModelState.IsValid)

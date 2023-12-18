@@ -142,7 +142,7 @@ namespace Component.Application.AI
             var result = new Result()
             {
                 UserId = request.UserId,
-                Title = "Result for " + request.UserId,
+                Title = "Result for " + request.UserId + " On "+ DateTime.UtcNow,
                 ResultDate = DateTime.UtcNow,
                 Description = gptResult,
                 Status = Data.Enums.ResultStatus.InProgress,
@@ -158,6 +158,7 @@ namespace Component.Application.AI
 
         private const string ResultApiBaseUrl = "https://localhost:5004/api/UserDetail";
         private const string ProductApiBaseUrl = "https://localhost:5004/api/Products/getAll";
+        private const string LinkProduct = "https://localhost:5004/api/Products/";
         public static async Task<string> GetResultByUserIdAsync(Guid userId, string languageId)
         {
             using (HttpClient client = new HttpClient())
@@ -193,14 +194,15 @@ namespace Component.Application.AI
                         ", Drink water frequence is " + resultData.WaterDrink.ToString() +
                         ", The target diet that user want is " + resultData.Diet.ToString() +
                         ", List of allergies keyword that user avoid is " + resultData.ProductAllergies.ToString() +
-                        ". Read all of the information above. " +
+                        ". Read and analys all of the information above. " +
                         " If the information is invalid or there is no sultable product for user, then don't provide any product and explain the reason" +
                         " If the information is valid, then"+
                         " this the type of person that want some product suitable for them" +
-                        ". Choose a list contain multiple of suitable product for this person," +
-                        " remember to exclude all the product that have allergies keyword in it's description " +
-                        "the product description and the product name must be in this list: " + ProductResultContent +
-                        " and give me the reason why you choose those products for this person";
+                        " .Choose a list contain multiple of suitable product for this person," +
+                        " remember to exclude all the product that have allergies keyword in it's description, " +
+                        " then choose the product description, product stock and the product name must be in this list: " + ProductResultContent +
+                        " . Then for every product you recommend, also provide a link to that product that have a type like this: " + LinkProduct + "{#productid#}"+ "/{#languageid#}" +
+                        " and give me the reason why you choose those products for this person. " ;
                     return result;
                 }
                 else
