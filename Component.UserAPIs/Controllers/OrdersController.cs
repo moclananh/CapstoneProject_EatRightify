@@ -81,16 +81,16 @@ namespace Component.UserAPIs.Controllers
             return Ok(billhistory);
         }
 
-/*        //ham nay de spam ra nen k dung nua, chuyen sang ham phia duoi
-        [HttpGet("GetBillById/{id}")]
+        //ham nay de spam ra nen k dung nua, chuyen sang ham phia duoi
+/*        [HttpGet("GetBillById/{id}")]
         public async Task<IActionResult> GetBillById(int id)
         {
             var billhistory = await _orderService.GetBillById(id);
             if (billhistory == null)
                 return BadRequest("Cannot find bill");
             return Ok(billhistory);
-        }
-*/
+        }*/
+
 
         [HttpGet("getByOrderCode/{orderCode}")]
         public async Task<IActionResult> GetOrderbyCode(Guid orderCode)
