@@ -1,4 +1,5 @@
-﻿using Component.Data.EF;
+﻿using Component.Application.Utilities.Mail;
+using Component.Data.EF;
 using Component.Data.Entities;
 using Component.ViewModels.Common;
 using Component.ViewModels.System.Users;
@@ -23,21 +24,24 @@ namespace Component.Application.System.Users
         private readonly RoleManager<AppRole> _roleManager;
         private readonly IConfiguration _config;
         private readonly ApplicationDbContext _context;
+        private readonly IEmailService _emailService;
 
         public UserService(UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             RoleManager<AppRole> roleManager,
             IConfiguration config,
-            ApplicationDbContext context)
+            ApplicationDbContext context,
+            IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _config = config;
             _context = context;
+            _emailService = emailService;
         }
 
-        public async Task<LoginRespone<string>> Authencate(LoginRequest request, IEnumerable<string> validRoles)
+        public async Task<LoginRespone<string>> Authencate(LoginRequest request, bool verifyRole = true)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null) return new LoginErrorRespone<string>("Tài khoản không tồn tại");
@@ -50,12 +54,7 @@ namespace Component.Application.System.Users
             }
 
             var roles = await _userManager.GetRolesAsync(user);
-            if (roles == null || !roles.Any())
-            {
-                roles = new List<string> { "User" };
-            }
-
-            if (validRoles.Any() && !roles.Any(role => validRoles.Contains(role)))
+            if (verifyRole && !roles.Any())
             {
                 return new LoginErrorRespone<string>("Tài khoản không được phép đăng nhập");
             }
@@ -247,6 +246,56 @@ namespace Component.Application.System.Users
             user.IsBanned = status;
             await _context.SaveChangesAsync();
             return new ApiSuccessResult<bool>();
+        }
+        public async Task<ApiResult<string>> ForgotPassword(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return new ApiErrorResult<string>("Email not found");
+            }
+
+            try
+            {
+                // Call the EmailService to send the password reset email
+                await _emailService.SendPasswordResetEmailAsync(email);
+
+                return new ApiSuccessMessage<string>("Password reset email sent");
+            }
+            catch
+            {
+                // Handle the exception as needed
+                return new ApiErrorResult<string>("Error sending password reset email");
+            }
+        }
+
+        public async Task<ApiResult<string>> ResetPassword(string email, string token, string newPassword, string confirmPassword)
+        {
+            // Find the user by email
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                // Handle case where email doesn't exist
+                return new ApiErrorResult<string>("Email not found");
+            }
+            if (newPassword != confirmPassword)
+            {
+                return new ApiErrorResult<string>("The new password and confirm password do not match");
+            }
+
+            // Validate the password reset token
+            var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+
+            if (result.Succeeded)
+            {
+                // Password successfully reset
+                return new ApiSuccessMessage<string>("Password reset successful");
+            }
+            else
+            {
+                // Handle password reset failure
+                return new ApiErrorResult<string>("Password reset failed");
+            }
         }
     }
 }

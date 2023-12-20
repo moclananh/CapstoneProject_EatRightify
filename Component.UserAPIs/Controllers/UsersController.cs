@@ -25,7 +25,7 @@ namespace Component.UserAPIs.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _userService.Authencate(request, new List<string> { "admin", "manager", "confiminator", "User"});
+            var result = await _userService.Authencate(request, false);
 
             if (string.IsNullOrEmpty(result.ResultObj))
             {
@@ -70,6 +70,36 @@ namespace Component.UserAPIs.Controllers
         {
             var user = await _userService.GetById(id);
             return Ok(user);
-        }      
+        }
+
+        [HttpPost("ForgotPassword/{Email}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword(string Email)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _userService.ForgotPassword(Email);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpPost("ResetPassword")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword(string email, string token, string newPassword, string confirmPassword)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _userService.ResetPassword(email, token, newPassword, confirmPassword);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
     }
 }

@@ -8,6 +8,7 @@ using Component.Application.System.Roles;
 using Component.Application.System.Users;
 using Component.Application.Utilities.Blogs;
 using Component.Application.Utilities.Comments;
+using Component.Application.Utilities.Mail;
 using Component.Application.Utilities.Promotions;
 using Component.Application.Utilities.Slides;
 using Component.Data.EF;
@@ -57,6 +58,7 @@ builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddTransient<IStatisticalService, StatisticalService>();
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 //custom swagger
 builder.Services.AddSwaggerGen(c =>

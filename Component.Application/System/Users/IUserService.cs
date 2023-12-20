@@ -10,7 +10,7 @@ namespace Component.Application.System.Users
 {
     public interface IUserService
     {
-        Task<LoginRespone<string>> Authencate(LoginRequest request, IEnumerable<string> validRoles);
+        Task<LoginRespone<string>> Authencate(LoginRequest request, bool verifyRole = true);
 
         Task<ApiResult<bool>> Register(RegisterRequest request);
 
@@ -24,5 +24,7 @@ namespace Component.Application.System.Users
 
         Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
         Task<ApiResult<bool>> BanAccount(Guid id, bool status);
+        Task<ApiResult<string>> ForgotPassword(string email);
+        Task<ApiResult<string>> ResetPassword(string email, string token, string newPassword, string confirmPassword);
     }
 }
