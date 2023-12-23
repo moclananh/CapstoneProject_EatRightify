@@ -247,6 +247,7 @@ namespace Component.Application.System.Users
             await _context.SaveChangesAsync();
             return new ApiSuccessResult<bool>();
         }
+        private static DateTime expireToken;
         public async Task<ApiResult<string>> ForgotPassword(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
@@ -259,7 +260,8 @@ namespace Component.Application.System.Users
             {
                 // Call the EmailService to send the password reset email
                 await _emailService.SendPasswordResetEmailAsync(email);
-
+                expireToken = DateTime.Now;
+                Console.WriteLine(expireToken);
                 return new ApiSuccessMessage<string>("Password reset email sent");
             }
             catch
@@ -277,6 +279,20 @@ namespace Component.Application.System.Users
             {
                 // Handle case where email doesn't exist
                 return new ApiErrorResult<string>("Email not found");
+            }
+            // Calculate the time difference
+            DateTime tmp = DateTime.Now;
+            TimeSpan timeDifference = tmp - expireToken;
+
+            Console.WriteLine("Current Time: " + tmp);
+            Console.WriteLine("Expire Token Time: " + expireToken);
+            Console.WriteLine("Time Difference: " + timeDifference);
+            Console.WriteLine("Total Minutes Difference: " + timeDifference.TotalMinutes);
+
+            // Check if the time difference is greater than 1 minute
+            if (timeDifference.TotalMinutes > 1)
+            {
+                return new ApiErrorResult<string>("Token has expired");
             }
             if (newPassword != confirmPassword)
             {

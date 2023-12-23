@@ -7,7 +7,7 @@ namespace Component.ManagerAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "ManagerPolicy")]
     public class SlidesController : ControllerBase
     {
         private readonly ISlideService _slideService;

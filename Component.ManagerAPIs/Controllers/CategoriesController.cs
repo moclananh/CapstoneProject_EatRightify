@@ -8,6 +8,7 @@ namespace Component.ManagerAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "ManagerPolicy")]
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
@@ -40,7 +41,6 @@ namespace Component.ManagerAPIs.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Create([FromForm] CategoryCreateRequest request)
         {
             if (!ModelState.IsValid)
@@ -58,7 +58,6 @@ namespace Component.ManagerAPIs.Controllers
 
         [HttpPut("{categoryId}")]
         [Consumes("multipart/form-data")]
-        [Authorize]
         public async Task<IActionResult> Update([FromRoute] int categoryId, [FromForm] CategoryUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -73,7 +72,6 @@ namespace Component.ManagerAPIs.Controllers
         }
 
         [HttpDelete("{categoryId}")]
-        [Authorize]
         public async Task<IActionResult> Delete(int categoryId)
         {
             var affectedResult = await _categoryService.Delete(categoryId);

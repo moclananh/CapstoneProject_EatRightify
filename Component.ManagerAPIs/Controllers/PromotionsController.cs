@@ -10,6 +10,7 @@ namespace Component.ManagerAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "ManagerPolicy")]
     public class PromotionsController : ControllerBase
     {
         private readonly IPromotionService _promotionService;
@@ -39,7 +40,6 @@ namespace Component.ManagerAPIs.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Create([FromForm] PromotionCreateRequest request)
         {
             if (!ModelState.IsValid)
@@ -57,7 +57,6 @@ namespace Component.ManagerAPIs.Controllers
 
         [HttpPut("{promotionId}")]
         [Consumes("multipart/form-data")]
-        [Authorize]
         public async Task<IActionResult> Update([FromRoute] int promotionId, [FromForm] PromotionUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -77,7 +76,6 @@ namespace Component.ManagerAPIs.Controllers
         }
 
         [HttpDelete("{promotionId}")]
-        [Authorize]
         public async Task<IActionResult> Delete(int promotionId)
         {
             var check = _promotionService.GetById(promotionId);

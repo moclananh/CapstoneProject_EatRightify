@@ -35,6 +35,20 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddIdentity<AppUser, AppRole>()
                .AddEntityFrameworkStores<ApplicationDbContext>()
                .AddDefaultTokenProviders();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy =>
+    {
+        policy.RequireRole("admin"); // Adjust the role name as needed
+    });
+});
+/*builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOigins, policy =>
+    {
+        policy.WithOrigins("").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+    });
+});*/
 
 //Declare DI
 builder.Services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
@@ -113,11 +127,8 @@ builder.Services.AddAuthentication(opt =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

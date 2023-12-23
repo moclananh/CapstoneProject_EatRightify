@@ -8,7 +8,7 @@ namespace Component.ConfirminatorAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "ConfirmPolicy")]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;

@@ -10,6 +10,7 @@ namespace Component.ManagerAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "ManagerPolicy")]
     public class BlogsController : ControllerBase
     {
         private readonly IBlogService _blogService;
@@ -46,7 +47,6 @@ namespace Component.ManagerAPIs.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Create([FromForm] BlogCreateRequest request)
         {
             if (!ModelState.IsValid)
@@ -64,7 +64,6 @@ namespace Component.ManagerAPIs.Controllers
 
         [HttpPut("{blogId}")]
         [Consumes("multipart/form-data")]
-        [Authorize]
         public async Task<IActionResult> Update([FromRoute] int blogId, [FromForm] BlogUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -84,7 +83,6 @@ namespace Component.ManagerAPIs.Controllers
         }
 
         [HttpDelete("{blogId}")]
-        [Authorize]
         public async Task<IActionResult> Delete(int blogId)
         {
             var affectedResult = await _blogService.Delete(blogId);

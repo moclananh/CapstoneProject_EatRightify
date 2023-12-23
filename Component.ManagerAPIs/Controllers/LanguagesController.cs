@@ -1,4 +1,5 @@
 ﻿using Component.Application.System.Languages;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,6 +7,7 @@ namespace Component.ManagerAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "ManagerPolicy")]
     public class LanguagesController : ControllerBase
     {
         private readonly ILanguageService _languageService;

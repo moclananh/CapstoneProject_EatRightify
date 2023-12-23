@@ -38,6 +38,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddIdentity<AppUser, AppRole>()
                .AddEntityFrameworkStores<ApplicationDbContext>()
                .AddDefaultTokenProviders();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ManagerPolicy", policy =>
+    {
+        policy.RequireRole("manager"); // Adjust the role name as needed
+    });
+});
+
 
 //Declare DI
 builder.Services.AddTransient<IStorageService, FileStorageService>();
@@ -128,11 +136,8 @@ builder.Services.AddAuthentication(opt =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 var fileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "Images"));

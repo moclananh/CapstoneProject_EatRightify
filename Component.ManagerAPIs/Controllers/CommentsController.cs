@@ -8,6 +8,7 @@ namespace Component.ManagerAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "ManagerPolicy")]
     public class CommentsController : ControllerBase
     {
         private readonly ICommentService _commentService;
@@ -38,7 +39,6 @@ namespace Component.ManagerAPIs.Controllers
 
 
         [HttpDelete("{commentId}")]
-        [Authorize]
         public async Task<IActionResult> Delete(int commentId)
         {
             var affectedResult = await _commentService.Delete(commentId);

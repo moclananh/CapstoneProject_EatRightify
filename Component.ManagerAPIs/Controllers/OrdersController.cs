@@ -1,5 +1,6 @@
 ﻿using Component.Application.Sales;
 using Component.ViewModels.Sales.Orders;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace Component.ManagerAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "ManagerPolicy")]
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;

@@ -7,7 +7,7 @@ namespace Component.AdminAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "AdminPolicy")]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
