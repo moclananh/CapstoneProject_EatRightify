@@ -45,6 +45,16 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole("manager"); // Adjust the role name as needed
     });
 });
+var allowedOrigin = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("myAppCors", policy =>
+    {
+        policy.WithOrigins(allowedOrigin)
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+    });
+});
 
 
 //Declare DI
@@ -162,5 +172,5 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.UseCors("myAppCors");
 app.Run();

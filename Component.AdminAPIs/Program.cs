@@ -42,13 +42,16 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole("admin"); // Adjust the role name as needed
     });
 });
-/*builder.Services.AddCors(options =>
+var allowedOrigin = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
+builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOigins, policy =>
+    options.AddPolicy("myAppCors", policy =>
     {
-        policy.WithOrigins("").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+        policy.WithOrigins(allowedOrigin)
+                .AllowAnyHeader()
+                .AllowAnyMethod();
     });
-});*/
+});
 
 //Declare DI
 builder.Services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
@@ -138,5 +141,5 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.UseCors("myAppCors");
 app.Run();

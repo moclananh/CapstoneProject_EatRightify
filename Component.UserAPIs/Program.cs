@@ -66,8 +66,16 @@ builder.Services.AddTransient<IStatisticalService, StatisticalService>();
 builder.Services.AddTransient<IUserDetailService, UserDetailService>();
 builder.Services.AddTransient<IAIService, AIService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
-
-
+var allowedOrigin = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("myAppCors", policy =>
+    {
+        policy.WithOrigins(allowedOrigin)
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+    });
+});
 //custom swagger
 builder.Services.AddSwaggerGen(c =>
 {
@@ -147,5 +155,5 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.UseCors("myAppCors");
 app.Run();
