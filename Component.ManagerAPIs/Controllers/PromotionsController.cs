@@ -10,7 +10,7 @@ namespace Component.ManagerAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Policy = "ManagerPolicy")]
+   /* [Authorize(Policy = "ManagerPolicy")]*/
     public class PromotionsController : ControllerBase
     {
         private readonly IPromotionService _promotionService;

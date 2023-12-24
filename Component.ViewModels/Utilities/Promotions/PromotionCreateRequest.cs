@@ -19,5 +19,6 @@ namespace Component.ViewModels.Utilities.Promotions
         [Required(ErrorMessage = "Please enter name")]
         public string Name { set; get; }
         public string? Description { set; get; }
+        public Guid? CreatedBy { get; set; }
     }
 }

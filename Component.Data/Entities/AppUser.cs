@@ -22,6 +22,9 @@ namespace Component.Data.Entities
         public AppUserDetails? UserDetails { get; set; }
         public List<Result>? Results { get; set; }
         public List<Comment>? Comments { get; set; }
+        public List<Slide>? Slides { get; set; }
+        public List<Blog>? Blogs { get; set; }
+        public List<Promotion>? Promotions { get; set; }
 
     }
 }

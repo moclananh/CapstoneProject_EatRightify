@@ -160,35 +160,35 @@ namespace Component.Data.Extensions
 
             // any guid
             var confirminatorRoleId = new Guid("07ad9a53-bb09-4d2a-ae06-89131aa9751b");
-            var confiminatorId = new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c");
+            var verifierId = new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c");
             modelBuilder.Entity<AppRole>().HasData(new AppRole
             {
                 Id = confirminatorRoleId,
-                Name = "confiminator",
-                NormalizedName = "confiminator",
-                Description = "Confiminator role"
+                Name = "verifier",
+                NormalizedName = "verifier",
+                Description = "verifier role"
             });
 
             var hasherConfirm = new PasswordHasher<AppUser>();
             modelBuilder.Entity<AppUser>().HasData(new AppUser
             {
-                Id = confiminatorId,
-                UserName = "confirm",
-                NormalizedUserName = "confiminator",
-                Email = "confirm@confim.com",
-                NormalizedEmail = "confirm@confim.com",
+                Id = verifierId,
+                UserName = "verifier",
+                NormalizedUserName = "verifier",
+                Email = "verifier@verifier.com",
+                NormalizedEmail = "verifier@verifier.com",
                 EmailConfirmed = true,
-                PasswordHash = hasherConfirm.HashPassword(null, "confirm"),
+                PasswordHash = hasherConfirm.HashPassword(null, "verifier"),
                 SecurityStamp = string.Empty,
-                FirstName = "Confirm",
-                LastName = "minator",
+                FirstName = "verifier",
+                LastName = "role",
                 Dob = new DateTime(2023, 01, 01)
             });
 
             modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
             {
                 RoleId = confirminatorRoleId,
-                UserId = confiminatorId
+                UserId = verifierId
             });
 
             modelBuilder.Entity<Slide>().HasData(

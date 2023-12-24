@@ -1,4 +1,5 @@
 ﻿using Component.Application.Common;
+using Component.Application.System.Users;
 using Component.Data.EF;
 using Component.Data.Entities;
 using Component.Utilities.Exceptions;
@@ -17,10 +18,9 @@ namespace Component.Application.Utilities.Blogs
     public class BlogService : IBlogService
     {
         private readonly ApplicationDbContext _context;
-        public BlogService(ApplicationDbContext context)
+        public BlogService(ApplicationDbContext context, IUserService userService)
         {
             _context = context;
-          
         }
 
         public async Task<Blog> Create(BlogCreateRequest request)
@@ -33,7 +33,8 @@ namespace Component.Application.Utilities.Blogs
                 Image = request.Image,
                 SortOrder= request.SortOrder,
                 DateCreate= DateTime.Now,
-                Status= Data.Enums.Status.Active
+                Status= Data.Enums.Status.Active,
+                CreatedBy = request.CreatedBy,
 
             };
 
@@ -54,7 +55,9 @@ namespace Component.Application.Utilities.Blogs
         public async Task<List<BlogVm>> GetAll()
         {
             var query = from b in _context.Blogs
-                        select new { b };
+                        join u in _context.AppUsers on b.CreatedBy equals u.Id into bu
+                        from u in bu.DefaultIfEmpty()
+                        select new { b, u };
             return await query.Select(x => new BlogVm()
             {
                 Id = x.b.Id,
@@ -63,7 +66,8 @@ namespace Component.Application.Utilities.Blogs
                 Image = x.b.Image,
                 SortOrder= x.b.SortOrder,
                 DateCreate= x.b.DateCreate,
-                Status = x.b.Status
+                Status = x.b.Status,
+                CreatedBy = x.u.Email,
             }).ToListAsync();
         }
 
@@ -71,6 +75,8 @@ namespace Component.Application.Utilities.Blogs
         {
             //1. Select join
             var query = from b in _context.Blogs
+                        join u in _context.AppUsers on b.CreatedBy equals u.Id into bu
+                        from u in bu.DefaultIfEmpty()
                         select new BlogVm()
                         {
                             Id = b.Id,
@@ -80,7 +86,8 @@ namespace Component.Application.Utilities.Blogs
                             Image = b.Image,
                             SortOrder = b.SortOrder,
                             DateCreate = b.DateCreate,
-                            Status = b.Status
+                            Status = b.Status,
+                            CreatedBy = u.Email,
                         };
 
             //2. filter
@@ -108,8 +115,10 @@ namespace Component.Application.Utilities.Blogs
         public async Task<BlogVm> GetById(int id)
         {
             var query = from b in _context.Blogs
+                        join u in _context.AppUsers on b.CreatedBy equals u.Id into bu
+                        from u in bu.DefaultIfEmpty()
                         where b.Id == id
-                        select new { b };
+                        select new { b, u};
             return await query.Select(x => new BlogVm()
             {
                 Id = x.b.Id,
@@ -119,7 +128,8 @@ namespace Component.Application.Utilities.Blogs
                 Image = x.b.Image,
                 SortOrder = x.b.SortOrder,
                 DateCreate = x.b.DateCreate,
-                Status = x.b.Status
+                Status = x.b.Status,
+                CreatedBy = x.u.Email
             }).FirstOrDefaultAsync();
         }
 

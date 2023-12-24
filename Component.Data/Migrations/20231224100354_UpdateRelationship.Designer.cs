@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Component.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231211071736_UpdatePromotionDb")]
-    partial class UpdatePromotionDb
+    [Migration("20231224100354_UpdateRelationship")]
+    partial class UpdateRelationship
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -98,9 +98,9 @@ namespace Component.Data.Migrations
                         new
                         {
                             Id = new Guid("07ad9a53-bb09-4d2a-ae06-89131aa9751b"),
-                            Description = "Confiminator role",
-                            Name = "confiminator",
-                            NormalizedName = "confiminator"
+                            Description = "verifier role",
+                            Name = "verifier",
+                            NormalizedName = "verifier"
                         });
                 });
 
@@ -183,7 +183,7 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d623af7e-44d8-4b79-abb1-a42c94a3d2b1",
+                            ConcurrencyStamp = "58e4d516-dcfd-47ce-9476-88d135fba434",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -193,7 +193,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@admin.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHrvmhLRwq6imgvT19Zcghk7Rm3kWhGQiuZLnGiKgsUik1rRlHiVyVWqf3qKqqXB4g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEI2JRr0p4Ou9QQFbk+v9adYnNe+d1MgriW1kG11QtyU1r3a14RnbxM+cV8ELXYmTRg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -203,7 +203,7 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d814d0b1-f62b-4d0e-ba8d-b1f163151060",
+                            ConcurrencyStamp = "d14d51e6-d823-4968-8e15-6eb97b6ba31a",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "manager@manager.com",
                             EmailConfirmed = true,
@@ -213,7 +213,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "manager@manager.com",
                             NormalizedUserName = "manager",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBJCJtTlFadb8wxZXoIb2kYOBT0BYz07dHKC3GKfl3QC1gL0la66xTc6xWGr+04G7Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFvr5EegTHDIy0VH7NNjHuH1QpFJB4slzvMRsAIyqZzB1c6zfZHDYjl42XQ1suxh0w==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -223,21 +223,21 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b4fdb6b6-0bc2-43a3-9e27-a6baeead95a4",
+                            ConcurrencyStamp = "8773431a-19f5-4fbc-88e9-166e95b1b664",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "confirm@confim.com",
+                            Email = "verifier@verifier.com",
                             EmailConfirmed = true,
-                            FirstName = "Confirm",
+                            FirstName = "verifier",
                             IsBanned = false,
-                            LastName = "minator",
+                            LastName = "role",
                             LockoutEnabled = false,
-                            NormalizedEmail = "confirm@confim.com",
-                            NormalizedUserName = "confiminator",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAoK9a6Xf8KVm2IjUeywgZoFE6sxbbY/eiEa13JxWnumGzykriBV1HNC4RhVHS1Vyg==",
+                            NormalizedEmail = "verifier@verifier.com",
+                            NormalizedUserName = "verifier",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEs1jD/ikOeCXcMgJZpFwTdWw1iI9CS6zV8+E+F5iRGamFUKbbZ5qyVETb6RrX5BHA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UserName = "confirm"
+                            UserName = "verifier"
                         });
                 });
 
@@ -310,6 +310,9 @@ namespace Component.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("DateCreate")
                         .HasColumnType("datetime2");
 
@@ -329,14 +332,15 @@ namespace Component.Data.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
 
                     b.ToTable("Blogs", (string)null);
                 });
@@ -730,7 +734,7 @@ namespace Component.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2023, 12, 11, 14, 17, 36, 157, DateTimeKind.Local).AddTicks(5630),
+                            DateCreated = new DateTime(2023, 12, 24, 17, 3, 53, 960, DateTimeKind.Local).AddTicks(4368),
                             OriginalPrice = 255m,
                             Price = 199m,
                             Status = 1,
@@ -876,6 +880,9 @@ namespace Component.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -899,6 +906,8 @@ namespace Component.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
 
                     b.ToTable("Promotions", (string)null);
                 });
@@ -946,6 +955,9 @@ namespace Component.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -973,6 +985,8 @@ namespace Component.Data.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
 
                     b.ToTable("Slides", (string)null);
 
@@ -1214,6 +1228,16 @@ namespace Component.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Component.Data.Entities.Blog", b =>
+                {
+                    b.HasOne("Component.Data.Entities.AppUser", "User")
+                        .WithMany("Blogs")
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Component.Data.Entities.Cart", b =>
                 {
                     b.HasOne("Component.Data.Entities.Product", "Product")
@@ -1350,6 +1374,16 @@ namespace Component.Data.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("Component.Data.Entities.Promotion", b =>
+                {
+                    b.HasOne("Component.Data.Entities.AppUser", "User")
+                        .WithMany("Promotions")
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Component.Data.Entities.Result", b =>
                 {
                     b.HasOne("Component.Data.Entities.AppUser", "User")
@@ -1357,6 +1391,16 @@ namespace Component.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Component.Data.Entities.Slide", b =>
+                {
+                    b.HasOne("Component.Data.Entities.AppUser", "User")
+                        .WithMany("Slides")
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("User");
                 });
@@ -1374,13 +1418,19 @@ namespace Component.Data.Migrations
 
             modelBuilder.Entity("Component.Data.Entities.AppUser", b =>
                 {
+                    b.Navigation("Blogs");
+
                     b.Navigation("Carts");
 
                     b.Navigation("Comments");
 
                     b.Navigation("Orders");
 
+                    b.Navigation("Promotions");
+
                     b.Navigation("Results");
+
+                    b.Navigation("Slides");
 
                     b.Navigation("Transactions");
 

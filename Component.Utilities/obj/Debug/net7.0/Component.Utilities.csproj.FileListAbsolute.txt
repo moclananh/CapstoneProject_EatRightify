@@ -142,3 +142,15 @@ D:\study\C_Project\do_an\new5\capstone_eatrightify\Component.Utilities\obj\Debug
 D:\study\C_Project\do_an\new5\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\refint\Component.Utilities.dll
 D:\study\C_Project\do_an\new5\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\Component.Utilities.pdb
 D:\study\C_Project\do_an\new5\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\ref\Component.Utilities.dll
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\Update_database\capstone_eatrightify\Component.Utilities\bin\Debug\net7.0\Component.Utilities.deps.json
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\Update_database\capstone_eatrightify\Component.Utilities\bin\Debug\net7.0\Component.Utilities.dll
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\Update_database\capstone_eatrightify\Component.Utilities\bin\Debug\net7.0\Component.Utilities.pdb
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\Update_database\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\Component.Utilities.csproj.AssemblyReference.cache
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\Update_database\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\Component.Utilities.GeneratedMSBuildEditorConfig.editorconfig
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\Update_database\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\Component.Utilities.AssemblyInfoInputs.cache
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\Update_database\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\Component.Utilities.AssemblyInfo.cs
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\Update_database\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\Component.Utilities.csproj.CoreCompileInputs.cache
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\Update_database\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\Component.Utilities.dll
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\Update_database\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\refint\Component.Utilities.dll
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\Update_database\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\Component.Utilities.pdb
+D:\FU_Hub\SP24_CapstoneProject\Project\Gitlab\Update_database\capstone_eatrightify\Component.Utilities\obj\Debug\net7.0\ref\Component.Utilities.dll

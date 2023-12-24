@@ -17,5 +17,7 @@ namespace Component.Data.Entities
         public string Image { get; set; }
         public int SortOrder { get; set; }
         public Status Status { set; get; }
+        public Guid? CreatedBy { get; set; }
+        public AppUser User { get; set; }
     }
 }

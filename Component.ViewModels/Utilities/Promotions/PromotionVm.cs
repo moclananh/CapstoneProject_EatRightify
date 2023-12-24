@@ -17,5 +17,6 @@ namespace Component.ViewModels.Utilities.Promotions
         public Status Status { set; get; }
         public string Name { set; get; }
         public string? Description { set; get; }
+        public string? CreatedBy { get; set; }
     }
 }

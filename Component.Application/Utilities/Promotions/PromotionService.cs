@@ -32,7 +32,8 @@ namespace Component.Application.Utilities.Promotions
                 DiscountPercent = request.DiscountPercent,
                 Status = Data.Enums.Status.Active,
                 Name = request.Name,
-                Description = request.Description
+                Description = request.Description,
+                CreatedBy= request.CreatedBy,
             };
 
             _context.Promotions.Add(promotion);
@@ -52,6 +53,8 @@ namespace Component.Application.Utilities.Promotions
         public async Task<PagedResult<PromotionVm>> GetAllPaging(GetPromotionPagingRequest request)
         {
             var query = from p in _context.Promotions
+                        join u in _context.AppUsers on p.CreatedBy equals u.Id into pu
+                        from u in pu.DefaultIfEmpty()
                         select new PromotionVm()
                         {
                            Id = p.Id,
@@ -61,7 +64,8 @@ namespace Component.Application.Utilities.Promotions
                            DiscountPercent = p.DiscountPercent,
                            Status = p.Status,
                            Name = p.Name,
-                           Description = p.Description
+                           Description = p.Description,
+                           CreatedBy= u.Email,
                         };
             //2. filter
             if (!string.IsNullOrEmpty(request.Keyword))
@@ -88,8 +92,10 @@ namespace Component.Application.Utilities.Promotions
         public async Task<PromotionVm> GetById(int id)
         {
             var query = from p in _context.Promotions
+                        join u in _context.AppUsers on p.CreatedBy equals u.Id into pu
+                        from u in pu.DefaultIfEmpty()
                         where p.Id == id
-                        select new { p };
+                        select new { p, u };
             return await query.Select(x => new PromotionVm()
             {
                 Id = x.p.Id,
@@ -99,15 +105,18 @@ namespace Component.Application.Utilities.Promotions
                 DiscountPercent = x.p.DiscountPercent,
                 Status = x.p.Status,
                 Name = x.p.Name,
-                Description = x.p.Description
+                Description = x.p.Description,
+                CreatedBy = x.u.Email,
             }).FirstOrDefaultAsync();
         }
 
         public async Task<PromotionVm> GetByPromotionCode(Guid code)
         {
             var query = from p in _context.Promotions
+                        join u in _context.AppUsers on p.CreatedBy equals u.Id into pu
+                        from u in pu.DefaultIfEmpty()
                         where p.DiscountCode.Equals(code)
-                        select new { p };
+                        select new { p, u};
             return await query.Select(x => new PromotionVm()
             {
                 Id = x.p.Id,
@@ -117,7 +126,8 @@ namespace Component.Application.Utilities.Promotions
                 DiscountPercent = x.p.DiscountPercent,
                 Status = x.p.Status,
                 Name = x.p.Name,
-                Description = x.p.Description
+                Description = x.p.Description,
+                CreatedBy = x.u.Email
             }).FirstOrDefaultAsync();
         }
 

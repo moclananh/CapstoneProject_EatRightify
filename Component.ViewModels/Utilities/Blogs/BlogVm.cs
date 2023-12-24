@@ -17,5 +17,6 @@ namespace Component.ViewModels.Utilities.Blogs
         public int SortOrder { get; set; }
         public DateTime DateCreate { get; set; }
         public Status Status { set; get; }
+        public string? CreatedBy { get; set; }
     }
 }

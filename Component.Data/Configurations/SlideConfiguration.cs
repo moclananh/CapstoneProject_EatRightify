@@ -15,14 +15,17 @@ namespace Component.Data.Configurations
         {
             builder.ToTable("Slides");
             builder.HasKey(x => x.Id);
-
             builder.Property(x => x.Id).UseIdentityColumn();
-
+            // Foreign key configuration
+            builder.HasOne(r => r.User)
+                .WithMany(u => u.Slides)
+                .HasForeignKey(r => r.CreatedBy)
+                .OnDelete(DeleteBehavior.Cascade);
+            //other entities
             builder.Property(x => x.Name).HasMaxLength(200).IsRequired();
             builder.Property(x => x.Description).HasMaxLength(200).IsRequired();
             builder.Property(x => x.Url).HasMaxLength(200).IsRequired();
-
-            builder.Property(x => x.Image).HasMaxLength(200).IsRequired();
+            builder.Property(x => x.Image).HasMaxLength(200).IsRequired();          
         }
     }
 }

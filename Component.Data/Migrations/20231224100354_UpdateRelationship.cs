@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Component.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdatePromotionDb : Migration
+    public partial class UpdateRelationship : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -142,25 +142,6 @@ namespace Component.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Blogs",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SortOrder = table.Column<int>(type: "int", nullable: false),
-                    DateCreate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Blogs", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
                 {
@@ -226,43 +207,6 @@ namespace Component.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Promotions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DiscountCode = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FromDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ToDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DiscountPercent = table.Column<int>(type: "int", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Promotions", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Slides",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    SortOrder = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Slides", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AppUserDetails",
                 columns: table => new
                 {
@@ -297,6 +241,32 @@ namespace Component.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Blogs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SortOrder = table.Column<int>(type: "int", nullable: false),
+                    DateCreate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Blogs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Blogs_AppUsers_CreatedBy",
+                        column: x => x.CreatedBy,
+                        principalTable: "AppUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -323,6 +293,32 @@ namespace Component.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Promotions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DiscountCode = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FromDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ToDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DiscountPercent = table.Column<int>(type: "int", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Promotions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Promotions_AppUsers_CreatedBy",
+                        column: x => x.CreatedBy,
+                        principalTable: "AppUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Results",
                 columns: table => new
                 {
@@ -341,6 +337,31 @@ namespace Component.Data.Migrations
                     table.ForeignKey(
                         name: "FK_Results_AppUsers_UserId",
                         column: x => x.UserId,
+                        principalTable: "AppUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Slides",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    SortOrder = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Slides", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Slides_AppUsers_CreatedBy",
+                        column: x => x.CreatedBy,
                         principalTable: "AppUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -584,7 +605,7 @@ namespace Component.Data.Migrations
                 values: new object[,]
                 {
                     { new Guid("05dc0e15-0df0-4b67-b76e-47ee37791bd4"), null, "Manager role", "manager", "managger" },
-                    { new Guid("07ad9a53-bb09-4d2a-ae06-89131aa9751b"), null, "Confiminator role", "confiminator", "confiminator" },
+                    { new Guid("07ad9a53-bb09-4d2a-ae06-89131aa9751b"), null, "verifier role", "verifier", "verifier" },
                     { new Guid("46f889a9-662d-4969-84f3-6ff4e199ecf5"), null, "Administrator role", "admin", "admin" }
                 });
 
@@ -603,9 +624,9 @@ namespace Component.Data.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "AccumulatedPoints", "ConcurrencyStamp", "Dob", "Email", "EmailConfirmed", "FirstName", "IsBanned", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "VIP" },
                 values: new object[,]
                 {
-                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), 0, null, "b4fdb6b6-0bc2-43a3-9e27-a6baeead95a4", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "confirm@confim.com", true, "Confirm", false, "minator", false, null, "confirm@confim.com", "confiminator", "AQAAAAIAAYagAAAAEAoK9a6Xf8KVm2IjUeywgZoFE6sxbbY/eiEa13JxWnumGzykriBV1HNC4RhVHS1Vyg==", null, false, "", false, "confirm", null },
-                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), 0, null, "d814d0b1-f62b-4d0e-ba8d-b1f163151060", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAEBJCJtTlFadb8wxZXoIb2kYOBT0BYz07dHKC3GKfl3QC1gL0la66xTc6xWGr+04G7Q==", null, false, "", false, "manager", null },
-                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), 0, null, "d623af7e-44d8-4b79-abb1-a42c94a3d2b1", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAEHrvmhLRwq6imgvT19Zcghk7Rm3kWhGQiuZLnGiKgsUik1rRlHiVyVWqf3qKqqXB4g==", null, false, "", false, "admin", null }
+                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), 0, null, "8773431a-19f5-4fbc-88e9-166e95b1b664", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "verifier@verifier.com", true, "verifier", false, "role", false, null, "verifier@verifier.com", "verifier", "AQAAAAIAAYagAAAAEEs1jD/ikOeCXcMgJZpFwTdWw1iI9CS6zV8+E+F5iRGamFUKbbZ5qyVETb6RrX5BHA==", null, false, "", false, "verifier", null },
+                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), 0, null, "d14d51e6-d823-4968-8e15-6eb97b6ba31a", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAEFvr5EegTHDIy0VH7NNjHuH1QpFJB4slzvMRsAIyqZzB1c6zfZHDYjl42XQ1suxh0w==", null, false, "", false, "manager", null },
+                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), 0, null, "58e4d516-dcfd-47ce-9476-88d135fba434", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAEI2JRr0p4Ou9QQFbk+v9adYnNe+d1MgriW1kG11QtyU1r3a14RnbxM+cV8ELXYmTRg==", null, false, "", false, "admin", null }
                 });
 
             migrationBuilder.InsertData(
@@ -631,19 +652,19 @@ namespace Component.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "DateCreated", "IsFeatured", "OriginalPrice", "Price", "Status", "Stock" },
-                values: new object[] { 1, new DateTime(2023, 12, 11, 14, 17, 36, 157, DateTimeKind.Local).AddTicks(5630), null, 255m, 199m, 1, 100 });
+                values: new object[] { 1, new DateTime(2023, 12, 24, 17, 3, 53, 960, DateTimeKind.Local).AddTicks(4368), null, 255m, 199m, 1, 100 });
 
             migrationBuilder.InsertData(
                 table: "Slides",
-                columns: new[] { "Id", "Description", "Image", "Name", "SortOrder", "Status", "Url" },
+                columns: new[] { "Id", "CreatedBy", "Description", "Image", "Name", "SortOrder", "Status", "Url" },
                 values: new object[,]
                 {
-                    { 1, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", "/themes/images/carousel/1.png", "Second Thumbnail label", 1, 1, "#" },
-                    { 2, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", "/themes/images/carousel/2.png", "Second Thumbnail label", 2, 1, "#" },
-                    { 3, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", "/themes/images/carousel/3.png", "Second Thumbnail label", 3, 1, "#" },
-                    { 4, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", "/themes/images/carousel/4.png", "Second Thumbnail label", 4, 1, "#" },
-                    { 5, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", "/themes/images/carousel/5.png", "Second Thumbnail label", 5, 1, "#" },
-                    { 6, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", "/themes/images/carousel/6.png", "Second Thumbnail label", 6, 1, "#" }
+                    { 1, null, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", "/themes/images/carousel/1.png", "Second Thumbnail label", 1, 1, "#" },
+                    { 2, null, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", "/themes/images/carousel/2.png", "Second Thumbnail label", 2, 1, "#" },
+                    { 3, null, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", "/themes/images/carousel/3.png", "Second Thumbnail label", 3, 1, "#" },
+                    { 4, null, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", "/themes/images/carousel/4.png", "Second Thumbnail label", 4, 1, "#" },
+                    { 5, null, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", "/themes/images/carousel/5.png", "Second Thumbnail label", 5, 1, "#" },
+                    { 6, null, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", "/themes/images/carousel/6.png", "Second Thumbnail label", 6, 1, "#" }
                 });
 
             migrationBuilder.InsertData(
@@ -666,6 +687,11 @@ namespace Component.Data.Migrations
                 table: "ProductTranslations",
                 columns: new[] { "Id", "Description", "Details", "LanguageId", "Name", "ProductId", "SeoAlias", "SeoDescription", "SeoTitle" },
                 values: new object[] { 1, "Eat Clean weekly weight loss meal package 1 meal per day for 7 days\r\n– Low starch\r\n– Deliver meal packages to your home from Monday to Sunday\r\n– Calories range from 500 – 600 per day\r\n– Low sugar, no MSG, clean green vegetables selected from the supermarket\r\n– Provides adequate protein for the body\r\n- Suitable for those who are sedentary and often sit in the office.", "eat clean 7 day", "en", "EAT CLEAN 7-DAY WEIGHT LOSS DIET", 1, "eat-clean-7-days", "You say I'm fat, I lose weight. You say I'm poor, I'll make money. When I'm skinny, beautiful and rich, will I still choose you?", "eat clean 7 day" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Blogs_CreatedBy",
+                table: "Blogs",
+                column: "CreatedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_ProductId",
@@ -728,9 +754,19 @@ namespace Component.Data.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Promotions_CreatedBy",
+                table: "Promotions",
+                column: "CreatedBy");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Results_UserId",
                 table: "Results",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Slides_CreatedBy",
+                table: "Slides",
+                column: "CreatedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_UserId",

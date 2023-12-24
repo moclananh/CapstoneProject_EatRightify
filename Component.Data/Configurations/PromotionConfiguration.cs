@@ -17,7 +17,12 @@ namespace Component.Data.Configurations
 
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).UseIdentityColumn();
-
+            // Foreign key configuration
+            builder.HasOne(r => r.User)
+                .WithMany(u => u.Promotions)
+                .HasForeignKey(r => r.CreatedBy)
+                .OnDelete(DeleteBehavior.Cascade);
+            //other entities
             builder.Property(x => x.Name).IsRequired();
         }
     }

@@ -14,11 +14,18 @@ namespace Component.Data.Configurations
         public void Configure(EntityTypeBuilder<Blog> builder)
         {
             builder.ToTable("Blogs");
-            builder.HasKey(x => x.Id);
 
+            // Primary key configuration
+            builder.HasKey(r => r.Id); ;
             builder.Property(x => x.Id).UseIdentityColumn();
+            // Foreign key configuration
+            builder.HasOne(r => r.User)
+                .WithMany(u => u.Blogs)
+                .HasForeignKey(r => r.CreatedBy)
+                .OnDelete(DeleteBehavior.Cascade); // Cascade delete if needed
 
-            builder.Property(x => x.Title).HasMaxLength(200).IsRequired();
+            // Other property configurations
+            builder.Property(r => r.Title).IsRequired();
         }
     }
 }
