@@ -26,5 +26,6 @@ namespace Component.Application.System.Users
         Task<ApiResult<bool>> BanAccount(Guid id, bool status);
         Task<ApiResult<string>> ForgotPassword(string email);
         Task<ApiResult<string>> ResetPassword(string email, string token, string newPassword, string confirmPassword);
+        Task<ApiResult<string>> UpdatePassword(Guid id, string oldPassword, string newPassword);
     }
 }

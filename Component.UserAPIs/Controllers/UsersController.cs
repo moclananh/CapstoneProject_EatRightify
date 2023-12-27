@@ -101,5 +101,20 @@ namespace Component.UserAPIs.Controllers
             }
             return Ok(result);
         }
+
+        [HttpPost("UpdatePassword")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdatePassword(Guid id, string oldPassword, string newPassword)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _userService.UpdatePassword(id, oldPassword, newPassword);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
     }
 }

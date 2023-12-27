@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -312,6 +313,22 @@ namespace Component.Application.System.Users
                 // Handle password reset failure
                 return new ApiErrorResult<string>("Password reset failed");
             }
+        }
+
+
+        public async Task<ApiResult<string>> UpdatePassword(Guid id, string oldPassword, string newPassword)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+
+            if (user != null)
+            {
+                var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+                if (result.Succeeded)
+                {
+                    return new ApiSuccessResult<string>();
+                }
+            }
+            return new ApiErrorResult<string>("Cập nhật không thành công");
         }
     }
 }
