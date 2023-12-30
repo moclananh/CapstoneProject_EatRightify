@@ -144,6 +144,7 @@ namespace Component.Application.System.Users
                     UserName = x.UserName,
                     FirstName = x.FirstName,
                     Id = x.Id,
+                    Dob = x.Dob,
                     LastName = x.LastName
                 }).ToListAsync();
 
