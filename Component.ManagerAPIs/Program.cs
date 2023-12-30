@@ -1,3 +1,4 @@
+using Azure.Storage.Blobs;
 using Component.Application.Catalog.Categories;
 using Component.Application.Catalog.Products;
 using Component.Application.Common;
@@ -55,7 +56,8 @@ builder.Services.AddCors(options =>
                 .AllowAnyMethod();
     });
 });
-
+// Add Azure Blob Storage configuration
+builder.Services.AddSingleton(x => new BlobServiceClient(builder.Configuration.GetConnectionString("DefaultEndpointsProtocol=https;AccountName=erssystem;AccountKey=pmqAE62gYFsyBtWYc+SCH67vleAXi3XhRIH5q+HMiem6MZWbwj/JP1C4rvky3Gd1HL6pemVVafez+AStb0i0ow==;EndpointSuffix=core.windows.net")));
 
 //Declare DI
 builder.Services.AddTransient<IStorageService, FileStorageService>();
@@ -149,21 +151,6 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
-
-var fileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "Images"));
-var requestPath = "/Images";
-
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = fileProvider,
-    RequestPath = requestPath
-});
-
-app.UseDirectoryBrowser(new DirectoryBrowserOptions
-{
-    FileProvider = fileProvider,
-    RequestPath = requestPath
-});
 
 app.UseAuthentication();
 

@@ -8,6 +8,7 @@
 
 
 	<ItemGroup>
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.19.1" />
 		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="7.0.0" />
 		<PackageReference Include="NETCore.MailKit" Version="2.1.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />

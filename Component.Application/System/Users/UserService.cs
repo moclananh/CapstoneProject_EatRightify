@@ -292,7 +292,7 @@ namespace Component.Application.System.Users
             Console.WriteLine("Total Minutes Difference: " + timeDifference.TotalMinutes);
 
             // Check if the time difference is greater than 1 minute
-            if (timeDifference.TotalMinutes > 1)
+            if (timeDifference.TotalMinutes > 10)
             {
                 return new ApiErrorResult<string>("Token has expired");
             }
