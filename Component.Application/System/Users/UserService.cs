@@ -118,7 +118,10 @@ namespace Component.Application.System.Users
                 Id = user.Id,
                 LastName = user.LastName,
                 UserName = user.UserName,
-                Roles = roles
+                Roles = roles,
+                IsBanned= user.IsBanned,
+                VIP= user.VIP,
+                AccumulatedPoints = user.AccumulatedPoints,
             };
             return new ApiSuccessResult<UserVm>(userVm);
         }
@@ -145,7 +148,8 @@ namespace Component.Application.System.Users
                     FirstName = x.FirstName,
                     Id = x.Id,
                     Dob = x.Dob,
-                    LastName = x.LastName
+                    LastName = x.LastName,
+                    IsBanned= x.IsBanned,
                 }).ToListAsync();
 
             //4. Select and projection

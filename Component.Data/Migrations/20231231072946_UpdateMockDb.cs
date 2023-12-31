@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Component.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateRelationship : Migration
+    public partial class UpdateMockDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -604,7 +604,7 @@ namespace Component.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("05dc0e15-0df0-4b67-b76e-47ee37791bd4"), null, "Manager role", "manager", "managger" },
+                    { new Guid("05dc0e15-0df0-4b67-b76e-47ee37791bd4"), null, "Manager role", "manager", "manager" },
                     { new Guid("07ad9a53-bb09-4d2a-ae06-89131aa9751b"), null, "verifier role", "verifier", "verifier" },
                     { new Guid("46f889a9-662d-4969-84f3-6ff4e199ecf5"), null, "Administrator role", "admin", "admin" }
                 });
@@ -624,9 +624,9 @@ namespace Component.Data.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "AccumulatedPoints", "ConcurrencyStamp", "Dob", "Email", "EmailConfirmed", "FirstName", "IsBanned", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "VIP" },
                 values: new object[,]
                 {
-                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), 0, null, "8773431a-19f5-4fbc-88e9-166e95b1b664", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "verifier@verifier.com", true, "verifier", false, "role", false, null, "verifier@verifier.com", "verifier", "AQAAAAIAAYagAAAAEEs1jD/ikOeCXcMgJZpFwTdWw1iI9CS6zV8+E+F5iRGamFUKbbZ5qyVETb6RrX5BHA==", null, false, "", false, "verifier", null },
-                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), 0, null, "d14d51e6-d823-4968-8e15-6eb97b6ba31a", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAEFvr5EegTHDIy0VH7NNjHuH1QpFJB4slzvMRsAIyqZzB1c6zfZHDYjl42XQ1suxh0w==", null, false, "", false, "manager", null },
-                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), 0, null, "58e4d516-dcfd-47ce-9476-88d135fba434", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAEI2JRr0p4Ou9QQFbk+v9adYnNe+d1MgriW1kG11QtyU1r3a14RnbxM+cV8ELXYmTRg==", null, false, "", false, "admin", null }
+                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), 0, null, "b36ee915-5158-43e1-b940-5fe27fa48cd4", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "verifier@verifier.com", true, "verifier", false, "role", false, null, "verifier@verifier.com", "verifier", "AQAAAAIAAYagAAAAEFAiTsSzsONTbPwXa9aM8iCMpyEqjKTbWG0fzqNR7aCU/6zzx0U3uNgZUrYVLo/SPA==", null, false, "", false, "verifier", null },
+                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), 0, null, "2e33b488-4d35-4cf5-88f5-000f39ed1add", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAEOCXYkRBtMlcHD28dXf+FPfEnhk9iCJUOg1u/LPmy45Oiow1eMqD2w3gyFnyOZwqvw==", null, false, "", false, "manager", null },
+                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), 0, null, "5570e1d7-e0b9-486d-9f43-cc4a10fee3a8", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAEFpBTIsKAoP10tHQ5DSGq09O9pqQ9C8kL9cddICCl8c5sYfRp9mLWtjoS2IoSJbKGg==", null, false, "", false, "admin", null }
                 });
 
             migrationBuilder.InsertData(
@@ -652,7 +652,7 @@ namespace Component.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "DateCreated", "IsFeatured", "OriginalPrice", "Price", "Status", "Stock" },
-                values: new object[] { 1, new DateTime(2023, 12, 24, 17, 3, 53, 960, DateTimeKind.Local).AddTicks(4368), null, 255m, 199m, 1, 100 });
+                values: new object[] { 1, new DateTime(2023, 12, 31, 14, 29, 45, 631, DateTimeKind.Local).AddTicks(7822), null, 255m, 199m, 1, 100 });
 
             migrationBuilder.InsertData(
                 table: "Slides",

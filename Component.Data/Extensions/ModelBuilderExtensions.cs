@@ -132,7 +132,7 @@ namespace Component.Data.Extensions
             {
                 Id = managerRoleId,
                 Name = "manager",
-                NormalizedName = "managger",
+                NormalizedName = "manager",
                 Description = "Manager role"
             });
 
