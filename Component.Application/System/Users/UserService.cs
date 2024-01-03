@@ -42,7 +42,7 @@ namespace Component.Application.System.Users
             _emailService = emailService;
         }
 
-        public async Task<LoginRespone<string>> Authencate(LoginRequest request, bool verifyRole = true)
+        public async Task<LoginRespone<string>> Authencate(LoginRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null) return new LoginErrorRespone<string>("Tài khoản không tồn tại");
@@ -55,10 +55,6 @@ namespace Component.Application.System.Users
             }
 
             var roles = await _userManager.GetRolesAsync(user);
-            if (verifyRole && !roles.Any())
-            {
-                return new LoginErrorRespone<string>("Tài khoản không được phép đăng nhập");
-            }
 
             var claims = new[]
             {

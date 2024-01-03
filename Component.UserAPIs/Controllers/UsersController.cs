@@ -25,7 +25,7 @@ namespace Component.UserAPIs.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _userService.Authencate(request, false);
+            var result = await _userService.Authencate(request);
 
             if (string.IsNullOrEmpty(result.ResultObj))
             {

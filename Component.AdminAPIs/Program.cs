@@ -14,12 +14,14 @@ using Component.Utilities.Constants;
 using Component.ViewModels.System.Users.FluentValidations;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Configuration;
+using static Component.Application.Utilities.RoleVerify.RoleVerify;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,12 +37,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddIdentity<AppUser, AppRole>()
                .AddEntityFrameworkStores<ApplicationDbContext>()
                .AddDefaultTokenProviders();
+builder.Services.AddSingleton<IAuthorizationHandler, RoleHandler>();
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("AdminPolicy", policy =>
-    {
-        policy.RequireRole("admin"); // Adjust the role name as needed
-    });
+    options.AddPolicy("AdminPolicy", policy => policy.Requirements.Add(new RolesRequirement("admin")));
 });
 var allowedOrigin = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
 builder.Services.AddCors(options =>
