@@ -22,7 +22,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Configuration;
-using static Component.Application.Utilities.RoleVerify.RoleVerify;
+using static Component.Application.System.Roles.RoleVerify.RoleVerify;
 
 var builder = WebApplication.CreateBuilder(args);
 

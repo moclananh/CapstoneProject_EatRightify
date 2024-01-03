@@ -10,7 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Component.Application.Utilities.RoleVerify
+namespace Component.Application.System.Roles.RoleVerify
 {
     public class RoleVerify
     {
