@@ -41,7 +41,7 @@ namespace Component.ManagerAPIs.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] CategoryCreateRequest request)
+        public async Task<IActionResult> Create([FromBody] CategoryCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -57,8 +57,7 @@ namespace Component.ManagerAPIs.Controllers
         }
 
         [HttpPut("{categoryId}")]
-        [Consumes("multipart/form-data")]
-        public async Task<IActionResult> Update([FromRoute] int categoryId, [FromForm] CategoryUpdateRequest request)
+        public async Task<IActionResult> Update([FromRoute] int categoryId, [FromBody] CategoryUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {

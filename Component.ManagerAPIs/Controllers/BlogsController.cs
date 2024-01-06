@@ -47,7 +47,7 @@ namespace Component.ManagerAPIs.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] BlogCreateRequest request)
+        public async Task<IActionResult> Create([FromBody] BlogCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -63,8 +63,7 @@ namespace Component.ManagerAPIs.Controllers
         }
 
         [HttpPut("{blogId}")]
-        [Consumes("multipart/form-data")]
-        public async Task<IActionResult> Update([FromRoute] int blogId, [FromForm] BlogUpdateRequest request)
+        public async Task<IActionResult> Update([FromRoute] int blogId, [FromBody] BlogUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
