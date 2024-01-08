@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Component.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateMockDb : Migration
+    public partial class UpdateDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -107,6 +107,11 @@ namespace Component.Data.Migrations
                     VIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AccumulatedPoints = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     IsBanned = table.Column<bool>(type: "bit", nullable: false),
+                    RefeshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RefeshCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RefeshTokenExpire = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    VerifyCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsVerify = table.Column<bool>(type: "bit", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -260,6 +265,31 @@ namespace Component.Data.Migrations
                     table.PrimaryKey("PK_Blogs", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Blogs_AppUsers_CreatedBy",
+                        column: x => x.CreatedBy,
+                        principalTable: "AppUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Locations",
+                columns: table => new
+                {
+                    LocationId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LocationName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Longitude = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Latitude = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Locations", x => x.LocationId);
+                    table.ForeignKey(
+                        name: "FK_Locations_AppUsers_CreatedBy",
                         column: x => x.CreatedBy,
                         principalTable: "AppUsers",
                         principalColumn: "Id",
@@ -621,12 +651,12 @@ namespace Component.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "AppUsers",
-                columns: new[] { "Id", "AccessFailedCount", "AccumulatedPoints", "ConcurrencyStamp", "Dob", "Email", "EmailConfirmed", "FirstName", "IsBanned", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "VIP" },
+                columns: new[] { "Id", "AccessFailedCount", "AccumulatedPoints", "ConcurrencyStamp", "Dob", "Email", "EmailConfirmed", "FirstName", "IsBanned", "IsVerify", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefeshCode", "RefeshToken", "RefeshTokenExpire", "SecurityStamp", "TwoFactorEnabled", "UserName", "VIP", "VerifyCode" },
                 values: new object[,]
                 {
-                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), 0, null, "b36ee915-5158-43e1-b940-5fe27fa48cd4", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "verifier@verifier.com", true, "verifier", false, "role", false, null, "verifier@verifier.com", "verifier", "AQAAAAIAAYagAAAAEFAiTsSzsONTbPwXa9aM8iCMpyEqjKTbWG0fzqNR7aCU/6zzx0U3uNgZUrYVLo/SPA==", null, false, "", false, "verifier", null },
-                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), 0, null, "2e33b488-4d35-4cf5-88f5-000f39ed1add", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAEOCXYkRBtMlcHD28dXf+FPfEnhk9iCJUOg1u/LPmy45Oiow1eMqD2w3gyFnyOZwqvw==", null, false, "", false, "manager", null },
-                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), 0, null, "5570e1d7-e0b9-486d-9f43-cc4a10fee3a8", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAEFpBTIsKAoP10tHQ5DSGq09O9pqQ9C8kL9cddICCl8c5sYfRp9mLWtjoS2IoSJbKGg==", null, false, "", false, "admin", null }
+                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), 0, null, "d01628dd-d8be-4b3d-94a8-038d02a1360c", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "verifier@verifier.com", true, "verifier", false, null, "role", false, null, "verifier@verifier.com", "verifier", "AQAAAAIAAYagAAAAEMwJYnMR4PUFAW5rVwi0GM/UmxrmZgmG4CwPwJ8R+NFNY4dgdBh9Govsix2jmXbHMA==", null, false, null, null, null, "", false, "verifier", null, null },
+                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), 0, null, "c623e4f5-096d-4e12-9788-12c691f828c1", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, null, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAEJ3U4JlFHx3jJ6xY1K3toFQ1M1GO4WKXvzoDS0i/NfhImpePu4iMLNYSccEZ7WJPXQ==", null, false, null, null, null, "", false, "manager", null, null },
+                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), 0, null, "26fbfc22-10c1-4bb5-89a7-2c69fedea850", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, null, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAENlSf3LnKYBSo03DjWD0Doi/JfwOTD2RJKQy4qDZsboeoE2eP3fSiGKNJk6ZKvdwqQ==", null, false, null, null, null, "", false, "admin", null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -652,7 +682,7 @@ namespace Component.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "DateCreated", "IsFeatured", "OriginalPrice", "Price", "Status", "Stock" },
-                values: new object[] { 1, new DateTime(2023, 12, 31, 14, 29, 45, 631, DateTimeKind.Local).AddTicks(7822), null, 255m, 199m, 1, 100 });
+                values: new object[] { 1, new DateTime(2024, 1, 8, 10, 48, 6, 482, DateTimeKind.Local).AddTicks(3135), null, 255m, 199m, 1, 100 });
 
             migrationBuilder.InsertData(
                 table: "Slides",
@@ -722,6 +752,11 @@ namespace Component.Data.Migrations
                 name: "IX_Comments_UserId",
                 table: "Comments",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Locations_CreatedBy",
+                table: "Locations",
+                column: "CreatedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_ProductId",
@@ -815,6 +850,9 @@ namespace Component.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Contacts");
+
+            migrationBuilder.DropTable(
+                name: "Locations");
 
             migrationBuilder.DropTable(
                 name: "OrderDetails");

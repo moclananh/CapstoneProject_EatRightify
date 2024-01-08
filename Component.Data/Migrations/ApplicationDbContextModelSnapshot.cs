@@ -133,6 +133,9 @@ namespace Component.Data.Migrations
                     b.Property<bool>("IsBanned")
                         .HasColumnType("bit");
 
+                    b.Property<bool?>("IsVerify")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -159,6 +162,15 @@ namespace Component.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("RefeshCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RefeshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RefeshTokenExpire")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -171,6 +183,9 @@ namespace Component.Data.Migrations
                     b.Property<string>("VIP")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("VerifyCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("AppUsers", (string)null);
@@ -180,7 +195,7 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5570e1d7-e0b9-486d-9f43-cc4a10fee3a8",
+                            ConcurrencyStamp = "26fbfc22-10c1-4bb5-89a7-2c69fedea850",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -190,7 +205,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@admin.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFpBTIsKAoP10tHQ5DSGq09O9pqQ9C8kL9cddICCl8c5sYfRp9mLWtjoS2IoSJbKGg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENlSf3LnKYBSo03DjWD0Doi/JfwOTD2RJKQy4qDZsboeoE2eP3fSiGKNJk6ZKvdwqQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -200,7 +215,7 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2e33b488-4d35-4cf5-88f5-000f39ed1add",
+                            ConcurrencyStamp = "c623e4f5-096d-4e12-9788-12c691f828c1",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "manager@manager.com",
                             EmailConfirmed = true,
@@ -210,7 +225,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "manager@manager.com",
                             NormalizedUserName = "manager",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOCXYkRBtMlcHD28dXf+FPfEnhk9iCJUOg1u/LPmy45Oiow1eMqD2w3gyFnyOZwqvw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJ3U4JlFHx3jJ6xY1K3toFQ1M1GO4WKXvzoDS0i/NfhImpePu4iMLNYSccEZ7WJPXQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -220,7 +235,7 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b36ee915-5158-43e1-b940-5fe27fa48cd4",
+                            ConcurrencyStamp = "d01628dd-d8be-4b3d-94a8-038d02a1360c",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "verifier@verifier.com",
                             EmailConfirmed = true,
@@ -230,7 +245,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "verifier@verifier.com",
                             NormalizedUserName = "verifier",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFAiTsSzsONTbPwXa9aM8iCMpyEqjKTbWG0fzqNR7aCU/6zzx0U3uNgZUrYVLo/SPA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMwJYnMR4PUFAW5rVwi0GM/UmxrmZgmG4CwPwJ8R+NFNY4dgdBh9Govsix2jmXbHMA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -621,6 +636,45 @@ namespace Component.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Component.Data.Entities.Location", b =>
+                {
+                    b.Property<int>("LocationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocationId"));
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Latitude")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LocationName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Longitude")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("LocationId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.ToTable("Locations", (string)null);
+                });
+
             modelBuilder.Entity("Component.Data.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -731,7 +785,7 @@ namespace Component.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2023, 12, 31, 14, 29, 45, 631, DateTimeKind.Local).AddTicks(7822),
+                            DateCreated = new DateTime(2024, 1, 8, 10, 48, 6, 482, DateTimeKind.Local).AddTicks(3135),
                             OriginalPrice = 255m,
                             Price = 199m,
                             Status = 1,
@@ -1292,6 +1346,16 @@ namespace Component.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Component.Data.Entities.Location", b =>
+                {
+                    b.HasOne("Component.Data.Entities.AppUser", "User")
+                        .WithMany("Locations")
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Component.Data.Entities.Order", b =>
                 {
                     b.HasOne("Component.Data.Entities.AppUser", "AppUser")
@@ -1420,6 +1484,8 @@ namespace Component.Data.Migrations
                     b.Navigation("Carts");
 
                     b.Navigation("Comments");
+
+                    b.Navigation("Locations");
 
                     b.Navigation("Orders");
 

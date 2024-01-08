@@ -45,6 +45,7 @@ namespace Component.Data.EF
             modelBuilder.ApplyConfiguration(new BlogConfiguration());
             modelBuilder.ApplyConfiguration(new ResultConfiguration());
             modelBuilder.ApplyConfiguration(new CommentConfiguration());
+            modelBuilder.ApplyConfiguration(new LocationConfiguration());
 
             //config for IdentityDbContext
             modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
@@ -90,5 +91,6 @@ namespace Component.Data.EF
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Result> Results { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Location> Locations { get; set; }
     }
 }

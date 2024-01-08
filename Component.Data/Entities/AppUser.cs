@@ -16,6 +16,11 @@ namespace Component.Data.Entities
         public string? VIP { get; set; }
         public decimal? AccumulatedPoints { get; set; }
         public bool IsBanned { get; set; }
+        public string? RefeshToken { get; set; }
+        public string? RefeshCode { get; set; }
+        public DateTime? RefeshTokenExpire { get; set; }
+        public string? VerifyCode { get; set; }
+        public bool? IsVerify { get; set; }
         public List<Cart> Carts { get; set; }
         public List<Order> Orders { get; set; }
         public List<Transaction> Transactions { get; set; }
@@ -25,6 +30,7 @@ namespace Component.Data.Entities
         public List<Slide>? Slides { get; set; }
         public List<Blog>? Blogs { get; set; }
         public List<Promotion>? Promotions { get; set; }
+        public List<Location>? Locations { get; set; }
 
     }
 }
