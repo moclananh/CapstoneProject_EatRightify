@@ -10,6 +10,7 @@ using Component.Application.System.Users;
 using Component.Application.System.Users.UserDetail;
 using Component.Application.Utilities.Blogs;
 using Component.Application.Utilities.Comments;
+using Component.Application.Utilities.Locations;
 using Component.Application.Utilities.Mail;
 using Component.Application.Utilities.Promotions;
 using Component.Application.Utilities.Slides;
@@ -58,6 +59,7 @@ builder.Services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
 builder.Services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
 builder.Services.AddTransient<ILanguageService, LanguageService>();
 builder.Services.AddTransient<ISlideService, SlideService>();
+builder.Services.AddTransient<ILocationService, LocationService>();
 
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IUserService, UserService>();
