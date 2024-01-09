@@ -8,7 +8,7 @@ namespace Component.ManagerAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   /* [Authorize(Policy = "ManagerPolicy")]*/
+    [Authorize(Policy = "ManagerPolicy")]
     public class LocationsController : ControllerBase
     {
         private readonly ILocationService _LocationService;

@@ -8,7 +8,8 @@ namespace Component.ManagerAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Policy = "ManagerPolicy")]
+    /*[Authorize(Policy = "ManagerPolicy")]*/
+    [AllowAnonymous]
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
@@ -44,9 +45,7 @@ namespace Component.ManagerAPIs.Controllers
         }
 
         [HttpPut("{orderId}")]
-        [Consumes("multipart/form-data")]
-        //[Authorize]
-        public async Task<IActionResult> UpdateStatus([FromRoute] int orderId, [FromForm] UpdateStatusRequest request)
+        public async Task<IActionResult> UpdateStatus([FromRoute] int orderId, [FromBody] UpdateStatusRequest request)
         {
             if (!ModelState.IsValid)
             {
