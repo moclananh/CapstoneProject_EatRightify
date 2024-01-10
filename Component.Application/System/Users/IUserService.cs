@@ -27,5 +27,7 @@ namespace Component.Application.System.Users
         Task<ApiResult<string>> ForgotPassword(string email);
         Task<ApiResult<string>> ResetPassword(string email, string token, string newPassword, string confirmPassword);
         Task<ApiResult<string>> UpdatePassword(Guid id, string oldPassword, string newPassword);
+        Task<ApiResult<string>> GetVerifyCode(string email);
+        Task<ApiResult<string>> VerifyAccount(string email, string code);
     }
 }

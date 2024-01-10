@@ -17,7 +17,7 @@ namespace Component.Application.Utilities.Mail
             _configuration = configuration;
             _userManager = userManager;
         }
-        public async Task SendPasswordResetEmailAsync(string email)
+        public async Task SendPasswordResetEmailAsync(string email, string subject, string body)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
@@ -25,12 +25,6 @@ namespace Component.Application.Utilities.Mail
                 // Handle case where email doesn't exist
                 throw new InvalidOperationException("Email not found");
             }
-
-            // Generate a password reset token
-            var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-            // Compose the email subject and body
-            var subject = "Password Reset Request";
-            var body = $"This is your refesh password token:\n {resetToken}";
 
             try
             {

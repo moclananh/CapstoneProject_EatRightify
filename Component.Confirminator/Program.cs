@@ -41,7 +41,7 @@ builder.Services.AddIdentity<AppUser, AppRole>()
 builder.Services.AddSingleton<IAuthorizationHandler, RoleHandler>();
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("ConfirmPolicy", policy => policy.Requirements.Add(new RolesRequirement("confiminator")));
+    options.AddPolicy("VerifierPolicy", policy => policy.Requirements.Add(new RolesRequirement("verifier")));
 });
 
 var allowedOrigin = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();

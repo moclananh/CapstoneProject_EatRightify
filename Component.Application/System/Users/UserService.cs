@@ -249,7 +249,7 @@ namespace Component.Application.System.Users
             await _context.SaveChangesAsync();
             return new ApiSuccessResult<bool>();
         }
-        private static DateTime expireToken;
+
         public async Task<ApiResult<string>> ForgotPassword(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
@@ -257,13 +257,20 @@ namespace Component.Application.System.Users
             {
                 return new ApiErrorResult<string>("Email not found");
             }
-
+            var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            Random generator = new Random();
+            string r = generator.Next(0, 1000000).ToString("D6");
+            DateTime expire = DateTime.Now;
+            user.RefeshToken = resetToken;
+            user.RefeshCode = r;
+            user.RefeshTokenExpire = expire;
+            await _context.SaveChangesAsync();
+            var subject = "Password Reset Request";
+            var body = $"This is your refesh password code:\n {r}";
             try
             {
                 // Call the EmailService to send the password reset email
-                await _emailService.SendPasswordResetEmailAsync(email);
-                expireToken = DateTime.Now;
-                Console.WriteLine(expireToken);
+                await _emailService.SendPasswordResetEmailAsync(email, subject, body);
                 return new ApiSuccessMessage<string>("Password reset email sent");
             }
             catch
@@ -273,8 +280,9 @@ namespace Component.Application.System.Users
             }
         }
 
-        public async Task<ApiResult<string>> ResetPassword(string email, string token, string newPassword, string confirmPassword)
+        public async Task<ApiResult<string>> ResetPassword(string email, string code, string newPassword, string confirmPassword)
         {
+            string token = "";
             // Find the user by email
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
@@ -284,15 +292,18 @@ namespace Component.Application.System.Users
             }
             // Calculate the time difference
             DateTime tmp = DateTime.Now;
-            TimeSpan timeDifference = tmp - expireToken;
+            TimeSpan timeDifference = (TimeSpan)(tmp - user.RefeshTokenExpire);
 
             Console.WriteLine("Current Time: " + tmp);
-            Console.WriteLine("Expire Token Time: " + expireToken);
+            Console.WriteLine("Expire Token Time: " + user.RefeshTokenExpire);
             Console.WriteLine("Time Difference: " + timeDifference);
             Console.WriteLine("Total Minutes Difference: " + timeDifference.TotalMinutes);
-
+            if (code == user.RefeshCode)
+            {
+                token = user.RefeshToken;
+            }
             // Check if the time difference is greater than 1 minute
-            if (timeDifference.TotalMinutes > 10)
+            if (timeDifference.TotalMinutes > 2)
             {
                 return new ApiErrorResult<string>("Token has expired");
             }
@@ -312,7 +323,7 @@ namespace Component.Application.System.Users
             else
             {
                 // Handle password reset failure
-                return new ApiErrorResult<string>("Password reset failed");
+                return new ApiErrorResult<string>("Password reset failed. Make sure your refesh code is correct");
             }
         }
 
@@ -330,6 +341,48 @@ namespace Component.Application.System.Users
                 }
             }
             return new ApiErrorResult<string>("Cập nhật không thành công");
+        }
+
+        public async Task<ApiResult<string>> GetVerifyCode(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return new ApiErrorResult<string>("Email not found");
+            }
+            Random generator = new Random();
+            string r = generator.Next(0, 1000000).ToString("D6");
+            user.VerifyCode = r;
+            await _context.SaveChangesAsync();
+            var subject = "Account verify";
+            var body = $"This is your verify code:\n {r}";
+            try
+            {
+                await _emailService.SendPasswordResetEmailAsync(email, subject, body);
+                return new ApiSuccessMessage<string>(" Verify email sent");
+            }
+            catch
+            {
+                // Handle the exception as needed
+                return new ApiErrorResult<string>("Error sending verify email");
+            }
+        }
+
+        public async Task<ApiResult<string>> VerifyAccount(string email, string code)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                // Handle case where email doesn't exist
+                return new ApiErrorResult<string>("Email not found");
+            }
+            if (code == user.VerifyCode)
+            {
+                user.IsVerify = true;
+                await _context.SaveChangesAsync();
+                return new ApiSuccessMessage<string>("Verify account successful");
+            }
+            return new ApiErrorResult<string>("Verify code not correct");
         }
     }
 }

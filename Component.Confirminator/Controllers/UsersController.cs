@@ -8,7 +8,7 @@ namespace Component.ConfirminatorAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Policy = "ConfirmPolicy")]
+    [Authorize(Policy = "VerifierPolicy")]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -79,6 +79,36 @@ namespace Component.ConfirminatorAPIs.Controllers
                 return BadRequest(ModelState);
 
             var result = await _userService.ResetPassword(email, token, newPassword, confirmPassword);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpPost("GetVerifyCode/{Email}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetVerifyCode(string Email)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _userService.GetVerifyCode(Email);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpPost("VerifyAccount")]
+        [AllowAnonymous]
+        public async Task<IActionResult> VerifyAccount(string email, string code)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _userService.VerifyAccount(email, code);
             if (!result.IsSuccessed)
             {
                 return BadRequest(result);

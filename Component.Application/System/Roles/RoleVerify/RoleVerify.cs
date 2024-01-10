@@ -35,6 +35,12 @@ namespace Component.Application.System.Roles.RoleVerify
         {
             protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, RolesRequirement requirement)
             {
+                // Check if the user is authenticated
+                if (!context.User.Identity.IsAuthenticated)
+                {
+                    context.Fail(); // Fail the requirement, user is not authenticated
+                    return Task.CompletedTask;
+                }
                 string roles = context.User.Claims.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
                 if (!string.IsNullOrEmpty(roles))
                 {
