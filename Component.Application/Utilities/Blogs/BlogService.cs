@@ -18,9 +18,11 @@ namespace Component.Application.Utilities.Blogs
     public class BlogService : IBlogService
     {
         private readonly ApplicationDbContext _context;
-        public BlogService(ApplicationDbContext context, IUserService userService)
+        private readonly IStorageService _storageService;
+        public BlogService(ApplicationDbContext context, IUserService userService, IStorageService storageService)
         {
             _context = context;
+            _storageService = storageService;
         }
 
         public async Task<Blog> Create(BlogCreateRequest request)
@@ -30,8 +32,8 @@ namespace Component.Application.Utilities.Blogs
                 Title = request.Title,
                 Description = request.Description,
                 Url = request.Url,
-                Image = request.Image,
-                SortOrder= request.SortOrder,
+                Image = await _storageService.SaveImageAsync(request.Image),
+                SortOrder = request.SortOrder,
                 DateCreate= DateTime.Now,
                 Status= Data.Enums.Status.Active,
                 CreatedBy = request.CreatedBy,

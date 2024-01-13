@@ -12,8 +12,8 @@ namespace Component.ViewModels.Utilities.Blogs
         public string Title { get; set; }
         public string Description { set; get; }
         public string Url { set; get; }
-        public string Image { get; set; }
         public int SortOrder { get; set; }
         public Guid? CreatedBy { get; set; }
+        public string Image { get; set; }
     }
 }
