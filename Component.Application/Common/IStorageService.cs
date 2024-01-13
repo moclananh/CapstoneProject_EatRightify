@@ -12,7 +12,7 @@ namespace Component.Application.Common
         string GetFileUrl(string fileName);
 
         /*  Task SaveFileAsync(Stream mediaBinaryStream, string fileName);*/
-        Task<string> SaveImageAsync(IFormFile image);
+        Task<string> SaveImageAsync(string image);
 
         Task DeleteFileAsync(string fileName);
     }

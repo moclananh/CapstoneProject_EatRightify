@@ -7,6 +7,7 @@ using Component.ViewModels.Catalog.ProductImages;
 using Component.ViewModels.Catalog.Products;
 using Component.ViewModels.Common;
 using Component.ViewModels.Utilities.Blogs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -568,6 +569,17 @@ namespace Component.Application.Catalog.Products
                 Status = x.p.Status,
                 ThumbnailImage = x.pi.ImagePath
             }).ToListAsync();
+        }
+
+        public async Task<string> CreateBase64Image(IFormFile image)
+        {
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                await image.CopyToAsync(memoryStream);
+                byte[] imageBytes = memoryStream.ToArray();
+                string base64Image = Convert.ToBase64String(imageBytes);
+                return base64Image;
+            }
         }
     }
 }

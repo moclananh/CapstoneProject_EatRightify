@@ -9,7 +9,8 @@ namespace Component.ManagerAPIs.Controllers
 {
     //api/products
     [Route("api/[controller]")]
-    [Authorize(Policy = "ManagerPolicy")]
+    /*   [Authorize(Policy = "ManagerPolicy")]*/
+    [AllowAnonymous]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -53,9 +54,7 @@ namespace Component.ManagerAPIs.Controllers
         }
 
         [HttpPost]
-        [Consumes("multipart/form-data")]
-        [Authorize]
-        public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
+        public async Task<IActionResult> Create([FromBody] ProductCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -69,10 +68,19 @@ namespace Component.ManagerAPIs.Controllers
             return Ok();
         }
 
+        [HttpPost("CreateBase64Image")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CreateBase64Image(IFormFile image)
+        {
+            var product = await _productService.CreateBase64Image(image);
+            if (product == null)
+                return BadRequest("Cannot find product");
+            return Ok(product);
+        }
+
+
         [HttpPut("{productId}")]
-        [Consumes("multipart/form-data")]
-        //[Authorize]
-        public async Task<IActionResult> Update([FromRoute] int productId, [FromForm] ProductUpdateRequest request)
+        public async Task<IActionResult> Update([FromRoute] int productId, [FromBody] ProductUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -108,7 +116,7 @@ namespace Component.ManagerAPIs.Controllers
 
         //Images
         [HttpPost("{productId}/images")]
-        public async Task<IActionResult> CreateImage(int productId, [FromForm] ProductImageCreateRequest request)
+        public async Task<IActionResult> CreateImage(int productId, [FromBody] ProductImageCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -125,7 +133,7 @@ namespace Component.ManagerAPIs.Controllers
 
         [HttpPut("{productId}/images/{imageId}")]
         [Authorize]
-        public async Task<IActionResult> UpdateImage(int imageId, [FromForm] ProductImageUpdateRequest request)
+        public async Task<IActionResult> UpdateImage(int imageId, [FromBody] ProductImageUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {

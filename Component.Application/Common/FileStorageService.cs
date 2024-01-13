@@ -52,41 +52,30 @@ namespace Component.Application.Common
             }
         }
 
-        public async Task<string> SaveImageAsync(IFormFile image)
+        public async Task<string> SaveImageAsync(string image)
         {
-            // Retrieve Azure Storage connection string from App Settings
             var connectionString = _configuration.GetConnectionString("AzureBlobStorageConnection");
-
-            // Retrieve the container name from App Settings
             var containerName = _configuration["ersimages"];
+            string fileName = Guid.NewGuid().ToString() + ".png";
 
-            // Create a unique filename for the blob
-            string fileName = Guid.NewGuid().ToString() + image.FileName;
-
-            // Create a blob client using the connection string
             var blobServiceClient = new BlobServiceClient(connectionString);
-
-            // Create a container client using the container name
             var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
-
-            // Create a blob client for the new blob
             var blobClient = containerClient.GetBlobClient(fileName);
 
-            // Set the content type based on the file extension (example: JPEG)
-            var contentType = GetContentType(image.FileName);
+            // Convert base64 string to byte array
+            byte[] imageBytes = Convert.FromBase64String(image);
+            var contentType = "image/png";
 
             // Open a stream to the blob and upload the file with content type
-            using (var stream = image.OpenReadStream())
+            using (var stream = new MemoryStream(imageBytes))
             {
                 var options = new BlobUploadOptions
                 {
                     HttpHeaders = new BlobHttpHeaders { ContentType = contentType },
                 };
-
                 await blobClient.UploadAsync(stream, options);
             }
 
-            // Return the URL of the uploaded blob
             return blobClient.Uri.ToString();
         }
 

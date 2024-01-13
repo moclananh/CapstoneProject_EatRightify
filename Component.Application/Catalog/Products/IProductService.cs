@@ -3,6 +3,7 @@ using Component.ViewModels.Catalog.ProductImages;
 using Component.ViewModels.Catalog.Products;
 using Component.ViewModels.Common;
 using Component.ViewModels.Utilities.Blogs;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,5 +48,6 @@ namespace Component.Application.Catalog.Products
 
         Task<List<ProductVm>> GetLatestProducts(string languageId, int take);
         Task<List<ProductVm>> GetAll(string languageId);
+        Task<string> CreateBase64Image(IFormFile image);
     }
 }
