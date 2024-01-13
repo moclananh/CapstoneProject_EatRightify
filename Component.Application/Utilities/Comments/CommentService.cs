@@ -53,6 +53,7 @@ namespace Component.Application.Utilities.Comments
         {
             var query = from c in _context.Comments
                         join u in _context.AppUsers on c.UserId equals u.Id
+                        where c.ProductId == request.ProductId
                         select new CommentVm()
                         {
                             Id = c.Id,

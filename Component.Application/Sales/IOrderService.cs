@@ -12,7 +12,7 @@ namespace Component.Application.Sales
 {
     public interface IOrderService
     {
-        Task<Order> Create(CheckoutRequest request);
+        Task<Order> Create(CheckoutRequest request); 
 
         Task<Order> GetById(int id);
         Task<BillHistoryDetailVM> GetByCode(Guid code);
