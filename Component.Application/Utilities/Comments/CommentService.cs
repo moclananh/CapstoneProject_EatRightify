@@ -33,7 +33,8 @@ namespace Component.Application.Utilities.Comments
                 ProductId = request.ProductId,
                 Content = request.Content,
                 CreatedAt = DateTime.Now,
-                Status = Data.Enums.Status.Active
+                Status = Data.Enums.Status.Active,
+                Grade= request.Grade,
             };
 
             _context.Comments.Add(comments);
@@ -65,7 +66,9 @@ namespace Component.Application.Utilities.Comments
                 ProductId = x.c.ProductId,
                 Content= x.c.Content,
                 CreatedAt = x.c.CreatedAt,
-                Status = x.c.Status
+                Status = x.c.Status,
+                Grade= x.c.Grade,
+                UserAvatar = x.u.Avatar
             }).ToListAsync();
         }
 
@@ -82,7 +85,9 @@ namespace Component.Application.Utilities.Comments
                             ProductId = c.ProductId,
                             Content = c.Content,
                             CreatedAt = c.CreatedAt,
-                            Status = c.Status
+                            Status = c.Status,
+                            Grade= c.Grade,
+                            UserAvatar = u.Avatar
                         };
             int totalRow = query.Count();
 
@@ -117,7 +122,9 @@ namespace Component.Application.Utilities.Comments
                 ProductId = x.c.ProductId,
                 Content = x.c.Content,
                 CreatedAt = x.c.CreatedAt,
-                Status = x.c.Status
+                Status = x.c.Status,
+                Grade = x.c.Grade,
+                UserAvatar = x.u.Avatar
             }).FirstOrDefaultAsync();
         }
 
@@ -127,6 +134,7 @@ namespace Component.Application.Utilities.Comments
 
             if (comments == null) throw new EShopException($"Cannot find a comments with id: {request.Id}");
             comments.Content = request.Content;
+            comments.Grade = request.Grade;
             return await _context.SaveChangesAsync();
         }
 

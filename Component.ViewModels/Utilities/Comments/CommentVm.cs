@@ -17,5 +17,7 @@ namespace Component.ViewModels.Utilities.Comments
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
         public Status Status { get; set; }
+        public int Grade { get; set; }
+        public string UserAvatar { get; set; }
     }
 }
