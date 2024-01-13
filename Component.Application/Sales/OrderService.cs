@@ -6,6 +6,7 @@ using Component.ViewModels.Catalog.Products;
 using Component.ViewModels.Common;
 using Component.ViewModels.Sales.Bills;
 using Component.ViewModels.Sales.Orders;
+using Component.ViewModels.Utilities.Blogs;
 using Component.ViewModels.Utilities.Promotions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -435,6 +436,33 @@ namespace Component.Application.Sales
                 user.VIP = "Vip 5";
             }
             return await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<OrderVm>> GetAll(string keyword)
+        {
+            //1. Select join
+            var query = from o in _context.Orders
+                        join od in _context.OrderDetails on o.Id equals od.OrderId
+                        join p in _context.Products on od.ProductId equals p.Id
+                        join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+                        select new {o, od, p, pt };
+
+            //2. filter
+            if (!string.IsNullOrEmpty(keyword))
+                query = query.Where(x => x.o.ShipPhoneNumber.Contains(keyword));
+
+            return await query.Select(x => new OrderVm()
+            {
+               Id = x.o.Id,
+               OrderDate  = x.o.OrderDate,
+               UserId= x.o.UserId,
+               ShipName = x.o.ShipName,
+               ShipAddress= x.o.ShipAddress,
+               ShipEmail= x.o.ShipAddress,
+               ShipPhoneNumber= x.o.ShipAddress,
+               OrderCode= x.o.OrderCode,
+               Status= x.o.Status,
+            }).Distinct().ToListAsync();
         }
     }
 }

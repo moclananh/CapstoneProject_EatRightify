@@ -2,6 +2,7 @@
 using Component.ViewModels.Common;
 using Component.ViewModels.Sales.Bills;
 using Component.ViewModels.Sales.Orders;
+using Component.ViewModels.Utilities.Blogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Component.Application.Sales
         Task<Order> GetById(int id);
         Task<BillHistoryDetailVM> GetByCode(Guid code);
         Task<Order> GetLastestOrderId();
-
+        Task<List<OrderVm>> GetAll(string keyword);
         Task<PagedResult<OrderVm>> GetAllPaging(OrderPagingRequest request);
         Task<PagedResult<OrderDetailView>> GetOrderDetailPagingRequest(OrderDetailPagingRequest request);
         Task<BillHistoryDetailVM> GetBillById(int id);

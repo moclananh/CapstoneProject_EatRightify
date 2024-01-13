@@ -47,7 +47,7 @@ namespace Component.Application.Catalog.Products
         Task<List<ProductVm>> GetFeaturedProducts(string languageId, int take);
 
         Task<List<ProductVm>> GetLatestProducts(string languageId, int take);
-        Task<List<ProductVm>> GetAll(string languageId);
+        Task<List<ProductVm>> GetAll(GetAllProductRequest request);
         Task<string> CreateBase64Image(IFormFile image);
     }
 }

@@ -49,6 +49,13 @@ namespace Component.ConfirminatorAPIs.Controllers
             return Ok(products);
         }
 
+        [HttpGet("getAll")]
+        public async Task<IActionResult> GetAll(string? keyword)
+        {
+            var item = await _aiService.GetAll(keyword);
+            return Ok(item);
+        }
+
         [HttpGet("GetById/{ResultId}")]
         public async Task<IActionResult> GetResultById(int ResultId)
         {

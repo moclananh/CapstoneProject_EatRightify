@@ -4,6 +4,7 @@ using Component.Data.Enums;
 using Component.Utilities.Exceptions;
 using Component.ViewModels.Catalog.Products;
 using Component.ViewModels.Common;
+using Component.ViewModels.Sales.Orders;
 using Component.ViewModels.Utilities.Blogs;
 using Component.ViewModels.Utilities.Comments;
 using Microsoft.EntityFrameworkCore;
@@ -47,6 +48,25 @@ namespace Component.Application.Utilities.Comments
 
             _context.Comments.Remove(comments);
             return await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<CommentVm>> GetAll(int productId)
+        {
+            var query = from c in _context.Comments
+                        join u in _context.AppUsers on c.UserId equals u.Id
+                        where c.ProductId == productId
+                        select new {c, u };
+
+            return await query.Select(x => new CommentVm()
+            {
+                Id = x.c.Id,
+                UserId= x.c.UserId,
+                UserName = x.u.UserName,
+                ProductId = x.c.ProductId,
+                Content= x.c.Content,
+                CreatedAt = x.c.CreatedAt,
+                Status = x.c.Status
+            }).ToListAsync();
         }
 
         public async Task<PagedResult<CommentVm>> GetAllCommentByProductIdPaging(GetCommentPagingRequest request)

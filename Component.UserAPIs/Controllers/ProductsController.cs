@@ -20,9 +20,9 @@ namespace Component.UserAPIs.Controllers
         }
 
         [HttpGet("getAll/{languageId}")]
-        public async Task<IActionResult> GetAll(string languageId)
+        public async Task<IActionResult> GetAll(GetAllProductRequest request)
         {
-            var products = await _productService.GetAll(languageId);
+            var products = await _productService.GetAll(request);
             return Ok(products);
         }
 

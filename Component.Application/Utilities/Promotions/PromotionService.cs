@@ -2,6 +2,7 @@
 using Component.Data.Entities;
 using Component.Utilities.Exceptions;
 using Component.ViewModels.Common;
+using Component.ViewModels.Sales.Orders;
 using Component.ViewModels.Utilities.Blogs;
 using Component.ViewModels.Utilities.Comments;
 using Component.ViewModels.Utilities.Promotions;
@@ -48,6 +49,31 @@ namespace Component.Application.Utilities.Promotions
 
             _context.Promotions.Remove(promotion);
             return await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<PromotionVm>> GetAll(string keyword)
+        {
+            var query = from p in _context.Promotions
+                        join u in _context.AppUsers on p.CreatedBy equals u.Id into pu
+                        from u in pu.DefaultIfEmpty()
+                        select new { p, u };
+
+            //filter
+            if (!string.IsNullOrEmpty(keyword))
+                query = query.Where(x => x.p.Name.Contains(keyword));
+
+            return await query.Select(x => new PromotionVm()
+            {
+                Id = x.p.Id,
+                DiscountCode= x.p.DiscountCode,
+                FromDate = x.p.FromDate,
+                ToDate= x.p.ToDate,
+                DiscountPercent= x.p.DiscountPercent,
+                Status= x.p.Status,
+                Name= x.p.Name,
+                Description= x.p.Description,
+                CreatedBy = x.u.UserName
+            }).Distinct().ToListAsync();
         }
 
         public async Task<PagedResult<PromotionVm>> GetAllPaging(GetPromotionPagingRequest request)

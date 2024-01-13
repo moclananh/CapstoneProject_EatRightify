@@ -85,6 +85,13 @@ namespace Component.AdminAPIs.Controllers
             return Ok(products);
         }
 
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll([FromQuery] string? keyword)
+        {
+            var item = await _userService.GetAll(keyword);
+            return Ok(item);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {

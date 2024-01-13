@@ -20,10 +20,17 @@ namespace Component.ManagerAPIs.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Statistical([FromQuery] StatisticalRequest request)
+        public async Task<IActionResult> Statistical([FromQuery] StatisticalPagingRequest request)
         {
             var statistical = await _statisticalService.Statistical(request);
             return Ok(statistical);
+        }
+
+        [HttpGet("getAll")]
+        public async Task<IActionResult> GetAll([FromQuery] StatisticalRequest request)
+        {
+            var item = await _statisticalService.GetAll(request);
+            return Ok(item);
         }
     }
 }

@@ -28,6 +28,13 @@ namespace Component.ManagerAPIs.Controllers
             return Ok(promotions);
         }
 
+        [HttpGet("getAll")]
+        public async Task<IActionResult> GetAll(string? keyword)
+        {
+            var promotions = await _promotionService.GetAll(keyword);
+            return Ok(promotions);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {

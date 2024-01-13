@@ -2,6 +2,7 @@
 using Component.ViewModels.AI;
 using Component.ViewModels.Common;
 using Component.ViewModels.Utilities.Blogs;
+using Component.ViewModels.Utilities.Promotions;
 
 namespace Component.Application.AI
 {
@@ -10,6 +11,7 @@ namespace Component.Application.AI
         Task<UpdateResultRequest> Update(int id, UpdateResultRequest request);
         Task<UpdateStatusResult> UpdateStatus(int id, UpdateStatusResult status);
         Task<PagedResult<ResultVM>> GetAllPaging(ResultPagingRequest request);
+        Task<List<ResultVM>> GetAll(string keyword);
         Task<ResultVM> GetById(int id);
         Task<ResultVM> GetById(Guid userId);
         Task<int> Delete(int id);

@@ -3,6 +3,7 @@ using Component.Data.EF;
 using Component.Data.Entities;
 using Component.ViewModels.Common;
 using Component.ViewModels.System.Users;
+using Component.ViewModels.Utilities.Promotions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -383,6 +384,29 @@ namespace Component.Application.System.Users
                 return new ApiSuccessMessage<string>("Verify account successful");
             }
             return new ApiErrorResult<string>("Verify code not correct");
+        }
+
+        public async Task<List<UserVm>> GetAll(string keyword)
+        {
+            var query = _userManager.Users;
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query.Where(x => x.UserName.Contains(keyword)
+                 || x.PhoneNumber.Contains(keyword));
+            }
+            return await query.Select(x => new UserVm()
+            {
+                Email = x.Email,
+                PhoneNumber = x.PhoneNumber,
+                UserName = x.UserName,
+                FirstName = x.FirstName,
+                Id = x.Id,
+                Dob = x.Dob,
+                LastName = x.LastName,
+                IsBanned = x.IsBanned,
+                VIP= x.VIP,
+                AccumulatedPoints= x.AccumulatedPoints,
+            }).Distinct().ToListAsync();
         }
     }
 }

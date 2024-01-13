@@ -19,6 +19,14 @@ namespace Component.ManagerAPIs.Controllers
             _commentService = commentService;
         }
 
+        [HttpGet("getAll")]
+        public async Task<IActionResult> GetAll(int productId)
+        {
+            var item = await _commentService.GetAll(productId);
+            return Ok(item);
+        }
+
+
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetCommentPagingRequest request)
         {

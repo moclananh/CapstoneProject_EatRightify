@@ -5,6 +5,7 @@ using Component.ViewModels.AI;
 using Component.ViewModels.Catalog.Products;
 using Component.ViewModels.Common;
 using Component.ViewModels.System.Users;
+using Component.ViewModels.Utilities.Promotions;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
@@ -45,6 +46,29 @@ namespace Component.Application.AI
             return status;
         }
 
+        public async Task<List<ResultVM>> GetAll(string keyword)
+        {
+            var query = from r in _context.Results
+                        join u in _context.AppUsers on r.UserId equals u.Id
+                        select new { r, u };
+
+            //filter
+            if (!string.IsNullOrEmpty(keyword))
+                query = query.Where(x => x.r.Title.Contains(keyword));
+
+            return await query.Select(x => new ResultVM()
+            {
+              Id = x.r.ResultId,
+              Title = x.r.Title,
+              Email = x.u.Email,
+              Description = x.r.Description,
+              ResultDate = x.r.ResultDate,
+              Status= x.r.Status,
+              IsSend = x.r.IsSended
+            }).Distinct().ToListAsync();
+        
+
+    }
         public async Task<PagedResult<ResultVM>> GetAllPaging(ResultPagingRequest request)
         {
             var query = from r in _context.Results

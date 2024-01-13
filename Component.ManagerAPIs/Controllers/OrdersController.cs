@@ -8,8 +8,7 @@ namespace Component.ManagerAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    /*[Authorize(Policy = "ManagerPolicy")]*/
-    [AllowAnonymous]
+    [Authorize(Policy = "ManagerPolicy")]
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
@@ -25,6 +24,13 @@ namespace Component.ManagerAPIs.Controllers
         {
             var categories = await _orderService.GetAllPaging(request);
             return Ok(categories);
+        }
+
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll([FromQuery] string? keyword)
+        {
+            var item = await _orderService.GetAll(keyword);
+            return Ok(item);
         }
 
         [HttpGet("GetOrderDetailPagingRequest")]

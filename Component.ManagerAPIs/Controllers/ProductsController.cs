@@ -9,8 +9,7 @@ namespace Component.ManagerAPIs.Controllers
 {
     //api/products
     [Route("api/[controller]")]
-    /*   [Authorize(Policy = "ManagerPolicy")]*/
-    [AllowAnonymous]
+    [Authorize(Policy = "ManagerPolicy")]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -26,6 +25,13 @@ namespace Component.ManagerAPIs.Controllers
         {
             var products = await _productService.GetAllPaging(request);
             return Ok(products);
+        }
+
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll([FromQuery] GetAllProductRequest request)
+        {
+            var item = await _productService.GetAll(request);
+            return Ok(item);
         }
 
         [HttpGet("{productId}/{languageId}")]
@@ -104,7 +110,6 @@ namespace Component.ManagerAPIs.Controllers
         }
 
         [HttpPatch("{productId}/{newPrice}")]
-        [Authorize]
         public async Task<IActionResult> UpdatePrice(int productId, decimal newPrice)
         {
             var isSuccessful = await _productService.UpdatePrice(productId, newPrice);
@@ -132,7 +137,6 @@ namespace Component.ManagerAPIs.Controllers
         }
 
         [HttpPut("{productId}/images/{imageId}")]
-        [Authorize]
         public async Task<IActionResult> UpdateImage(int imageId, [FromBody] ProductImageUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -147,7 +151,6 @@ namespace Component.ManagerAPIs.Controllers
         }
 
         [HttpDelete("{productId}/images/{imageId}")]
-        [Authorize]
         public async Task<IActionResult> RemoveImage(int imageId)
         {
             if (!ModelState.IsValid)
@@ -161,17 +164,18 @@ namespace Component.ManagerAPIs.Controllers
             return Ok();
         }
 
-        [HttpGet("{productId}/images/{imageId}")]
-        public async Task<IActionResult> GetImageById(int productId, int imageId)
+        [HttpGet("images/{imageId}")]
+        public async Task<IActionResult> GetImageById(int imageId)
         {
             var image = await _productService.GetImageById(imageId);
-            if (image == null)
-                return BadRequest("Cannot find product");
-            return Ok(image);
+            if (image != null)
+            {
+                return Ok(image);
+            }
+            else return BadRequest();
         }
 
         [HttpPut("{id}/categories")]
-        [Authorize]
         public async Task<IActionResult> CategoryAssign(int id, [FromBody] CategoryAssignRequest request)
         {
             if (!ModelState.IsValid)

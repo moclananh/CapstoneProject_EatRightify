@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Component.ViewModels.Statistical
 {
-    public class StatisticalRequest
+    public class StatisticalPagingRequest : PagingRequestBase
     {
         // public string LanguageId { get; set; }
         public DateTime? StartDate { get; set; }

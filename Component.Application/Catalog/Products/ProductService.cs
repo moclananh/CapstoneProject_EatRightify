@@ -165,7 +165,7 @@ namespace Component.Application.Catalog.Products
                             Status= p.Status,
                             CategoryId = pic.CategoryId // Add CategoryId to ProductVm
                         };
-
+            
             if (!string.IsNullOrEmpty(request.Keyword))
             {
                 query = query.Where(x => x.Name.Contains(request.Keyword));
@@ -538,7 +538,7 @@ namespace Component.Application.Catalog.Products
             return data;
         }
 
-        public async Task<List<ProductVm>> GetAll(string languageId)
+        public async Task<List<ProductVm>> GetAll(GetAllProductRequest request)
         {
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
@@ -548,27 +548,56 @@ namespace Component.Application.Catalog.Products
                         from c in picc.DefaultIfEmpty()
                         join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
                         from pi in ppi.DefaultIfEmpty()
-                        where pt.LanguageId == languageId
-                        select new { p, pt, pic, c, pi };
-            return await query.Select(x => new ProductVm()
+                        where pt.LanguageId == request.LanguageId
+                        select new ProductVm()
+                        {
+                            Id = p.Id,
+                            Name = pt.Name,
+                            DateCreated = p.DateCreated,
+                            Description = pt.Description,
+                            Details = pt.Details,
+                            LanguageId = pt.LanguageId,
+                            OriginalPrice = p.OriginalPrice,
+                            Price = p.Price,
+                            SeoAlias = pt.SeoAlias,
+                            SeoDescription = pt.SeoDescription,
+                            SeoTitle = pt.SeoTitle,
+                            Stock = p.Stock,
+                            ViewCount = p.ViewCount,
+                            IsFeatured = p.IsFeatured,
+                            ThumbnailImage = pi.ImagePath,
+                            Status = p.Status,
+                            CategoryId = pic.CategoryId // Add CategoryId to ProductVm
+                        };
+
+            if (!string.IsNullOrEmpty(request.Keyword))
             {
-                Id = x.p.Id,
-                Name = x.pt.Name,
-                DateCreated = x.p.DateCreated,
-                Description = x.pt.Description,
-                Details = x.pt.Details,
-                LanguageId = x.pt.LanguageId,
-                OriginalPrice = x.p.OriginalPrice,
-                Price = x.p.Price,
-                SeoAlias = x.pt.SeoAlias,
-                SeoDescription = x.pt.SeoDescription,
-                SeoTitle = x.pt.SeoTitle,
-                Stock = x.p.Stock,
-                ViewCount = x.p.ViewCount,
-                IsFeatured = x.p.IsFeatured,
-                Status = x.p.Status,
-                ThumbnailImage = x.pi.ImagePath
-            }).ToListAsync();
+                query = query.Where(x => x.Name.Contains(request.Keyword));
+            }
+
+            // Filter by CategoryId
+            if (request.CategoryId != null && request.CategoryId != 0)
+            {
+                query = query.Where(x => x.CategoryId == request.CategoryId);
+            }
+
+            // Create a list to store distinct products
+            List<ProductVm> distinctProducts = new List<ProductVm>();
+
+            foreach (var productVm in query)
+            {
+                // Check if the product with the same ID is already in the distinctProducts list
+                if (!distinctProducts.Any(p => p.Id == productVm.Id) /*&& !(productVm.Name == "N/A")*/)
+                {
+                    distinctProducts.Add(productVm);
+                }
+            }
+
+            var queryFilter = distinctProducts
+             .OrderByDescending(item => item.DateCreated) // Sort by TotalQuantity in descending order
+             .ToList();
+
+            return queryFilter;
         }
 
         public async Task<string> CreateBase64Image(IFormFile image)
