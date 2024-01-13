@@ -143,7 +143,7 @@ namespace Component.Application.Utilities.Blogs
             blog.Title = request.Title;
             blog.Description = request.Description;
             blog.Url = request.Url;
-            blog.Image = request.Image;
+            blog.Image = await _storageService.SaveImageAsync(request.Image);
             blog.SortOrder = request.SortOrder;
             blog.Status = request.Status;
             return await _context.SaveChangesAsync();
