@@ -1,9 +1,5 @@
 ﻿using Component.Data.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Component.Data.Entities
 {
@@ -15,6 +11,8 @@ namespace Component.Data.Entities
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
         public Status Status { get; set; }
+        [Range(1,5)]
+        public int Grade { get; set; }
         public AppUser User { get; set; }
         public Product Product { get; set; }
     }

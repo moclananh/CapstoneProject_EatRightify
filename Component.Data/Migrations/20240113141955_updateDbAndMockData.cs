@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Component.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateDb : Migration
+    public partial class updateDbAndMockData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -112,6 +112,7 @@ namespace Component.Data.Migrations
                     RefeshTokenExpire = table.Column<DateTime>(type: "datetime2", nullable: true),
                     VerifyCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsVerify = table.Column<bool>(type: "bit", nullable: true),
+                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -493,7 +494,8 @@ namespace Component.Data.Migrations
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Grade = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -651,12 +653,13 @@ namespace Component.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "AppUsers",
-                columns: new[] { "Id", "AccessFailedCount", "AccumulatedPoints", "ConcurrencyStamp", "Dob", "Email", "EmailConfirmed", "FirstName", "IsBanned", "IsVerify", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefeshCode", "RefeshToken", "RefeshTokenExpire", "SecurityStamp", "TwoFactorEnabled", "UserName", "VIP", "VerifyCode" },
+                columns: new[] { "Id", "AccessFailedCount", "AccumulatedPoints", "Avatar", "ConcurrencyStamp", "Dob", "Email", "EmailConfirmed", "FirstName", "IsBanned", "IsVerify", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefeshCode", "RefeshToken", "RefeshTokenExpire", "SecurityStamp", "TwoFactorEnabled", "UserName", "VIP", "VerifyCode" },
                 values: new object[,]
                 {
-                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), 0, null, "d01628dd-d8be-4b3d-94a8-038d02a1360c", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "verifier@verifier.com", true, "verifier", false, null, "role", false, null, "verifier@verifier.com", "verifier", "AQAAAAIAAYagAAAAEMwJYnMR4PUFAW5rVwi0GM/UmxrmZgmG4CwPwJ8R+NFNY4dgdBh9Govsix2jmXbHMA==", null, false, null, null, null, "", false, "verifier", null, null },
-                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), 0, null, "c623e4f5-096d-4e12-9788-12c691f828c1", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, null, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAEJ3U4JlFHx3jJ6xY1K3toFQ1M1GO4WKXvzoDS0i/NfhImpePu4iMLNYSccEZ7WJPXQ==", null, false, null, null, null, "", false, "manager", null, null },
-                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), 0, null, "26fbfc22-10c1-4bb5-89a7-2c69fedea850", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, null, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAENlSf3LnKYBSo03DjWD0Doi/JfwOTD2RJKQy4qDZsboeoE2eP3fSiGKNJk6ZKvdwqQ==", null, false, null, null, null, "", false, "admin", null, null }
+                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), 0, null, null, "8451ce88-bfc7-4276-bd91-dcaab40ae87c", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "verifier@verifier.com", true, "verifier", false, true, "role", false, null, "verifier@verifier.com", "verifier", "AQAAAAIAAYagAAAAEPsWnojUyRuJbJxsc2P9qTW6lbKl3Kfk+Q/KknqvPhgOhKTEw+3uMw3nT5nkPGJkAg==", null, false, null, null, null, "", false, "verifier", null, null },
+                    { new Guid("3f5b49c6-e455-48a2-be45-26423e92afbe"), 0, null, null, "68a06f85-8dc9-4e3a-9a78-168fab27dfdd", new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "guest@guest.com", true, "Guest", false, true, "Role", false, null, "guest@guest.com", "guest", "AQAAAAIAAYagAAAAEJnT9R0EgO6Os9Q4+iPnVE23o4dJ/7XTiNS6I9TIjwputoN6EKipoR3cqWHWsZCU7g==", null, false, null, null, null, "", false, "guest", null, null },
+                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), 0, null, null, "833d57ca-29c0-48d6-a23d-935bdff37162", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, true, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAEIigzYUV08zFMY/vY4I2BynBm/8ZOrBhQKy9NaD4yumkEvcxSqYGqeiv/qGhvRG0+Q==", null, false, null, null, null, "", false, "manager", null, null },
+                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), 0, null, null, "6ae2c0f5-6453-4501-a768-b71243a39dbf", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, true, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAEGwQ4+zzrVOFp/jCAcGHjkrlI/VXfm49dq6L0i/NubyrnAKvWLl+dXsdfhCGOFJ6lw==", null, false, null, null, null, "", false, "admin", null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -682,7 +685,12 @@ namespace Component.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "DateCreated", "IsFeatured", "OriginalPrice", "Price", "Status", "Stock" },
-                values: new object[] { 1, new DateTime(2024, 1, 8, 10, 48, 6, 482, DateTimeKind.Local).AddTicks(3135), null, 255m, 199m, 1, 100 });
+                values: new object[,]
+                {
+                    { 1, new DateTime(2024, 1, 13, 21, 19, 54, 903, DateTimeKind.Local).AddTicks(170), null, 255m, 199m, 1, 100 },
+                    { 2, new DateTime(2024, 1, 13, 21, 19, 54, 903, DateTimeKind.Local).AddTicks(238), null, 355m, 299m, 1, 100 },
+                    { 3, new DateTime(2024, 1, 13, 21, 19, 54, 903, DateTimeKind.Local).AddTicks(267), null, 455m, 399m, 1, 100 }
+                });
 
             migrationBuilder.InsertData(
                 table: "Slides",
@@ -711,12 +719,22 @@ namespace Component.Data.Migrations
             migrationBuilder.InsertData(
                 table: "ProductInCategories",
                 columns: new[] { "CategoryId", "ProductId" },
-                values: new object[] { 1, 1 });
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 1, 2 },
+                    { 1, 3 }
+                });
 
             migrationBuilder.InsertData(
                 table: "ProductTranslations",
                 columns: new[] { "Id", "Description", "Details", "LanguageId", "Name", "ProductId", "SeoAlias", "SeoDescription", "SeoTitle" },
-                values: new object[] { 1, "Eat Clean weekly weight loss meal package 1 meal per day for 7 days\r\n– Low starch\r\n– Deliver meal packages to your home from Monday to Sunday\r\n– Calories range from 500 – 600 per day\r\n– Low sugar, no MSG, clean green vegetables selected from the supermarket\r\n– Provides adequate protein for the body\r\n- Suitable for those who are sedentary and often sit in the office.", "eat clean 7 day", "en", "EAT CLEAN 7-DAY WEIGHT LOSS DIET", 1, "eat-clean-7-days", "You say I'm fat, I lose weight. You say I'm poor, I'll make money. When I'm skinny, beautiful and rich, will I still choose you?", "eat clean 7 day" });
+                values: new object[,]
+                {
+                    { 1, "Eat Clean weekly weight loss meal package 1 meal per day for 7 days\r\n– Low starch\r\n– Deliver meal packages to your home from Monday to Sunday\r\n– Calories range from 500 – 600 per day\r\n– Low sugar, no MSG, clean green vegetables selected from the supermarket\r\n– Provides adequate protein for the body\r\n- Suitable for those who are sedentary and often sit in the office.", "eat clean 7 day", "en", "EAT CLEAN 7-DAY WEIGHT LOSS DIET", 1, "eat-clean-7-days", "You say I'm fat, I lose weight. You say I'm poor, I'll make money. When I'm skinny, beautiful and rich, will I still choose you?", "eat clean 7 day" },
+                    { 2, "Eat Clean weekly weight loss meal package 1 meal per day for 14 days\r\n– Low starch\r\n– Deliver meal packages to your home from Monday to Sunday\r\n– Calories range from 700 – 900 per day\r\n– Low sugar, no MSG, clean green vegetables selected from the supermarket\r\n– Provides adequate protein for the body\r\n- Suitable for those who are sedentary and often sit in the office.", "eat clean 14 day", "en", "EAT CLEAN 14-DAY WEIGHT LOSS DIET", 2, "eat-clean-14-days", "You say I'm fat, I lose weight. You say I'm poor, I'll make money. When I'm skinny, beautiful and rich, will I still choose you?", "eat clean 14 day" },
+                    { 3, "Eat Clean weekly weight loss meal package 1 meal per day for 32 days\r\n– Low starch\r\n– Deliver meal packages to your home from Monday to Sunday\r\n– Calories range from 900 – 1200 per day\r\n– Low sugar, no MSG, clean green vegetables selected from the supermarket\r\n– Provides adequate protein for the body\r\n- Suitable for those who are sedentary and often sit in the office.", "eat clean 32 day", "en", "EAT CLEAN 32-DAY WEIGHT LOSS DIET", 3, "eat-clean-32-days", "You say I'm fat, I lose weight. You say I'm poor, I'll make money. When I'm skinny, beautiful and rich, will I still choose you?", "eat clean 32 day" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Blogs_CreatedBy",

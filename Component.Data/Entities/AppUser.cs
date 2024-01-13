@@ -21,6 +21,7 @@ namespace Component.Data.Entities
         public DateTime? RefeshTokenExpire { get; set; }
         public string? VerifyCode { get; set; }
         public bool? IsVerify { get; set; }
+        public string? Avatar { get; set; }
         public List<Cart> Carts { get; set; }
         public List<Order> Orders { get; set; }
         public List<Transaction> Transactions { get; set; }

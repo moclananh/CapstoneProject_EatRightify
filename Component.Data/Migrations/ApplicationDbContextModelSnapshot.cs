@@ -113,6 +113,9 @@ namespace Component.Data.Migrations
                     b.Property<decimal?>("AccumulatedPoints")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -195,17 +198,18 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "26fbfc22-10c1-4bb5-89a7-2c69fedea850",
+                            ConcurrencyStamp = "6ae2c0f5-6453-4501-a768-b71243a39dbf",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
                             IsBanned = false,
+                            IsVerify = true,
                             LastName = "minator",
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@admin.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAENlSf3LnKYBSo03DjWD0Doi/JfwOTD2RJKQy4qDZsboeoE2eP3fSiGKNJk6ZKvdwqQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGwQ4+zzrVOFp/jCAcGHjkrlI/VXfm49dq6L0i/NubyrnAKvWLl+dXsdfhCGOFJ6lw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -215,17 +219,18 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c623e4f5-096d-4e12-9788-12c691f828c1",
+                            ConcurrencyStamp = "833d57ca-29c0-48d6-a23d-935bdff37162",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "manager@manager.com",
                             EmailConfirmed = true,
                             FirstName = "Manager",
                             IsBanned = false,
+                            IsVerify = true,
                             LastName = "minator",
                             LockoutEnabled = false,
                             NormalizedEmail = "manager@manager.com",
                             NormalizedUserName = "manager",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJ3U4JlFHx3jJ6xY1K3toFQ1M1GO4WKXvzoDS0i/NfhImpePu4iMLNYSccEZ7WJPXQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIigzYUV08zFMY/vY4I2BynBm/8ZOrBhQKy9NaD4yumkEvcxSqYGqeiv/qGhvRG0+Q==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -235,21 +240,43 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d01628dd-d8be-4b3d-94a8-038d02a1360c",
+                            ConcurrencyStamp = "8451ce88-bfc7-4276-bd91-dcaab40ae87c",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "verifier@verifier.com",
                             EmailConfirmed = true,
                             FirstName = "verifier",
                             IsBanned = false,
+                            IsVerify = true,
                             LastName = "role",
                             LockoutEnabled = false,
                             NormalizedEmail = "verifier@verifier.com",
                             NormalizedUserName = "verifier",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMwJYnMR4PUFAW5rVwi0GM/UmxrmZgmG4CwPwJ8R+NFNY4dgdBh9Govsix2jmXbHMA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPsWnojUyRuJbJxsc2P9qTW6lbKl3Kfk+Q/KknqvPhgOhKTEw+3uMw3nT5nkPGJkAg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
                             UserName = "verifier"
+                        },
+                        new
+                        {
+                            Id = new Guid("3f5b49c6-e455-48a2-be45-26423e92afbe"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "68a06f85-8dc9-4e3a-9a78-168fab27dfdd",
+                            Dob = new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "guest@guest.com",
+                            EmailConfirmed = true,
+                            FirstName = "Guest",
+                            IsBanned = false,
+                            IsVerify = true,
+                            LastName = "Role",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "guest@guest.com",
+                            NormalizedUserName = "guest",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJnT9R0EgO6Os9Q4+iPnVE23o4dJ/7XTiNS6I9TIjwputoN6EKipoR3cqWHWsZCU7g==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "guest"
                         });
                 });
 
@@ -549,6 +576,9 @@ namespace Component.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Grade")
+                        .HasColumnType("int");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
@@ -785,9 +815,29 @@ namespace Component.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2024, 1, 8, 10, 48, 6, 482, DateTimeKind.Local).AddTicks(3135),
+                            DateCreated = new DateTime(2024, 1, 13, 21, 19, 54, 903, DateTimeKind.Local).AddTicks(170),
                             OriginalPrice = 255m,
                             Price = 199m,
+                            Status = 1,
+                            Stock = 100,
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateCreated = new DateTime(2024, 1, 13, 21, 19, 54, 903, DateTimeKind.Local).AddTicks(238),
+                            OriginalPrice = 355m,
+                            Price = 299m,
+                            Status = 1,
+                            Stock = 100,
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DateCreated = new DateTime(2024, 1, 13, 21, 19, 54, 903, DateTimeKind.Local).AddTicks(267),
+                            OriginalPrice = 455m,
+                            Price = 399m,
                             Status = 1,
                             Stock = 100,
                             ViewCount = 0
@@ -853,6 +903,16 @@ namespace Component.Data.Migrations
                         {
                             CategoryId = 1,
                             ProductId = 1
+                        },
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 2
+                        },
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 3
                         });
                 });
 
@@ -920,6 +980,30 @@ namespace Component.Data.Migrations
                             SeoAlias = "eat-clean-7-days",
                             SeoDescription = "You say I'm fat, I lose weight. You say I'm poor, I'll make money. When I'm skinny, beautiful and rich, will I still choose you?",
                             SeoTitle = "eat clean 7 day"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Eat Clean weekly weight loss meal package 1 meal per day for 14 days\r\n– Low starch\r\n– Deliver meal packages to your home from Monday to Sunday\r\n– Calories range from 700 – 900 per day\r\n– Low sugar, no MSG, clean green vegetables selected from the supermarket\r\n– Provides adequate protein for the body\r\n- Suitable for those who are sedentary and often sit in the office.",
+                            Details = "eat clean 14 day",
+                            LanguageId = "en",
+                            Name = "EAT CLEAN 14-DAY WEIGHT LOSS DIET",
+                            ProductId = 2,
+                            SeoAlias = "eat-clean-14-days",
+                            SeoDescription = "You say I'm fat, I lose weight. You say I'm poor, I'll make money. When I'm skinny, beautiful and rich, will I still choose you?",
+                            SeoTitle = "eat clean 14 day"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Eat Clean weekly weight loss meal package 1 meal per day for 32 days\r\n– Low starch\r\n– Deliver meal packages to your home from Monday to Sunday\r\n– Calories range from 900 – 1200 per day\r\n– Low sugar, no MSG, clean green vegetables selected from the supermarket\r\n– Provides adequate protein for the body\r\n- Suitable for those who are sedentary and often sit in the office.",
+                            Details = "eat clean 32 day",
+                            LanguageId = "en",
+                            Name = "EAT CLEAN 32-DAY WEIGHT LOSS DIET",
+                            ProductId = 3,
+                            SeoAlias = "eat-clean-32-days",
+                            SeoDescription = "You say I'm fat, I lose weight. You say I'm poor, I'll make money. When I'm skinny, beautiful and rich, will I still choose you?",
+                            SeoTitle = "eat clean 32 day"
                         });
                 });
 

@@ -2,11 +2,6 @@
 using Component.Data.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Component.Data.Extensions
 {
@@ -92,6 +87,62 @@ namespace Component.Data.Extensions
                 new ProductInCategory() { ProductId = 1, CategoryId = 1 }
                 );
 
+            modelBuilder.Entity<Product>().HasData(
+         new Product()
+         {
+             Id = 2,
+             DateCreated = DateTime.Now,
+             OriginalPrice = 355,
+             Price = 299,
+             Stock = 100,
+             ViewCount = 0,
+             Status = Status.Active,
+         });
+            modelBuilder.Entity<ProductTranslation>().HasData(
+                 new ProductTranslation()
+                 {
+                     Id = 2,
+                     ProductId = 2,
+                     Name = "EAT CLEAN 14-DAY WEIGHT LOSS DIET",
+                     LanguageId = "en",
+                     SeoAlias = "eat-clean-14-days",
+                     SeoDescription = "You say I'm fat, I lose weight. You say I'm poor, I'll make money. When I'm skinny, beautiful and rich, will I still choose you?",
+                     SeoTitle = "eat clean 14 day",
+                     Details = "eat clean 14 day",
+                     Description = "Eat Clean weekly weight loss meal package 1 meal per day for 14 days\r\n– Low starch\r\n– Deliver meal packages to your home from Monday to Sunday\r\n– Calories range from 700 – 900 per day\r\n– Low sugar, no MSG, clean green vegetables selected from the supermarket\r\n– Provides adequate protein for the body\r\n- Suitable for those who are sedentary and often sit in the office."
+                 });
+            modelBuilder.Entity<ProductInCategory>().HasData(
+                new ProductInCategory() { ProductId = 2, CategoryId = 1 }
+                );
+
+            modelBuilder.Entity<Product>().HasData(
+         new Product()
+         {
+             Id = 3,
+             DateCreated = DateTime.Now,
+             OriginalPrice = 455,
+             Price = 399,
+             Stock = 100,
+             ViewCount = 0,
+             Status = Status.Active,
+         });
+            modelBuilder.Entity<ProductTranslation>().HasData(
+                 new ProductTranslation()
+                 {
+                     Id = 3,
+                     ProductId = 3,
+                     Name = "EAT CLEAN 32-DAY WEIGHT LOSS DIET",
+                     LanguageId = "en",
+                     SeoAlias = "eat-clean-32-days",
+                     SeoDescription = "You say I'm fat, I lose weight. You say I'm poor, I'll make money. When I'm skinny, beautiful and rich, will I still choose you?",
+                     SeoTitle = "eat clean 32 day",
+                     Details = "eat clean 32 day",
+                     Description = "Eat Clean weekly weight loss meal package 1 meal per day for 32 days\r\n– Low starch\r\n– Deliver meal packages to your home from Monday to Sunday\r\n– Calories range from 900 – 1200 per day\r\n– Low sugar, no MSG, clean green vegetables selected from the supermarket\r\n– Provides adequate protein for the body\r\n- Suitable for those who are sedentary and often sit in the office."
+                 });
+            modelBuilder.Entity<ProductInCategory>().HasData(
+                new ProductInCategory() { ProductId = 3, CategoryId = 1 }
+                );
+
             // any guid
             var adminRoleId = new Guid("46f889a9-662d-4969-84f3-6ff4e199ecf5");
             var adminId = new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38");
@@ -116,7 +167,8 @@ namespace Component.Data.Extensions
                 SecurityStamp = string.Empty,
                 FirstName = "Admin",
                 LastName = "minator",
-                Dob = new DateTime(2023, 01, 01)
+                Dob = new DateTime(2023, 01, 01),
+                IsVerify= true,
             });
 
             modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
@@ -149,7 +201,8 @@ namespace Component.Data.Extensions
                 SecurityStamp = string.Empty,
                 FirstName = "Manager",
                 LastName = "minator",
-                Dob = new DateTime(2023, 01, 01)
+                Dob = new DateTime(2023, 01, 01),
+                IsVerify = true,
             });
 
             modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
@@ -182,7 +235,8 @@ namespace Component.Data.Extensions
                 SecurityStamp = string.Empty,
                 FirstName = "verifier",
                 LastName = "role",
-                Dob = new DateTime(2023, 01, 01)
+                Dob = new DateTime(2023, 01, 01),
+                IsVerify = true,
             });
 
             modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
@@ -190,6 +244,26 @@ namespace Component.Data.Extensions
                 RoleId = confirminatorRoleId,
                 UserId = verifierId
             });
+
+            // guest
+            var guestId = new Guid("3f5b49c6-e455-48a2-be45-26423e92afbe");
+            var hasherGuest = new PasswordHasher<AppUser>();
+            modelBuilder.Entity<AppUser>().HasData(new AppUser
+            {
+                Id = guestId,
+                UserName = "guest",
+                NormalizedUserName = "guest",
+                Email = "guest@guest.com",
+                NormalizedEmail = "guest@guest.com",
+                EmailConfirmed = true,
+                PasswordHash = hasherGuest.HashPassword(null, "guest"),
+                SecurityStamp = string.Empty,
+                FirstName = "Guest",
+                LastName = "Role",
+                Dob = new DateTime(1999, 01, 01),
+                IsVerify = true,
+            });
+
 
             modelBuilder.Entity<Slide>().HasData(
               new Slide() { Id = 1, Name = "Second Thumbnail label", Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", SortOrder = 1, Url = "#", Image = "/themes/images/carousel/1.png", Status = Status.Active },

@@ -33,5 +33,6 @@ namespace Component.ViewModels.System.Users
         public string? VIP { get; set; }
         public decimal? AccumulatedPoints { get; set; }
         public bool IsBanned { get; set; }
+        public string Avatar { get; set; }
     }
 }

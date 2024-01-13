@@ -1,4 +1,5 @@
-﻿using Component.Application.Utilities.Mail;
+﻿using Component.Application.Common;
+using Component.Application.Utilities.Mail;
 using Component.Data.EF;
 using Component.Data.Entities;
 using Component.ViewModels.Common;
@@ -27,13 +28,15 @@ namespace Component.Application.System.Users
         private readonly IConfiguration _config;
         private readonly ApplicationDbContext _context;
         private readonly IEmailService _emailService;
+        private readonly IStorageService _storageService;
 
         public UserService(UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             RoleManager<AppRole> roleManager,
             IConfiguration config,
             ApplicationDbContext context,
-            IEmailService emailService)
+            IEmailService emailService,
+            IStorageService storageService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -41,6 +44,7 @@ namespace Component.Application.System.Users
             _config = config;
             _context = context;
             _emailService = emailService;
+            _storageService = storageService;
         }
 
         public async Task<LoginRespone<string>> Authencate(LoginRequest request)
@@ -116,9 +120,10 @@ namespace Component.Application.System.Users
                 LastName = user.LastName,
                 UserName = user.UserName,
                 Roles = roles,
-                IsBanned= user.IsBanned,
-                VIP= user.VIP,
+                IsBanned = user.IsBanned,
+                VIP = user.VIP,
                 AccumulatedPoints = user.AccumulatedPoints,
+                Avatar = user.Avatar,
             };
             return new ApiSuccessResult<UserVm>(userVm);
         }
@@ -146,7 +151,10 @@ namespace Component.Application.System.Users
                     Id = x.Id,
                     Dob = x.Dob,
                     LastName = x.LastName,
-                    IsBanned= x.IsBanned,
+                    IsBanned = x.IsBanned,
+                    VIP = x.VIP,
+                    AccumulatedPoints = x.AccumulatedPoints,
+                    Avatar = x.Avatar,
                 }).ToListAsync();
 
             //4. Select and projection
@@ -230,6 +238,7 @@ namespace Component.Application.System.Users
             user.FirstName = request.FirstName;
             user.LastName = request.LastName;
             user.PhoneNumber = request.PhoneNumber;
+            user.Avatar = await _storageService.SaveImageAsync(request.Avatar);
 
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
@@ -404,8 +413,9 @@ namespace Component.Application.System.Users
                 Dob = x.Dob,
                 LastName = x.LastName,
                 IsBanned = x.IsBanned,
-                VIP= x.VIP,
-                AccumulatedPoints= x.AccumulatedPoints,
+                VIP = x.VIP,
+                AccumulatedPoints = x.AccumulatedPoints,
+                Avatar = x.Avatar,
             }).Distinct().ToListAsync();
         }
     }
