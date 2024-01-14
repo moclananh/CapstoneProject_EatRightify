@@ -63,7 +63,7 @@ builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAIService, AIService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
-
+builder.Services.AddTransient<IStorageService, FileStorageService>();
 //custom swagger
 builder.Services.AddSwaggerGen(c =>
 {
