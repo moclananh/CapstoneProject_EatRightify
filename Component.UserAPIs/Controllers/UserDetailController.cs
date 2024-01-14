@@ -9,6 +9,7 @@ namespace Component.UserAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserDetailController : Controller
     {
         private readonly IUserDetailService _userDetailService;
@@ -21,7 +22,6 @@ namespace Component.UserAPIs.Controllers
 
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Create([FromForm] UserDetailVm request)
         {
             if (!ModelState.IsValid)
@@ -46,7 +46,6 @@ namespace Component.UserAPIs.Controllers
 
         [HttpPut("{userId}")]
         [Consumes("multipart/form-data")]
-        [Authorize]
         public async Task<IActionResult> Update([FromRoute] Guid userId, [FromForm] UserDetailVm request)
         {
             if (!ModelState.IsValid)
@@ -67,7 +66,6 @@ namespace Component.UserAPIs.Controllers
 
 
         [HttpGet("{id}")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetById(Guid id)
         {
             var userId = await _userDetailService.GetById(id);

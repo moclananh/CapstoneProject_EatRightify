@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace Component.Application.AI
 {
@@ -181,14 +183,15 @@ namespace Component.Application.AI
 
 
         private const string ResultApiBaseUrl = "https://eatright2.azurewebsites.net/api/UserDetail";
-        private const string ProductApiBaseUrl = "https://eatright2.azurewebsites.net/api/Products/getAll";
+        private const string ProductApiBaseUrl = "https://eatright2.azurewebsites.net/api/Products/getAll?LanguageId";
         private const string LinkProduct = "https://eatright2.azurewebsites.net/api/Products/";
+     
         public static async Task<string> GetResultByUserIdAsync(Guid userId, string languageId)
         {
             using (HttpClient client = new HttpClient())
             {
                 string apiUrl = $"{ResultApiBaseUrl}/{userId}";
-                string productApi = $"{ProductApiBaseUrl}/{languageId}";
+                string productApi = $"{ProductApiBaseUrl}={languageId}";
 
                 var response = await client.GetAsync(apiUrl);
                 var productResponse = await client.GetAsync(productApi);
@@ -199,7 +202,7 @@ namespace Component.Application.AI
                     string ProductResultContent = await productResponse.Content.ReadAsStringAsync();
 
                     var resultData = JsonConvert.DeserializeObject<UserDetailVm>(resultContent);
-                   // var ProductResultData = JsonConvert.DeserializeObject<ProductVm>(ProductResultContent);
+                    // var ProductResultData = JsonConvert.DeserializeObject<ProductVm>(ProductResultContent);
 
                     string result = "Gender: " + resultData.Gender.ToString() +
                         ", Age Range is " + resultData.AgeRange.ToString() +
@@ -217,7 +220,7 @@ namespace Component.Application.AI
                         ", The user's sleep frequence is " + resultData.TimeSleep.ToString() +
                         ", Drink water frequence is " + resultData.WaterDrink.ToString() +
                         ", The target diet that user want is " + resultData.Diet.ToString() +
-                        ", List of allergies keyword that user avoid is " + resultData.ProductAllergies.ToString() +
+                        ", List of allergies keyword that user avoid is " + resultData.ProductAllergies +
                         ". Read and analys all of the information above. " +
                         " If the information is invalid or there is no sultable product for user, then don't provide any product and explain the reason" +
                         " If the information is valid, then"+

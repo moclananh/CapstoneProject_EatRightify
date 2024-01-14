@@ -20,7 +20,6 @@ namespace Component.UserAPIs.Controllers
         }
 
         [HttpGet("GetResultByUserId/{userId}")]
-        [Authorize]
         public async Task<IActionResult> GetResultByUserId(Guid userId)
         {
             var result = await _aiService.GetById(userId);
@@ -34,7 +33,6 @@ namespace Component.UserAPIs.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Create([FromForm] CreateResultRequest request)
         {
             if (!ModelState.IsValid)
