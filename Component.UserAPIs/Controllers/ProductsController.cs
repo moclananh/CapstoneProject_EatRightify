@@ -20,6 +20,7 @@ namespace Component.UserAPIs.Controllers
         }
 
         [HttpGet("getAll")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll([FromQuery]GetAllProductRequest request)
         {
             var products = await _productService.GetAll(request);

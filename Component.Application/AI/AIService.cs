@@ -185,7 +185,7 @@ namespace Component.Application.AI
         private const string ResultApiBaseUrl = "https://eatright2.azurewebsites.net/api/UserDetail";
         private const string ProductApiBaseUrl = "https://eatright2.azurewebsites.net/api/Products/getAll?LanguageId";
         private const string LinkProduct = "https://eatright2.azurewebsites.net/api/Products/";
-     
+
         public static async Task<string> GetResultByUserIdAsync(Guid userId, string languageId)
         {
             using (HttpClient client = new HttpClient())
