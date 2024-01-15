@@ -116,6 +116,46 @@ namespace Component.Application.Statistical
             return queryFilter;
         }
 
+        public async Task<List<UserInteractionRequest>> GetListUserInteractions(string keyword)
+        {
+            var query = from c in _context.Comments
+                        join u in _context.AppUsers on c.UserId equals u.Id
+                        group new { c, u} by new
+                        {
+                            u.UserName,
+                            u.Id
+                        }
+                         into grouped
+                        select new UserInteractionRequest()
+                        {
+                            UserName = grouped.Key.UserName,
+                            UserId = grouped.Key.Id,
+                            TotalOfComment = grouped.Count()
+                        };
+
+            // filter
+            if (!string.IsNullOrEmpty(keyword))
+                query = query.Where(x => x.UserName.Contains(keyword));
+
+            // Create a list to store distinct products
+            List<UserInteractionRequest> distinctProducts = new List<UserInteractionRequest>();
+
+            foreach (var productVm in query)
+            {
+                // Check if the product with the same ID is already in the distinctProducts list
+                if (!distinctProducts.Any(p => p.UserId == productVm.UserId))
+                {
+                    distinctProducts.Add(productVm);
+                }
+            }
+
+            var queryFilter = distinctProducts
+              .OrderByDescending(item => item.TotalOfComment)
+              .ToList();
+
+            return queryFilter;
+        }
+
         public async Task<PagedResult<StatisticalVm>> Statistical(StatisticalPagingRequest request)
         {
             var query = from od in _context.OrderDetails

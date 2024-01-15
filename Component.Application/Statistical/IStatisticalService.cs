@@ -14,6 +14,7 @@ namespace Component.Application.Statistical
         Task<PagedResult<StatisticalVm>> Statistical(StatisticalPagingRequest request);
         Task<List<StatisticalVm>> GetAll(StatisticalRequest request);
         Task<List<ProductInteractionRequest>> GetListProductInteractions(string keyword);
+        Task<List<UserInteractionRequest>> GetListUserInteractions(string keyword);
 
     }
 }
