@@ -39,7 +39,7 @@ namespace Component.UserAPIs.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Create([FromForm] CommentCreateRequest request)
+        public async Task<IActionResult> Create([FromBody] CommentCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -55,9 +55,8 @@ namespace Component.UserAPIs.Controllers
         }
 
         [HttpPut("{userId}/{commentId}")]
-        [Consumes("multipart/form-data")]
         [Authorize]
-        public async Task<IActionResult> Update([FromRoute] Guid userId, int commentId, [FromForm] CommentUpdateRequest request)
+        public async Task<IActionResult> Update([FromRoute] Guid userId, int commentId, [FromBody] CommentUpdateRequest request)
         {
             var userComments = await _commentService.GetById(commentId);
             var check = userComments.UserId.Equals(userId);

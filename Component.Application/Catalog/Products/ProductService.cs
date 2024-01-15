@@ -297,6 +297,26 @@ namespace Component.Application.Catalog.Products
             return await _context.SaveChangesAsync();
         }
 
+        public async Task<int> UpdateWithoutImage(ProductUpdateWithoutImageRequest request)
+        {
+            var product = await _context.Products.FindAsync(request.Id);
+            var productTranslations = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.ProductId == request.Id
+            && x.LanguageId == request.LanguageId);
+
+            if (product == null || productTranslations == null) throw new EShopException($"Cannot find a product with id: {request.Id}");
+
+            productTranslations.Name = request.Name;
+            productTranslations.SeoAlias = request.SeoAlias;
+            productTranslations.SeoDescription = request.SeoDescription;
+            productTranslations.SeoTitle = request.SeoTitle;
+            productTranslations.Description = request.Description;
+            productTranslations.Details = request.Details;
+            product.IsFeatured = request.IsFeatured;
+            product.Status = request.Status;
+
+            return await _context.SaveChangesAsync();
+        }
+
         public async Task<int> Update(ProductUpdateRequest request)
         {
             var product = await _context.Products.FindAsync(request.Id);
@@ -314,10 +334,12 @@ namespace Component.Application.Catalog.Products
             product.IsFeatured = request.IsFeatured;
             product.Status = request.Status;
 
-            //Save image
+            // Save image
             if (request.ThumbnailImage != null)
             {
-                var thumbnailImage = await _context.ProductImages.FirstOrDefaultAsync(i => i.IsDefault == true && i.ProductId == request.Id);
+                var thumbnailImage = await _context.ProductImages
+                    .FirstOrDefaultAsync(i => i.IsDefault == true && i.ProductId == request.Id);
+
                 if (thumbnailImage != null)
                 {
                     thumbnailImage.FileSize = request.ThumbnailImage.Length;
@@ -325,7 +347,7 @@ namespace Component.Application.Catalog.Products
                     _context.ProductImages.Update(thumbnailImage);
                 }
             }
-
+         
             return await _context.SaveChangesAsync();
         }
 
