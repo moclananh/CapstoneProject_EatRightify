@@ -38,7 +38,7 @@ namespace Component.UserAPIs.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [AllowAnonymous] // note
         public async Task<IActionResult> Create([FromBody] CommentCreateRequest request)
         {
             if (!ModelState.IsValid)

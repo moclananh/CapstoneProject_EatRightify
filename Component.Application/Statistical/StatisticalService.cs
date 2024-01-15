@@ -1,4 +1,5 @@
 ﻿using Component.Data.EF;
+using Component.Data.Entities;
 using Component.ViewModels.Catalog.Products;
 using Component.ViewModels.Common;
 using Component.ViewModels.Statistical;
@@ -6,6 +7,7 @@ using Component.ViewModels.Utilities.Comments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -64,6 +66,52 @@ namespace Component.Application.Statistical
               .OrderByDescending(item => item.TotalQuantity) // Sort by TotalQuantity in descending order
               .ToList();
 
+
+            return queryFilter;
+        }
+
+        public async Task<List<ProductInteractionRequest>> GetListProductInteractions(string keyword)
+        {
+
+            var query = from c in _context.Comments
+                         join u in _context.AppUsers on c.UserId equals u.Id
+                         join p in _context.Products on c.ProductId equals p.Id
+                         join pimg in _context.ProductImages on p.Id equals pimg.ProductId 
+                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+                         group new { c } by new
+                         {
+                             c.ProductId,
+                             pt.Name,
+                             pimg.ImagePath
+                         }
+                        into grouped
+                         select new ProductInteractionRequest()
+                         { 
+                             ProductId = grouped.Key.ProductId,
+                             ProductName = grouped.Key.Name,
+                             ImagePath = grouped.Key.ImagePath,
+                             TotalOfComment = grouped.Count()
+                        };
+
+            // filter
+            if (!string.IsNullOrEmpty(keyword))
+                query = query.Where(x => x.ProductName.Contains(keyword));
+
+            // Create a list to store distinct products
+            List<ProductInteractionRequest> distinctProducts = new List<ProductInteractionRequest>();
+
+            foreach (var productVm in query)
+            {
+                // Check if the product with the same ID is already in the distinctProducts list
+                if (!distinctProducts.Any(p => p.ProductId == productVm.ProductId) /*&& !(productVm.Name == "N/A")*/)
+                {
+                    distinctProducts.Add(productVm);
+                }
+            }
+
+            var queryFilter = distinctProducts
+              .OrderByDescending(item => item.TotalOfComment) 
+              .ToList();
 
             return queryFilter;
         }

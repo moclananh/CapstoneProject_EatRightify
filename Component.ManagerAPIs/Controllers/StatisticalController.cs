@@ -32,5 +32,13 @@ namespace Component.ManagerAPIs.Controllers
             var item = await _statisticalService.GetAll(request);
             return Ok(item);
         }
+
+        [HttpGet("GetListProductInteraction")]
+        [AllowAnonymous] // note
+        public async Task<IActionResult> GetListProductInteraction(string? keyword)
+        {
+            var item = await _statisticalService.GetListProductInteractions(keyword);
+            return Ok(item);
+        }
     }
 }
