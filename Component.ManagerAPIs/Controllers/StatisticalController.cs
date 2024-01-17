@@ -46,5 +46,12 @@ namespace Component.ManagerAPIs.Controllers
             var item = await _statisticalService.GetListUserInteractions(keyword);
             return Ok(item);
         }
+
+        [HttpGet("GetListCustomerLoyal")]
+        public async Task<IActionResult> GetListCustomerLoyal(string? keyword)
+        {
+            var item = await _statisticalService.GetListCustomerLoyal(keyword);
+            return Ok(item);
+        }
     }
 }

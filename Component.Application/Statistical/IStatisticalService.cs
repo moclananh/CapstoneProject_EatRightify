@@ -15,6 +15,7 @@ namespace Component.Application.Statistical
         Task<List<StatisticalVm>> GetAll(StatisticalRequest request);
         Task<List<ProductInteractionRequest>> GetListProductInteractions(string keyword);
         Task<List<UserInteractionRequest>> GetListUserInteractions(string keyword);
+        Task<List<CustomerLoyalRequest>> GetListCustomerLoyal(string keyword);
 
     }
 }

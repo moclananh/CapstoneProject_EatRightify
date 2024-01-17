@@ -70,6 +70,49 @@ namespace Component.Application.Statistical
             return queryFilter;
         }
 
+        public async Task<List<CustomerLoyalRequest>> GetListCustomerLoyal(string keyword)
+        {
+            var query = from o in _context.Orders
+                        join u in _context.AppUsers on o.UserId equals u.Id
+                        where o.Status == Data.Enums.OrderStatus.Success
+                        group new { o, u } by new
+                        {
+                            u.UserName,
+                            u.Id,
+                            u.Avatar
+                        }
+                        into grouped
+                        select new CustomerLoyalRequest()
+                        {
+                            UserName = grouped.Key.UserName,
+                            UserId = grouped.Key.Id,
+                            TotalOfOrdered = grouped.Count(),
+                            UserAvatar = grouped.Key.Avatar,
+                        };
+
+            // filter
+            if (!string.IsNullOrEmpty(keyword))
+                query = query.Where(x => x.UserName.Contains(keyword));
+
+            // Create a list to store distinct products
+            List<CustomerLoyalRequest> distinctProducts = new List<CustomerLoyalRequest>();
+
+            foreach (var productVm in query)
+            {
+                // Check if the product with the same ID is already in the distinctProducts list
+                if (!distinctProducts.Any(p => p.UserId == productVm.UserId))
+                {
+                    distinctProducts.Add(productVm);
+                }
+            }
+
+            var queryFilter = distinctProducts
+              .OrderByDescending(item => item.TotalOfOrdered)
+              .ToList();
+
+            return queryFilter;
+        }
+
         public async Task<List<ProductInteractionRequest>> GetListProductInteractions(string keyword)
         {
 
@@ -123,14 +166,16 @@ namespace Component.Application.Statistical
                         group new { c, u} by new
                         {
                             u.UserName,
-                            u.Id
+                            u.Id,
+                            u.Avatar
                         }
                          into grouped
                         select new UserInteractionRequest()
                         {
                             UserName = grouped.Key.UserName,
                             UserId = grouped.Key.Id,
-                            TotalOfComment = grouped.Count()
+                            TotalOfComment = grouped.Count(),
+                            UserAvatar= grouped.Key.Avatar,
                         };
 
             // filter
