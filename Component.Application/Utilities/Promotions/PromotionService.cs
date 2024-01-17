@@ -91,7 +91,7 @@ namespace Component.Application.Utilities.Promotions
                            Status = p.Status,
                            Name = p.Name,
                            Description = p.Description,
-                           CreatedBy= u.Email,
+                           CreatedBy= u.UserName,
                         };
             //2. filter
             if (!string.IsNullOrEmpty(request.Keyword))
@@ -132,7 +132,7 @@ namespace Component.Application.Utilities.Promotions
                 Status = x.p.Status,
                 Name = x.p.Name,
                 Description = x.p.Description,
-                CreatedBy = x.u.Email,
+                CreatedBy = x.u.UserName,
             }).FirstOrDefaultAsync();
         }
 
@@ -153,7 +153,7 @@ namespace Component.Application.Utilities.Promotions
                 Status = x.p.Status,
                 Name = x.p.Name,
                 Description = x.p.Description,
-                CreatedBy = x.u.Email
+                CreatedBy = x.u.UserName
             }).FirstOrDefaultAsync();
         }
 
