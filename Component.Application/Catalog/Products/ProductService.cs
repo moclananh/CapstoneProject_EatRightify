@@ -9,11 +9,13 @@ using Component.ViewModels.Common;
 using Component.ViewModels.Utilities.Blogs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Component.Application.Catalog.Products
 {
@@ -21,16 +23,22 @@ namespace Component.Application.Catalog.Products
     {
         private readonly ApplicationDbContext _context;
         private readonly IStorageService _storageService;
+        private readonly IConfiguration _configuration;
         //private const string USER_CONTENT_FOLDER_NAME = "user-content";
 
-        public ProductService(ApplicationDbContext context, IStorageService storageService)
+        public ProductService(ApplicationDbContext context, IStorageService storageService, IConfiguration configuration)
         {
             _context = context;
             _storageService = storageService;
+            _configuration = configuration;
         }
 
         public async Task<int> AddImage(int productId, ProductImageCreateRequest request)
         {
+            int imageId = 0;
+            string path = "";
+            string oldPath = _configuration["NoImage"];
+            bool NoImage;
             var productImage = new ProductImage()
             {
                 Caption = request.Caption,
@@ -39,15 +47,34 @@ namespace Component.Application.Catalog.Products
                 ProductId = productId,
                 SortOrder = request.SortOrder
             };
-
-            if (request.ImageFile != null)
+            var thumbnailImage = await _context.ProductImages.FirstOrDefaultAsync(i => i.IsDefault && i.ProductId == productId);
+            path = thumbnailImage.ImagePath;
+            NoImage = string.Equals(path, oldPath, StringComparison.OrdinalIgnoreCase);
+            if ((!string.IsNullOrWhiteSpace(request.ImageFile) && IsBase64String(request.ImageFile)) && NoImage)
+            {
+                thumbnailImage.ImagePath = await _storageService.SaveImageAsync(request.ImageFile);
+                thumbnailImage.FileSize = request.ImageFile.Length;
+                _context.ProductImages.Update(thumbnailImage);
+                imageId = thumbnailImage.Id;
+            }
+            else if ((!string.IsNullOrWhiteSpace(request.ImageFile) && IsBase64String(request.ImageFile)) && !NoImage)
             {
                 productImage.ImagePath = await _storageService.SaveImageAsync(request.ImageFile);
                 productImage.FileSize = request.ImageFile.Length;
+                _context.ProductImages.Add(productImage);
+                await _context.SaveChangesAsync();
+                imageId = productImage.Id;
             }
-            _context.ProductImages.Add(productImage);
+            else
+            {
+                productImage.ImagePath = thumbnailImage.ImagePath;
+                productImage.FileSize = thumbnailImage.FileSize;
+                _context.ProductImages.Update(thumbnailImage);
+                imageId = thumbnailImage.Id;
+            }
+
             await _context.SaveChangesAsync();
-            return productImage.Id;
+            return imageId;
         }
 
         public async Task AddViewcount(int productId)
@@ -99,7 +126,7 @@ namespace Component.Application.Catalog.Products
                 Status = Data.Enums.Status.Active
             };
             //Save image
-            if (request.ThumbnailImage != null)
+            if (!string.IsNullOrWhiteSpace(request.ThumbnailImage) && IsBase64String(request.ThumbnailImage))
             {
                 product.ProductImages = new List<ProductImage>()
                 {
@@ -109,6 +136,21 @@ namespace Component.Application.Catalog.Products
                         DateCreated = DateTime.Now,
                         FileSize = request.ThumbnailImage.Length,
                         ImagePath = await _storageService.SaveImageAsync(request.ThumbnailImage),
+                        IsDefault = true,
+                        SortOrder = 1,
+                    }
+                };
+            }
+            else
+            {
+                product.ProductImages = new List<ProductImage>()
+                {
+                    new ProductImage()
+                    {
+                        Caption = "Thumbnail image",
+                        DateCreated = DateTime.Now,
+                        FileSize = 34648,
+                        ImagePath = _configuration["NoImage"],
                         IsDefault = true,
                         SortOrder = 1
                     }
@@ -290,30 +332,34 @@ namespace Component.Application.Catalog.Products
 
         public async Task<int> RemoveImage(int imageId)
         {
+            int idPro = 0;
             var productImage = await _context.ProductImages.FindAsync(imageId);
             if (productImage == null)
                 throw new EShopException($"Cannot find an image with id {imageId}");
+            idPro = productImage.ProductId;
             _context.ProductImages.Remove(productImage);
-            return await _context.SaveChangesAsync();
-        }
+            await _context.SaveChangesAsync();
+            var thumbnailImage = await _context.ProductImages.FirstOrDefaultAsync(i => i.IsDefault && i.ProductId == idPro);
+            if (thumbnailImage == null)
+            {
+                var newThumbnailImage = new ProductImage
+                {
 
-        public async Task<int> UpdateWithoutImage(ProductUpdateWithoutImageRequest request)
-        {
-            var product = await _context.Products.FindAsync(request.Id);
-            var productTranslations = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.ProductId == request.Id
-            && x.LanguageId == request.LanguageId);
+                    Caption = "Thumbnail image",
+                    DateCreated = DateTime.Now,
+                    FileSize = 34648,
+                    ImagePath = _configuration["NoImage"],
+                    IsDefault = true,
+                    SortOrder = 1,
+                    ProductId = idPro
+                };
 
-            if (product == null || productTranslations == null) throw new EShopException($"Cannot find a product with id: {request.Id}");
-
-            productTranslations.Name = request.Name;
-            productTranslations.SeoAlias = request.SeoAlias;
-            productTranslations.SeoDescription = request.SeoDescription;
-            productTranslations.SeoTitle = request.SeoTitle;
-            productTranslations.Description = request.Description;
-            productTranslations.Details = request.Details;
-            product.IsFeatured = request.IsFeatured;
-            product.Status = request.Status;
-
+                _context.ProductImages.Add(newThumbnailImage);
+            }
+            else
+            {
+                _context.ProductImages.Update(thumbnailImage);
+            }
             return await _context.SaveChangesAsync();
         }
 
@@ -334,21 +380,37 @@ namespace Component.Application.Catalog.Products
             product.IsFeatured = request.IsFeatured;
             product.Status = request.Status;
 
-            // Save image
-            if (request.ThumbnailImage != null)
+            //Save image
+            // Check if ThumbnailImage is a base64-encoded string
+            if (!string.IsNullOrWhiteSpace(request.ThumbnailImage) && IsBase64String(request.ThumbnailImage))
             {
-                var thumbnailImage = await _context.ProductImages
-                    .FirstOrDefaultAsync(i => i.IsDefault == true && i.ProductId == request.Id);
-
-                if (thumbnailImage != null)
-                {
-                    thumbnailImage.FileSize = request.ThumbnailImage.Length;
-                    thumbnailImage.ImagePath = await _storageService.SaveImageAsync(request.ThumbnailImage);
-                    _context.ProductImages.Update(thumbnailImage);
-                }
+                var thumbnailImage = await _context.ProductImages.FirstOrDefaultAsync(i => i.IsDefault && i.ProductId == request.Id);
+                // Update existing image properties
+                thumbnailImage.FileSize = request.ThumbnailImage.Length;
+                thumbnailImage.ImagePath = await _storageService.SaveImageAsync(request.ThumbnailImage);
+                _context.ProductImages.Update(thumbnailImage);
             }
-         
+            else
+            {
+                var thumbnailImage = await _context.ProductImages.FirstOrDefaultAsync(i => i.IsDefault && i.ProductId == request.Id);
+                request.ThumbnailImage = thumbnailImage.ImagePath;
+                _context.ProductImages.Update(thumbnailImage);
+            }
             return await _context.SaveChangesAsync();
+        }
+
+        // Helper method to check if a string is a base64-encoded string
+        private bool IsBase64String(string s)
+        {
+            try
+            {
+                Convert.FromBase64String(s);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public async Task<int> UpdateImage(int imageId, ProductImageUpdateRequest request)
@@ -357,10 +419,19 @@ namespace Component.Application.Catalog.Products
             if (productImage == null)
                 throw new EShopException($"Cannot find an image with id {imageId}");
 
-            if (request.ImageFile != null)
+            if (!string.IsNullOrWhiteSpace(request.ImageFile) && IsBase64String(request.ImageFile))
             {
-                productImage.ImagePath = await _storageService.SaveImageAsync(request.ImageFile);
-                productImage.FileSize = request.ImageFile.Length;
+                var thumbnailImage = await _context.ProductImages.FirstOrDefaultAsync(i => i.IsDefault && i.ProductId == request.Id);
+                // Update existing image properties
+                thumbnailImage.FileSize = request.ImageFile.Length;
+                thumbnailImage.ImagePath = await _storageService.SaveImageAsync(request.ImageFile);
+                _context.ProductImages.Update(thumbnailImage);
+            }
+            else
+            {
+                var thumbnailImage = await _context.ProductImages.FirstOrDefaultAsync(i => i.IsDefault && i.ProductId == request.Id);
+                request.ImageFile = thumbnailImage.ImagePath;
+                _context.ProductImages.Update(thumbnailImage);
             }
             _context.ProductImages.Update(productImage);
             return await _context.SaveChangesAsync();

@@ -99,23 +99,7 @@ namespace Component.ManagerAPIs.Controllers
             return Ok();
         }
 
-
-        [HttpPut("UpdateWithoutImage/{productId}")]
-        public async Task<IActionResult> UpdateWithoutImage([FromRoute] int productId, [FromBody] ProductUpdateWithoutImageRequest request)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            request.Id = productId;
-            var affectedResult = await _productService.UpdateWithoutImage(request);
-            if (affectedResult == 0)
-                return BadRequest();
-            return Ok();
-        }
-
-        [HttpDelete("{productId}")]
-        [Authorize]
+        [HttpDelete("{productId}")]        
         public async Task<IActionResult> Delete(int productId)
         {
             var affectedResult = await _productService.Delete(productId);

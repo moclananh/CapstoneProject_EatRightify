@@ -17,7 +17,6 @@ namespace Component.Application.Catalog.Products
         Task<Product> Create(ProductCreateRequest request);
 
         Task<int> Update(ProductUpdateRequest request);
-        Task<int> UpdateWithoutImage(ProductUpdateWithoutImageRequest request);
 
         Task<int> Delete(int productId);
 
