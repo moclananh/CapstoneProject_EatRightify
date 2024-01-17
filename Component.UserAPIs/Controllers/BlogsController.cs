@@ -17,6 +17,13 @@ namespace Component.UserAPIs.Controllers
             _blogService = blogService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var blogs = await _blogService.GetAll();
+            return Ok(blogs);
+        }
+
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetBlogPagingRequest request)
         {
