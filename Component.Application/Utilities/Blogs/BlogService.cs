@@ -91,7 +91,7 @@ namespace Component.Application.Utilities.Blogs
                 SortOrder= x.b.SortOrder,
                 DateCreate= x.b.DateCreate,
                 Status = x.b.Status,
-                CreatedBy = x.u.Email,
+                CreatedBy = x.u.UserName,
             }).ToListAsync();
         }
 
@@ -111,7 +111,7 @@ namespace Component.Application.Utilities.Blogs
                             SortOrder = b.SortOrder,
                             DateCreate = b.DateCreate,
                             Status = b.Status,
-                            CreatedBy = u.Email,
+                            CreatedBy = u.UserName,
                         };
 
             //2. filter
@@ -153,7 +153,7 @@ namespace Component.Application.Utilities.Blogs
                 SortOrder = x.b.SortOrder,
                 DateCreate = x.b.DateCreate,
                 Status = x.b.Status,
-                CreatedBy = x.u.Email
+                CreatedBy = x.u.UserName
             }).FirstOrDefaultAsync();
         }
 

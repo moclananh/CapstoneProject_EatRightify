@@ -58,7 +58,7 @@ namespace Component.Application.Utilities.Locations
                 Description = x.l.Description,
                 Status = x.l.Status,
                 DateCreated = x.l.DateCreated,
-                CreatedBy = x.u.Email
+                CreatedBy = x.u.UserName
             }).ToListAsync();
         }
 
@@ -77,7 +77,7 @@ namespace Component.Application.Utilities.Locations
                             Description = l.Description,
                             Status = l.Status,
                             DateCreated = l.DateCreated,
-                            CreatedBy = u.Email
+                            CreatedBy = u.UserName
                         };
 
             //2. filter
@@ -118,7 +118,7 @@ namespace Component.Application.Utilities.Locations
                 Description = x.l.Description,
                 Status = x.l.Status,
                 DateCreated = x.l.DateCreated,
-                CreatedBy = x.u.Email
+                CreatedBy = x.u.UserName
             }).FirstOrDefaultAsync();
 
         }
