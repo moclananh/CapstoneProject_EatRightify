@@ -7,6 +7,7 @@ using Component.ViewModels.Catalog.Categories;
 using Component.ViewModels.Common;
 using Component.ViewModels.Utilities.Blogs;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +20,12 @@ namespace Component.Application.Utilities.Blogs
     {
         private readonly ApplicationDbContext _context;
         private readonly IStorageService _storageService;
-        public BlogService(ApplicationDbContext context, IUserService userService, IStorageService storageService)
+        private readonly IConfiguration _configuration;
+        public BlogService(ApplicationDbContext context, IUserService userService, IStorageService storageService, IConfiguration configuration)
         {
             _context = context;
             _storageService = storageService;
+            _configuration = configuration;
         }
 
         public async Task<Blog> Create(BlogCreateRequest request)
@@ -31,26 +34,45 @@ namespace Component.Application.Utilities.Blogs
             {
                 Title = request.Title,
                 Description = request.Description,
-                Url = request.Url,
-                Image = await _storageService.SaveImageAsync(request.Image),
+                Url = request.Url,                
                 SortOrder = request.SortOrder,
                 DateCreate= DateTime.Now,
                 Status= Data.Enums.Status.Active,
                 CreatedBy = request.CreatedBy,
 
             };
+            if (!string.IsNullOrWhiteSpace(request.Image) && IsBase64String(request.Image))
+            {
+                blogs.Image = await _storageService.SaveImageAsync(request.Image);
+            }
+            else
+            {
+                blogs.Image = _configuration["NoImage"];
+            }
 
             _context.Blogs.Add(blogs);
             await _context.SaveChangesAsync();
             return blogs;
+        }
+        private bool IsBase64String(string s)
+        {
+            try
+            {
+                Convert.FromBase64String(s);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public async Task<int> Delete(int blogId)
         {
             var blog = await _context.Blogs.FindAsync(blogId);
             if (blog == null) throw new EShopException($"Cannot find a blog: {blogId}");
-
             _context.Blogs.Remove(blog);
+            await _context.SaveChangesAsync();
             return await _context.SaveChangesAsync();
         }
 
@@ -143,9 +165,16 @@ namespace Component.Application.Utilities.Blogs
             blog.Title = request.Title;
             blog.Description = request.Description;
             blog.Url = request.Url;
-            blog.Image = await _storageService.SaveImageAsync(request.Image);
             blog.SortOrder = request.SortOrder;
             blog.Status = request.Status;
+            if (!string.IsNullOrWhiteSpace(request.Image) && IsBase64String(request.Image))
+            {
+                blog.Image = await _storageService.SaveImageAsync(request.Image);
+            }
+            else
+            {
+                request.Image = blog.Image;
+            }
             return await _context.SaveChangesAsync();
         }
     }

@@ -52,6 +52,7 @@ namespace Component.Application.System.Users
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null) return new LoginErrorRespone<string>("Tài khoản không tồn tại");
             if (user.IsBanned == true) return new LoginErrorRespone<string>("Tài khoản đã bị khóa");
+            if (user.IsVerify == false) return new LoginErrorRespone<string>("Tài khoản chưa xác thực");
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             if (!result.Succeeded)
@@ -187,7 +188,9 @@ namespace Component.Application.System.Users
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 UserName = request.UserName,
-                PhoneNumber = request.PhoneNumber
+                PhoneNumber = request.PhoneNumber,
+                IsVerify = false
+                
             };
             var result = await _userManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
@@ -238,7 +241,14 @@ namespace Component.Application.System.Users
             user.FirstName = request.FirstName;
             user.LastName = request.LastName;
             user.PhoneNumber = request.PhoneNumber;
-            user.Avatar = await _storageService.SaveImageAsync(request.Avatar);
+            if (!string.IsNullOrWhiteSpace(request.Avatar) && IsBase64String(request.Avatar))
+            {
+                user.Avatar = await _storageService.SaveImageAsync(request.Avatar);
+            }
+            else
+            {
+                request.Avatar = user.Avatar;
+            }
 
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
@@ -246,6 +256,18 @@ namespace Component.Application.System.Users
                 return new ApiSuccessResult<bool>();
             }
             return new ApiErrorResult<bool>("Cập nhật không thành công");
+        }
+        private bool IsBase64String(string s)
+        {
+            try
+            {
+                Convert.FromBase64String(s);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public async Task<ApiResult<bool>> BanAccount(Guid id, bool status)
