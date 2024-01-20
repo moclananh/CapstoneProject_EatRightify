@@ -72,7 +72,7 @@ namespace Component.Application.Utilities.Blogs
             var blog = await _context.Blogs.FindAsync(blogId);
             if (blog == null) throw new EShopException($"Cannot find a blog: {blogId}");
             _context.Blogs.Remove(blog);
-            await _context.SaveChangesAsync();
+
             return await _context.SaveChangesAsync();
         }
 
