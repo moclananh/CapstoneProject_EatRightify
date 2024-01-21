@@ -75,10 +75,14 @@ namespace Component.ManagerAPIs.Controllers
             {
                 return BadRequest();
             }
-            var affectedResult = await _blogService.Update(request);
-            if (affectedResult == 0)
+            try
+            {
+                var affectedResult = await _blogService.Update(request);
+                return Ok();
+            }catch(Exception ex)
+            {
                 return BadRequest();
-            return Ok();
+            }
         }
 
         [HttpDelete("{blogId}")]
