@@ -75,10 +75,15 @@ namespace Component.ManagerAPIs.Controllers
             {
                 return BadRequest();
             }
-            var affectedResult = await _promotionService.Update(request);
-            if (affectedResult == 0)
-                return BadRequest();
-            return Ok();
+            try
+            {
+                var affectedResult = await _promotionService.Update(request);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                    return BadRequest();
+            }
         }
 
         [HttpDelete("{promotionId}")]

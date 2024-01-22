@@ -57,12 +57,17 @@ namespace Component.ManagerAPIs.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             request.OrderId = orderId;
-            var affectedResult = await _orderService.UpdateStatus(request);
-            if (affectedResult == 0)
+            try
+            {
+                var affectedResult = await _orderService.UpdateStatus(request);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
                 return BadRequest();
-            return Ok();
+            }
+
         }
 
     }

@@ -64,10 +64,14 @@ namespace Component.ManagerAPIs.Controllers
                 return BadRequest(ModelState);
             }
             request.Id = categoryId;
-            var affectedResult = await _categoryService.Update(request);
-            if (affectedResult == 0)
+            try
+            {
+                var affectedResult = await _categoryService.Update(request);
+                return Ok();
+            }catch(Exception ex)
+            {
                 return BadRequest();
-            return Ok();
+            }
         }
 
         [HttpDelete("{categoryId}")]
