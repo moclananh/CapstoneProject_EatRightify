@@ -57,7 +57,7 @@ namespace Component.Application.Utilities.Comments
                         join u in _context.AppUsers on c.UserId equals u.Id
                         where c.ProductId == productId
                         select new {c, u };
-
+            query = query.OrderByDescending(x => x.c.CreatedAt);
             return await query.Select(x => new CommentVm()
             {
                 Id = x.c.Id,
