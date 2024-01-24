@@ -63,7 +63,6 @@ namespace Component.UserAPIs.Controllers
             {
                 return BadRequest();
             }
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -74,10 +73,15 @@ namespace Component.UserAPIs.Controllers
             {
                 return BadRequest();
             }
-            var affectedResult = await _commentService.Update(request);
-            if (affectedResult == 0)
+            try
+            {
+                var affectedResult = await _commentService.Update(request);
+                return Ok();
+            }
+            catch (Exception)
+            {
                 return BadRequest();
-            return Ok();
+            }
         }
 
         [HttpDelete("{userId}/{commentId}")]
