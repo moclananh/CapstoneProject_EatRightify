@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -441,6 +442,20 @@ namespace Component.Application.System.Users
                 AccumulatedPoints = x.AccumulatedPoints,
                 Avatar = x.Avatar,
             }).Distinct().ToListAsync();
+        }
+
+        public async Task<int> UpdateUserAvatar(Guid userId, string image)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (!string.IsNullOrWhiteSpace(image) && IsBase64String(image))
+            {
+                user.Avatar = await _storageService.SaveImageAsync(image);
+            }
+            else
+            {
+                image = user.Avatar;
+            }
+            return await _context.SaveChangesAsync();
         }
     }
 }

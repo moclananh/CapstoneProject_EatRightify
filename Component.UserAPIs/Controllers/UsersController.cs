@@ -64,6 +64,22 @@ namespace Component.UserAPIs.Controllers
             return Ok(result);
         }
 
+        [HttpPut("UpdateUserAvatar/{userId}")]
+        public async Task<IActionResult> UpdateUserAvatar(Guid userId, string image)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var result = await _userService.UpdateUserAvatar(userId, image);
+                return Ok();
+            }catch(Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)

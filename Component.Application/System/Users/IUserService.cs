@@ -16,6 +16,7 @@ namespace Component.Application.System.Users
 
         Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request);
         Task<List<UserVm>> GetAll(string keyword);
+        Task<int> UpdateUserAvatar(Guid userId, string image);
 
         Task<ApiResult<PagedResult<UserVm>>> GetUsersPaging(GetUserPagingRequest request);
 
@@ -30,5 +31,6 @@ namespace Component.Application.System.Users
         Task<ApiResult<string>> UpdatePassword(Guid id, string oldPassword, string newPassword);
         Task<ApiResult<string>> GetVerifyCode(string email);
         Task<ApiResult<string>> VerifyAccount(string email, string code);
+        
     }
 }
