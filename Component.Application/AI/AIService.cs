@@ -12,6 +12,7 @@ using MailKit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Org.BouncyCastle.Crypto.Prng;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,13 +29,11 @@ namespace Component.Application.AI
         private const string USER_CONTENT_FOLDER_NAME = "user-content";
         private readonly IEmailService _emailService;
         private readonly UserManager<AppUser> _userManager;
-        private readonly IUserService _userService;
-        public AIService(ApplicationDbContext context, IEmailService emailService, UserManager<AppUser> userManager, IUserService userService)
+        public AIService(ApplicationDbContext context, IEmailService emailService, UserManager<AppUser> userManager)
         {
             _context = context;
             _emailService = emailService;
             _userManager = userManager;
-            _userService = userService;
         }
 
         public async Task<UpdateResultRequest> Update(int id, UpdateResultRequest request)
@@ -175,11 +174,10 @@ namespace Component.Application.AI
         {
             string userDetail = await GetResultByUserIdAsync(request.UserId, request.LanguageId);
             string gptResult = await ChatGPTService.GetGPTResult(userDetail);
-            var user = await _userService.GetById(request.UserId);
             var result = new Result()
             {
                 UserId = request.UserId,
-                Title = "Result for " + user.ResultObj.UserName + " On " + DateTime.UtcNow,
+                Title = "Result for " + request.UserId + " On " + DateTime.UtcNow,
                 ResultDate = DateTime.UtcNow,
                 Description = gptResult,
                 Status = Data.Enums.ResultStatus.InProgress,

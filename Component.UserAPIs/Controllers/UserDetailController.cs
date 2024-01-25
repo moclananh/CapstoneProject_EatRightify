@@ -22,7 +22,7 @@ namespace Component.UserAPIs.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] UserDetailVm request)
+        public async Task<IActionResult> Create([FromBody] UserDetailVm request)
         {
             if (!ModelState.IsValid)
             {
@@ -45,8 +45,7 @@ namespace Component.UserAPIs.Controllers
 
 
         [HttpPut("{userId}")]
-        [Consumes("multipart/form-data")]
-        public async Task<IActionResult> Update([FromRoute] Guid userId, [FromForm] UserDetailVm request)
+        public async Task<IActionResult> Update([FromRoute] Guid userId, [FromBody] UserDetailVm request)
         {
             if (!ModelState.IsValid)
             {
@@ -58,10 +57,15 @@ namespace Component.UserAPIs.Controllers
             {
                 return BadRequest();
             }
-            var affectedResult = await _userDetailService.Update(request);
-            if (affectedResult == 0)
+            try
+            {
+                var affectedResult = await _userDetailService.Update(request);
+                return Ok();
+            }
+            catch (Exception)
+            {
                 return BadRequest();
-            return Ok();
+            }
         }
 
 

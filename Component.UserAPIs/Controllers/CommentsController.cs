@@ -19,6 +19,13 @@ namespace Component.UserAPIs.Controllers
             _commentService = commentService;
         }
 
+        [HttpGet("getAll")]
+        public async Task<IActionResult> GetAll(int productId)
+        {
+            var item = await _commentService.GetAll(productId);
+            return Ok(item);
+        }
+
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetCommentPagingRequest request)
         {
@@ -63,7 +70,6 @@ namespace Component.UserAPIs.Controllers
             {
                 return BadRequest();
             }
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -74,10 +80,15 @@ namespace Component.UserAPIs.Controllers
             {
                 return BadRequest();
             }
-            var affectedResult = await _commentService.Update(request);
-            if (affectedResult == 0)
+            try
+            {
+                var affectedResult = await _commentService.Update(request);
+                return Ok();
+            }
+            catch (Exception)
+            {
                 return BadRequest();
-            return Ok();
+            }
         }
 
         [HttpDelete("{userId}/{commentId}")]

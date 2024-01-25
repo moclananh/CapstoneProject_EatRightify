@@ -33,7 +33,7 @@ namespace Component.UserAPIs.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] CreateResultRequest request)
+        public async Task<IActionResult> Create([FromBody] CreateResultRequest request)
         {
             if (!ModelState.IsValid)
             {
