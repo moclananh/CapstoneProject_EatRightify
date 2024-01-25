@@ -22,7 +22,7 @@ namespace Component.UserAPIs.Controllers
         [HttpGet("GetResultByUserId/{userId}")]
         public async Task<IActionResult> GetResultByUserId(Guid userId)
         {
-            var result = await _aiService.GetById(userId);
+            var result = await _aiService.GetByUserId(userId);
 
             if (result == null)
             {
@@ -46,6 +46,6 @@ namespace Component.UserAPIs.Controllers
             }
 
             return Ok(result);
-        }
+        }     
     }
 }

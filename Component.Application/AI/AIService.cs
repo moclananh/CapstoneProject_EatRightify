@@ -1,4 +1,6 @@
-﻿using Component.Data.EF;
+﻿using Component.Application.System.Users;
+using Component.Application.Utilities.Mail;
+using Component.Data.EF;
 using Component.Data.Entities;
 using Component.Utilities.Exceptions;
 using Component.ViewModels.AI;
@@ -6,6 +8,8 @@ using Component.ViewModels.Catalog.Products;
 using Component.ViewModels.Common;
 using Component.ViewModels.System.Users;
 using Component.ViewModels.Utilities.Promotions;
+using MailKit;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
@@ -22,9 +26,15 @@ namespace Component.Application.AI
     {
         private readonly ApplicationDbContext _context;
         private const string USER_CONTENT_FOLDER_NAME = "user-content";
-        public AIService(ApplicationDbContext context)
+        private readonly IEmailService _emailService;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IUserService _userService;
+        public AIService(ApplicationDbContext context, IEmailService emailService, UserManager<AppUser> userManager, IUserService userService)
         {
             _context = context;
+            _emailService = emailService;
+            _userManager = userManager;
+            _userService = userService;
         }
 
         public async Task<UpdateResultRequest> Update(int id, UpdateResultRequest request)
@@ -60,17 +70,17 @@ namespace Component.Application.AI
 
             return await query.Select(x => new ResultVM()
             {
-              Id = x.r.ResultId,
-              Title = x.r.Title,
-              Email = x.u.Email,
-              Description = x.r.Description,
-              ResultDate = x.r.ResultDate,
-              Status= x.r.Status,
-              IsSend = x.r.IsSended
+                Id = x.r.ResultId,
+                Title = x.r.Title,
+                Email = x.u.Email,
+                Description = x.r.Description,
+                ResultDate = x.r.ResultDate,
+                Status = x.r.Status,
+                IsSend = x.r.IsSended
             }).Distinct().ToListAsync();
-        
 
-    }
+
+        }
         public async Task<PagedResult<ResultVM>> GetAllPaging(ResultPagingRequest request)
         {
             var query = from r in _context.Results
@@ -138,7 +148,7 @@ namespace Component.Application.AI
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<ResultVM> GetById(Guid userId)
+        public async Task<ResultVM> GetByUserId(Guid userId)
         {
             var query = from r in _context.Results
                         join u in _context.AppUsers on r.UserId equals u.Id
@@ -165,10 +175,11 @@ namespace Component.Application.AI
         {
             string userDetail = await GetResultByUserIdAsync(request.UserId, request.LanguageId);
             string gptResult = await ChatGPTService.GetGPTResult(userDetail);
+            var user = await _userService.GetById(request.UserId);
             var result = new Result()
             {
                 UserId = request.UserId,
-                Title = "Result for " + request.UserId + " On "+ DateTime.UtcNow,
+                Title = "Result for " + user.ResultObj.UserName + " On " + DateTime.UtcNow,
                 ResultDate = DateTime.UtcNow,
                 Description = gptResult,
                 Status = Data.Enums.ResultStatus.InProgress,
@@ -223,14 +234,14 @@ namespace Component.Application.AI
                         ", List of allergies keyword that user avoid is " + resultData.ProductAllergies +
                         ". Read and analys all of the information above. " +
                         " If the information is invalid or there is no sultable product for user, then don't provide any product and explain the reason" +
-                        " If the information is valid, then"+
+                        " If the information is valid, then" +
                         " this the type of person that want some product suitable for them" +
                         " .Choose a list contain multiple of suitable product for this person," +
                         " remember to exclude all the product that have allergies keyword in it's description, " +
                         " then choose the product description, product stock and the product name must be in this list: " + ProductResultContent +
-                        " . Then for every product you recommend, also provide a link to that product that have a type like this: " + LinkProduct + "{#productid#}"+ "/{#languageid#}" +
+                        " . Then for every product you recommend, also provide a link to that product that have a type like this: " + LinkProduct + "{#productid#}" + "/{#languageid#}" +
                         " and give me the reason why you choose those products for this person. " +
-                        ". Finally, generate a list of work out exercise that suitable for this person and then give me a best advice for this person base on their stats." ;
+                        ". Finally, generate a list of work out exercise that suitable for this person and then give me a best advice for this person base on their stats.";
                     return result;
                 }
                 else
@@ -238,6 +249,58 @@ namespace Component.Application.AI
                     // Xử lý lỗi nếu cần
                     return null;
                 }
+            }
+        }
+
+        public async Task<ApiResult<string>> GetResultEmail(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return new ApiErrorResult<string>("Email not found");
+            }
+            var userId = user.Id;
+            var result = await GetByUserId(userId);
+            if (result == null)
+            {
+                return new ApiErrorResult<string>("Result not found");
+            }
+            var resultEntity = await _context.Results.FindAsync(result.Id);
+            var subject = "ERS health care result";
+            var body = $@"
+            <p style='color: black;'>This is your health care result in ERS system.</p>
+            <table border='1' style='border-collapse: collapse;'>          
+            <tr>
+            <td style='color: black;'><strong>Title</strong></td>
+            <td style='color: black;'>Result for user {user.UserName}</td>
+            </tr>
+            <tr>
+            <td style='color: black;'><strong>Email</strong></td>
+            <td style='color: black;'>{user.Email}</td>
+            </tr>
+            <tr>
+            <td style='color: black;'><strong>Description</strong></td>
+            <td style='color: black;'>{result.Description}</td>
+            </tr>
+            <tr>
+            <td style='color: black;'><strong>Result Date</strong></td>
+            <td style='color: black;'>{result.ResultDate}</td>
+            </tr>            
+            </table>";
+
+            // Adding line breaks for better formatting
+            body = string.Join(Environment.NewLine, body.Split('\n').Select(line => line.Trim()));
+            try
+            {
+                await _emailService.SendPasswordResetEmailAsync(email, subject, body);
+                resultEntity.IsSended = true;
+                await _context.SaveChangesAsync();
+                return new ApiSuccessMessage<string>(" Result email sent");
+            }
+            catch
+            {
+                // Handle the exception as needed
+                return new ApiErrorResult<string>("Error sending result email");
             }
         }
     }

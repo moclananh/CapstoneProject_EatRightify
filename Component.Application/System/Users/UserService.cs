@@ -1,4 +1,5 @@
-﻿using Component.Application.Common;
+﻿using Component.Application.AI;
+using Component.Application.Common;
 using Component.Application.Utilities.Mail;
 using Component.Data.EF;
 using Component.Data.Entities;
@@ -17,6 +18,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Component.Application.System.Users
 {
@@ -178,7 +180,7 @@ namespace Component.Application.System.Users
             }
             if (await _userManager.FindByEmailAsync(request.Email) != null)
             {
-                return new ApiErrorResult<bool>("Emai đã tồn tại");
+                return new ApiErrorResult<bool>("Email đã tồn tại");
             }
 
             user = new AppUser()
@@ -298,7 +300,7 @@ namespace Component.Application.System.Users
             user.RefeshTokenExpire = expire;
             await _context.SaveChangesAsync();
             var subject = "Password Reset Request";
-            var body = $"This is your refesh password code:\n {r}";
+            var body = $"This is your refesh password code: <strong>{r}</strong>";
             try
             {
                 // Call the EmailService to send the password reset email
@@ -387,7 +389,7 @@ namespace Component.Application.System.Users
             user.VerifyCode = r;
             await _context.SaveChangesAsync();
             var subject = "Account verify";
-            var body = $"This is your verify code:\n {r}";
+            var body = $"This is your verify code: <strong>{r}</strong>";
             try
             {
                 await _emailService.SendPasswordResetEmailAsync(email, subject, body);

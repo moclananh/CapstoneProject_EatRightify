@@ -13,8 +13,9 @@ namespace Component.Application.AI
         Task<PagedResult<ResultVM>> GetAllPaging(ResultPagingRequest request);
         Task<List<ResultVM>> GetAll(string keyword);
         Task<ResultVM> GetById(int id);
-        Task<ResultVM> GetById(Guid userId);
+        Task<ResultVM> GetByUserId(Guid userId);
         Task<int> Delete(int id);
         Task<Result> Create(CreateResultRequest request);
+        Task<ApiResult<string>> GetResultEmail(string email);
     }
 }

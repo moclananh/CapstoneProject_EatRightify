@@ -79,5 +79,19 @@ namespace Component.ConfirminatorAPIs.Controllers
             }
             return Ok(); // Return the order with a 200 OK status code.
         }
+
+        [HttpPost("GetResultEmail/{Email}")]
+        public async Task<IActionResult> GetResultEmail(string Email)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _aiService.GetResultEmail(Email);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
     }
 }
