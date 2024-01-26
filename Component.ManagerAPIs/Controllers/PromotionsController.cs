@@ -89,7 +89,7 @@ namespace Component.ManagerAPIs.Controllers
         [HttpDelete("{promotionId}")]
         public async Task<IActionResult> Delete(int promotionId)
         {
-            var check = _promotionService.GetById(promotionId);
+            var check = await _promotionService.GetById(promotionId);
             if (check == null) return BadRequest();
             var affectedResult = await _promotionService.Delete(promotionId);
             if (affectedResult == 0)

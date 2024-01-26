@@ -19,6 +19,6 @@ namespace Component.Application.Utilities.Locations
 
         Task<int> Update(LocationUpdateRequest request);
 
-        Task<int> Delete(int LocationId);
+        Task<int> Delete(int locationId);
     }
 }

@@ -15,6 +15,8 @@ namespace Component.Application.Utilities.Locations
         {
             _context = context;
         }
+
+     
         public async Task<Location> Create(LocationCreateRequest request)
         {
             var locations = new Location()
@@ -34,14 +36,22 @@ namespace Component.Application.Utilities.Locations
             return locations;
         }
 
-        public async Task<int> Delete(int LocationId)
+        public async Task<int> Delete(int locationId)
         {
-            var location = await _context.Locations.FindAsync(LocationId);
-            if (location == null) throw new EShopException($"Cannot find a location: {LocationId}");
-
+            var check = await GetById(locationId);
+            var location = await _context.Locations.FirstOrDefaultAsync(x => x.LocationId == locationId);
+            if (location == null)
+            {
+                throw new EShopException($"Cannot find a location: {locationId}");
+            }
+            if (check.LocationId != location.LocationId)
+            {
+                throw new EShopException($"Error to find location: {locationId}");
+            }
             _context.Locations.Remove(location);
             return await _context.SaveChangesAsync();
         }
+
 
         public async Task<List<LocationVm>> GetAll()
         {

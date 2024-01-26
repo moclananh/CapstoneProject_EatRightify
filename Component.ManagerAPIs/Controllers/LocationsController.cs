@@ -82,15 +82,20 @@ namespace Component.ManagerAPIs.Controllers
         [HttpDelete("{locationId}")]
         public async Task<IActionResult> Delete(int locationId)
         {
-            var check = _LocationService.GetById(locationId);
+            var check = await _LocationService.GetById(locationId);
             if (check == null)
             {
                 return BadRequest();
             }
-            var affectedResult = await _LocationService.Delete(locationId);
-            if (affectedResult == 0)
+            try
+            {
+                var affectedResult = await _LocationService.Delete(locationId);
+                return Ok();
+            }
+            catch(Exception e)
+            {
                 return BadRequest();
-            return Ok();
+            } 
         }
     }
 }

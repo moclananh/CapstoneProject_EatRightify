@@ -88,6 +88,8 @@ namespace Component.ManagerAPIs.Controllers
         [HttpDelete("{blogId}")]
         public async Task<IActionResult> Delete(int blogId)
         {
+            var check = await _blogService.GetById(blogId);
+            if (check == null) return BadRequest();
             var affectedResult = await _blogService.Delete(blogId);
             if (affectedResult == 0)
                 return BadRequest();

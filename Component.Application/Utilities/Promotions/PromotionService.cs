@@ -5,6 +5,7 @@ using Component.ViewModels.Common;
 using Component.ViewModels.Sales.Orders;
 using Component.ViewModels.Utilities.Blogs;
 using Component.ViewModels.Utilities.Comments;
+using Component.ViewModels.Utilities.Locations;
 using Component.ViewModels.Utilities.Promotions;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -44,9 +45,16 @@ namespace Component.Application.Utilities.Promotions
 
         public async Task<int> Delete(int promotionId)
         {
-            var promotion = await _context.Promotions.FindAsync(promotionId);
-            if (promotion == null) throw new EShopException($"Cannot find a promotion: {promotionId}");
-
+            var check = await GetById(promotionId);
+            var promotion = await _context.Promotions.FirstOrDefaultAsync(x => x.Id == promotionId);
+            if (promotion == null)
+            {
+                throw new EShopException($"Cannot find a location: {promotionId}");
+            }
+            if (check.Id != promotion.Id)
+            {
+                throw new EShopException($"Error to find location: {promotionId}");
+            }
             _context.Promotions.Remove(promotion);
             return await _context.SaveChangesAsync();
         }

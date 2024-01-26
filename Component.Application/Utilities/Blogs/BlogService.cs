@@ -6,6 +6,7 @@ using Component.Utilities.Exceptions;
 using Component.ViewModels.Catalog.Categories;
 using Component.ViewModels.Common;
 using Component.ViewModels.Utilities.Blogs;
+using Component.ViewModels.Utilities.Locations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -69,10 +70,17 @@ namespace Component.Application.Utilities.Blogs
 
         public async Task<int> Delete(int blogId)
         {
-            var blog = await _context.Blogs.FindAsync(blogId);
-            if (blog == null) throw new EShopException($"Cannot find a blog: {blogId}");
+            var check = await GetById(blogId);
+            var blog = await _context.Blogs.FirstOrDefaultAsync(x => x.Id == blogId);
+            if (blog == null)
+            {
+                throw new EShopException($"Cannot find a location: {blogId}");
+            }
+            if (check.Id != blog.Id)
+            {
+                throw new EShopException($"Error to find location: {blogId}");
+            }
             _context.Blogs.Remove(blog);
-
             return await _context.SaveChangesAsync();
         }
 
