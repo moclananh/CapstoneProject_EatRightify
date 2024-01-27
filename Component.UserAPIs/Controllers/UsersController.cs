@@ -67,17 +67,16 @@ namespace Component.UserAPIs.Controllers
         [HttpPut("UpdateUserAvatar/{userId}")]
         public async Task<IActionResult> UpdateUserAvatar(Guid userId,[FromBody] UpdateUserAvatarRequest request)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
             var check = await _userService.GetById(userId);
             if (check == null) return BadRequest();
             try
             {
                 var result = await _userService.UpdateUserAvatar(request);
                 return Ok();
-            }catch(Exception e)
+            }catch(Exception)
             {
-                return BadRequest(e);
+                return BadRequest();
             }
         }
 

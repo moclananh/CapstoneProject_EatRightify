@@ -16,6 +16,7 @@ namespace Component.ConfirminatorAPIs.Controllers
         {
             _aiService = aiService;
         }
+
         [HttpPut("Update/{resultId}")]
         public async Task<IActionResult> Update(int resultId, UpdateResultRequest request)
         {
@@ -32,14 +33,30 @@ namespace Component.ConfirminatorAPIs.Controllers
         [HttpPut("UpdateStatus/{resultId}")]
         public async Task<IActionResult> UpdateStatus(int resultId, UpdateStatusResult request)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
             var result = await _aiService.UpdateStatus(resultId, request);
             if (result == null)
             {
                 return BadRequest();
             }
             return Ok(result);
+        }
+
+        [HttpPut("UpdateIsSend/{resultId}")]
+        public async Task<IActionResult> UpdateIsSend(int resultId, UpdateIsSendRequest request)
+        {
+            var check = await _aiService.GetById(resultId);
+            if (check == null) return BadRequest();
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            try
+            {
+                var result = await _aiService.UpdateIsSend(resultId, request);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet("paging")]

@@ -12,7 +12,6 @@ namespace Component.ViewModels.AI
         public string Title { get; set; }
         public string Description { get; set; }
         public ResultStatus Status { get; set; }
-        public bool IsSend { get; set; }
         
     }
 }

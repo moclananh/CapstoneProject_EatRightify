@@ -10,6 +10,7 @@ namespace Component.Application.AI
     {
         Task<UpdateResultRequest> Update(int id, UpdateResultRequest request);
         Task<UpdateStatusResult> UpdateStatus(int id, UpdateStatusResult status);
+        Task<int> UpdateIsSend(int id, UpdateIsSendRequest request);
         Task<PagedResult<ResultVM>> GetAllPaging(ResultPagingRequest request);
         Task<List<ResultVM>> GetAll(string keyword);
         Task<ResultVM> GetById(int id);

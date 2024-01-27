@@ -2,6 +2,7 @@
 using Component.Application.Utilities.Mail;
 using Component.Data.EF;
 using Component.Data.Entities;
+using Component.Data.Enums;
 using Component.Utilities.Exceptions;
 using Component.ViewModels.AI;
 using Component.ViewModels.Catalog.Products;
@@ -42,7 +43,6 @@ namespace Component.Application.AI
             if (result == null) throw new EShopException($"Cannot find a result with id: {id}");
             result.Title = request.Title;
             result.Description = request.Description;
-            result.IsSended = request.IsSend;
             result.Status = request.Status;
             await _context.SaveChangesAsync();
             return request;
@@ -300,6 +300,14 @@ namespace Component.Application.AI
                 // Handle the exception as needed
                 return new ApiErrorResult<string>("Error sending result email");
             }
+        }
+
+        public async Task<int> UpdateIsSend(int id, UpdateIsSendRequest request)
+        {
+            var result = await _context.Results.FindAsync(id);
+            if (result == null) throw new EShopException($"Cannot find a result with id: {id}");
+            result.IsSended = request.IsSended;
+            return await _context.SaveChangesAsync();
         }
     }
 }
