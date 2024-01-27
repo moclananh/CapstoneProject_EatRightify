@@ -444,16 +444,16 @@ namespace Component.Application.System.Users
             }).Distinct().ToListAsync();
         }
 
-        public async Task<int> UpdateUserAvatar(Guid userId, string image)
+        public async Task<int> UpdateUserAvatar(UpdateUserAvatarRequest request)
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
-            if (!string.IsNullOrWhiteSpace(image) && IsBase64String(image))
+            var user = await _userManager.FindByIdAsync(request.UserId.ToString());
+            if (!string.IsNullOrWhiteSpace(request.AvatarImage) && IsBase64String(request.AvatarImage))
             {
-                user.Avatar = await _storageService.SaveImageAsync(image);
+                user.Avatar = await _storageService.SaveImageAsync(request.AvatarImage);
             }
             else
             {
-                image = user.Avatar;
+                request.AvatarImage = user.Avatar;
             }
             return await _context.SaveChangesAsync();
         }

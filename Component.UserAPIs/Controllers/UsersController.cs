@@ -65,15 +65,15 @@ namespace Component.UserAPIs.Controllers
         }
 
         [HttpPut("UpdateUserAvatar/{userId}")]
-        [AllowAnonymous]
-        public async Task<IActionResult> UpdateUserAvatar(Guid userId, [FromBody] string image)
+        public async Task<IActionResult> UpdateUserAvatar(Guid userId,[FromBody] UpdateUserAvatarRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
+            var check = await _userService.GetById(userId);
+            if (check == null) return BadRequest();
             try
             {
-                var result = await _userService.UpdateUserAvatar(userId, image);
+                var result = await _userService.UpdateUserAvatar(request);
                 return Ok();
             }catch(Exception e)
             {

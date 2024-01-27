@@ -16,7 +16,7 @@ namespace Component.Application.System.Users
 
         Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request);
         Task<List<UserVm>> GetAll(string keyword);
-        Task<int> UpdateUserAvatar(Guid userId, string image);
+        Task<int> UpdateUserAvatar(UpdateUserAvatarRequest request);
 
         Task<ApiResult<PagedResult<UserVm>>> GetUsersPaging(GetUserPagingRequest request);
 
