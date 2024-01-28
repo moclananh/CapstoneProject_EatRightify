@@ -250,18 +250,21 @@ namespace Component.Application.AI
             }
         }
 
-        public async Task<ApiResult<string>> GetResultEmail(string email)
+        public async Task<ApiResult<string>> GetResultEmail(string email, int id)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
                 return new ApiErrorResult<string>("Email not found");
             }
-            var userId = user.Id;
-            var result = await GetByUserId(userId);
+            var result = await GetById(id);
             if (result == null)
             {
                 return new ApiErrorResult<string>("Result not found");
+            }
+            if (email != result.Email)
+            {
+                return new ApiErrorResult<string>("Result information not match");
             }
             var resultEntity = await _context.Results.FindAsync(result.Id);
             var subject = "ERS health care result";

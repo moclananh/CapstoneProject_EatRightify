@@ -98,12 +98,12 @@ namespace Component.ConfirminatorAPIs.Controllers
         }
 
         [HttpPost("GetResultEmail/{Email}")]
-        public async Task<IActionResult> GetResultEmail(string Email)
+        public async Task<IActionResult> GetResultEmail(string Email, int id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _aiService.GetResultEmail(Email);
+            var result = await _aiService.GetResultEmail(Email, id);
             if (!result.IsSuccessed)
             {
                 return BadRequest(result);

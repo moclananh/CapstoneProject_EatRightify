@@ -17,6 +17,6 @@ namespace Component.Application.AI
         Task<ResultVM> GetByUserId(Guid userId);
         Task<int> Delete(int id);
         Task<Result> Create(CreateResultRequest request);
-        Task<ApiResult<string>> GetResultEmail(string email);
+        Task<ApiResult<string>> GetResultEmail(string email, int id);
     }
 }
