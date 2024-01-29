@@ -1,5 +1,6 @@
 ﻿using Component.Application.Sales;
 using Component.ViewModels.Sales.Orders;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Component.UserAPIs.Controllers
@@ -73,6 +74,7 @@ namespace Component.UserAPIs.Controllers
         }
 
         [HttpGet("GetBillHistory/{userId}")]
+        [Authorize]
         public async Task<IActionResult> GetBillHistory(Guid userId)
         {
             var billhistory = await _orderService.BillHistory(userId);
@@ -81,18 +83,16 @@ namespace Component.UserAPIs.Controllers
             return Ok(billhistory);
         }
 
-        //ham nay de spam ra nen k dung nua, chuyen sang ham phia duoi
-/*        [HttpGet("GetBillById/{id}")]
-        public async Task<IActionResult> GetBillById(int id)
+        [HttpGet("GetBillDetails/{id}")]
+        [Authorize]
+        public async Task<IActionResult> GetBillDetails(int id)
         {
-            var billhistory = await _orderService.GetBillById(id);
-            if (billhistory == null)
-                return BadRequest("Cannot find bill");
-            return Ok(billhistory);
-        }*/
+            var item = await _orderService.GetOrderDetail(id);
+            return Ok(item);
+        }
 
 
-        [HttpGet("getByOrderCode/{orderCode}")]
+        [HttpGet("GetByOrderCode/{orderCode}")]
         public async Task<IActionResult> GetOrderbyCode(Guid orderCode)
         {
             var order = await _orderService.GetByCode(orderCode);

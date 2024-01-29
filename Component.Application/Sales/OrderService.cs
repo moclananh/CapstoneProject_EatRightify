@@ -464,5 +464,24 @@ namespace Component.Application.Sales
                Status= x.o.Status,
             }).Distinct().ToListAsync();
         }
+
+        public async Task<List<OrderDetailView>> GetOrderDetail(int id)
+        {
+            //1. Select join
+            var query = from o in _context.Orders
+                        join od in _context.OrderDetails on o.Id equals od.OrderId
+                        join p in _context.Products on od.ProductId equals p.Id
+                        join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+                        join l in _context.Languages on pt.LanguageId equals l.Id
+                        where o.Id == id
+                        select new {pt, od };
+
+            return await query.Select(x => new OrderDetailView()
+            {
+                ProductName = x.pt.Name,
+                Quatity = x.od.Quantity,
+                Price = x.od.Price
+            }).ToListAsync();
+        }
     }
 }
