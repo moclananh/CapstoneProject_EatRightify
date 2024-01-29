@@ -11,9 +11,14 @@ namespace Component.ViewModels.Sales.Bills
     {
         public int id { get; set; }
         public string email { get; set; }
+        public string userName { set; get; }
+        public Guid userId { get; set; }
+        public string ShipName { set; get; }
+        public string ShipPhoneNumber { set; get; }
         public string address { get; set; }
         public DateTime orderDate { get; set; }
-        public decimal price { get; set; }
         public OrderStatus Status { get; set; }
+        public Guid oderCode { get; set; }
+
     }
 }

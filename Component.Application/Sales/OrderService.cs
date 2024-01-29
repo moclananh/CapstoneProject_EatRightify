@@ -283,26 +283,29 @@ namespace Component.Application.Sales
                                {
                                    id = o.Id,
                                    email = a.Email,
+                                   userId = a.Id,
+                                   userName = a.UserName,
+                                   ShipName = o.ShipName,
+                                   ShipPhoneNumber = o.ShipPhoneNumber,
                                    address = o.ShipAddress,
                                    orderDate = o.OrderDate,
-                                   price = od.Price,
-                                   Status = o.Status
+                                   Status = o.Status,
+                                   oderCode = o.OrderCode
                                }).ToListAsync();
 
             // Group the results by id and calculate the sum of price
-            var groupedQuery = query
-                .GroupBy(item => item.id)
-                .Select(group => new BillHistoryVM
-                {
-                    id = group.Key,
-                    email = group.First().email,
-                    address = group.First().address,
-                    orderDate = group.First().orderDate,
-                    price = group.Sum(item => item.price),
-                    Status = group.First().Status
-                }).ToList();
+            /*            var groupedQuery = query
+                            .GroupBy(item => item.id)
+                            .Select(group => new BillHistoryVM
+                            {
+                                id = group.Key,
+                                email = group.First().email,
+                                address = group.First().address,
+                                orderDate = group.First().orderDate,
+                                Status = group.First().Status
+                            }).ToList();*/
 
-            result.AddRange(groupedQuery);
+            result.AddRange(query);
 
             return result;
         }
