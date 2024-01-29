@@ -291,20 +291,7 @@ namespace Component.Application.Sales
                                    orderDate = o.OrderDate,
                                    Status = o.Status,
                                    oderCode = o.OrderCode
-                               }).ToListAsync();
-
-            // Group the results by id and calculate the sum of price
-            /*            var groupedQuery = query
-                            .GroupBy(item => item.id)
-                            .Select(group => new BillHistoryVM
-                            {
-                                id = group.Key,
-                                email = group.First().email,
-                                address = group.First().address,
-                                orderDate = group.First().orderDate,
-                                Status = group.First().Status
-                            }).ToList();*/
-
+                               }).Distinct().ToListAsync();
             result.AddRange(query);
 
             return result;
@@ -486,7 +473,7 @@ namespace Component.Application.Sales
                 ImagePath = x.pi.ImagePath,
                 Quatity = x.od.Quantity,
                 Price = x.od.Price
-            }).ToListAsync();
+            }).Distinct().ToListAsync();
         }
     }
 }

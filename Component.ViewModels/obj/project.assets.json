@@ -4005,19 +4005,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\MinhHung\\.nuget\\packages\\": {}
+    "C:\\Users\\Kristino\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\study\\C_Project\\do_an\\new18\\capstone_eatrightify\\Component.ViewModels\\Component.ViewModels.csproj",
+      "projectUniqueName": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\2901\\capstone_eatrightify\\Component.ViewModels\\Component.ViewModels.csproj",
       "projectName": "Component.ViewModels",
-      "projectPath": "D:\\study\\C_Project\\do_an\\new18\\capstone_eatrightify\\Component.ViewModels\\Component.ViewModels.csproj",
-      "packagesPath": "C:\\Users\\MinhHung\\.nuget\\packages\\",
-      "outputPath": "D:\\study\\C_Project\\do_an\\new18\\capstone_eatrightify\\Component.ViewModels\\obj\\",
+      "projectPath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\2901\\capstone_eatrightify\\Component.ViewModels\\Component.ViewModels.csproj",
+      "packagesPath": "C:\\Users\\Kristino\\.nuget\\packages\\",
+      "outputPath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\2901\\capstone_eatrightify\\Component.ViewModels\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\MinhHung\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Kristino\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4025,14 +4030,15 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\study\\C_Project\\do_an\\new18\\capstone_eatrightify\\Component.Data\\Component.Data.csproj": {
-              "projectPath": "D:\\study\\C_Project\\do_an\\new18\\capstone_eatrightify\\Component.Data\\Component.Data.csproj"
+            "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\2901\\capstone_eatrightify\\Component.Data\\Component.Data.csproj": {
+              "projectPath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\2901\\capstone_eatrightify\\Component.Data\\Component.Data.csproj"
             }
           }
         }
@@ -4072,7 +4078,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.103\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }
