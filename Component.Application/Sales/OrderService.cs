@@ -471,14 +471,16 @@ namespace Component.Application.Sales
             var query = from o in _context.Orders
                         join od in _context.OrderDetails on o.Id equals od.OrderId
                         join p in _context.Products on od.ProductId equals p.Id
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join l in _context.Languages on pt.LanguageId equals l.Id
                         where o.Id == id
-                        select new {pt, od };
+                        select new {pt, od, pi };
 
             return await query.Select(x => new OrderDetailView()
             {
                 ProductName = x.pt.Name,
+                ImagePath = x.pi.ImagePath,
                 Quatity = x.od.Quantity,
                 Price = x.od.Price
             }).ToListAsync();
