@@ -9,16 +9,15 @@ namespace Component.ViewModels.Sales.Bills
 {
     public class BillHistoryVM
     {
-        public int id { get; set; }
-        public string email { get; set; }
-        public string userName { set; get; }
-        public Guid userId { get; set; }
+        public int Id { get; set; }
+        public string ShippedEmail { get; set; }
+        public Guid UserId { get; set; }
         public string ShipName { set; get; }
         public string ShipPhoneNumber { set; get; }
-        public string address { get; set; }
-        public DateTime orderDate { get; set; }
+        public string Address { get; set; }
+        public DateTime OrderDate { get; set; }
         public OrderStatus Status { get; set; }
-        public Guid oderCode { get; set; }
+        public Guid OrderCode { get; set; }
 
     }
 }

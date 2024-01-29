@@ -281,16 +281,15 @@ namespace Component.Application.Sales
                                where o.UserId == id
                                select new BillHistoryVM
                                {
-                                   id = o.Id,
-                                   email = a.Email,
-                                   userId = a.Id,
-                                   userName = a.UserName,
+                                   Id = o.Id,
+                                   ShippedEmail = o.ShipEmail,
+                                   UserId = a.Id,
                                    ShipName = o.ShipName,
                                    ShipPhoneNumber = o.ShipPhoneNumber,
-                                   address = o.ShipAddress,
-                                   orderDate = o.OrderDate,
+                                   Address = o.ShipAddress,
+                                   OrderDate = o.OrderDate,
                                    Status = o.Status,
-                                   oderCode = o.OrderCode
+                                   OrderCode = o.OrderCode
                                }).Distinct().ToListAsync();
             result.AddRange(query);
 
