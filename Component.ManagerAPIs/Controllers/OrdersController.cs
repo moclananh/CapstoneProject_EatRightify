@@ -70,5 +70,13 @@ namespace Component.ManagerAPIs.Controllers
 
         }
 
+        [HttpGet("GetOrderDetail/{orderId}")]
+        public async Task<IActionResult> GetODById(int orderId)
+        {
+            var product = await _orderService.GetOrderDetail(orderId);
+            if (product == null)
+                return BadRequest("Cannot find Order");
+            return Ok(product);
+        }
     }
 }

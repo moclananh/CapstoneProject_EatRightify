@@ -211,7 +211,7 @@ namespace Component.Application.Sales
                         select new OrderDetailView()
                         {
                             ProductName = pt.Name,
-                            Quatity = od.Quantity,
+                            Quantity = od.Quantity,
                             Price = od.Price
                         };
 
@@ -470,7 +470,7 @@ namespace Component.Application.Sales
             {
                 ProductName = x.pt.Name,
                 ImagePath = x.pi.ImagePath,
-                Quatity = x.od.Quantity,
+                Quantity = x.od.Quantity,
                 Price = x.od.Price
             }).Distinct().ToListAsync();
         }

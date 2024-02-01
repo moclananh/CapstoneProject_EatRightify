@@ -53,14 +53,14 @@ namespace Component.Application.System.Users
         public async Task<LoginRespone<string>> Authencate(LoginRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
-            if (user == null) return new LoginErrorRespone<string>("Tài khoản không tồn tại");
-            if (user.IsBanned == true) return new LoginErrorRespone<string>("Tài khoản đã bị khóa");
-            if (user.IsVerify == false) return new LoginErrorRespone<string>("Tài khoản chưa xác thực");
+            if (user == null) return new LoginErrorRespone<string>("Account is not exist");
+            if (user.IsBanned == true) return new LoginErrorRespone<string>("Account has been banned");
+            if (user.IsVerify == false) return new LoginErrorRespone<string>("Account is not verify");
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             if (!result.Succeeded)
             {
-                return new LoginErrorRespone<string>("Đăng nhập không đúng");
+                return new LoginErrorRespone<string>("Wrong username or password");
             }
 
             var roles = await _userManager.GetRolesAsync(user);
@@ -97,13 +97,13 @@ namespace Component.Application.System.Users
             var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null)
             {
-                return new ApiErrorResult<bool>("User không tồn tại");
+                return new ApiErrorResult<bool>("User is not exist");
             }
             var reult = await _userManager.DeleteAsync(user);
             if (reult.Succeeded)
                 return new ApiSuccessResult<bool>();
 
-            return new ApiErrorResult<bool>("Xóa không thành công");
+            return new ApiErrorResult<bool>("Delete fail");
         }
 
         public async Task<ApiResult<UserVm>> GetById(Guid id)
@@ -111,7 +111,7 @@ namespace Component.Application.System.Users
             var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null)
             {
-                return new ApiErrorResult<UserVm>("User không tồn tại");
+                return new ApiErrorResult<UserVm>("User is not exist");
             }
             var roles = await _userManager.GetRolesAsync(user);
             var userVm = new UserVm()
@@ -177,11 +177,11 @@ namespace Component.Application.System.Users
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user != null)
             {
-                return new ApiErrorResult<bool>("Tài khoản đã tồn tại");
+                return new ApiErrorResult<bool>("Account is exist");
             }
             if (await _userManager.FindByEmailAsync(request.Email) != null)
             {
-                return new ApiErrorResult<bool>("Email đã tồn tại");
+                return new ApiErrorResult<bool>("Email is exist");
             }
 
             user = new AppUser()
@@ -200,7 +200,7 @@ namespace Component.Application.System.Users
             {
                 return new ApiSuccessResult<bool>();
             }
-            return new ApiErrorResult<bool>("Đăng ký không thành công");
+            return new ApiErrorResult<bool>("Register fail");
         }
 
         public async Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request)
@@ -208,7 +208,7 @@ namespace Component.Application.System.Users
             var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null)
             {
-                return new ApiErrorResult<bool>("Tài khoản không tồn tại");
+                return new ApiErrorResult<bool>("Account is not exist");
             }
             var removedRoles = request.Roles.Where(x => x.Selected == false).Select(x => x.Name).ToList();
             foreach (var roleName in removedRoles)
@@ -236,7 +236,7 @@ namespace Component.Application.System.Users
         {
             if (await _userManager.Users.AnyAsync(x => x.Email == request.Email && x.Id != id))
             {
-                return new ApiErrorResult<bool>("Emai đã tồn tại");
+                return new ApiErrorResult<bool>("Emai is exist");
             }
             var user = await _userManager.FindByIdAsync(id.ToString());
             user.Dob = request.Dob;
@@ -258,7 +258,7 @@ namespace Component.Application.System.Users
             {
                 return new ApiSuccessResult<bool>();
             }
-            return new ApiErrorResult<bool>("Cập nhật không thành công");
+            return new ApiErrorResult<bool>("Update fail");
         }
         private bool IsBase64String(string s)
         {
@@ -278,7 +278,7 @@ namespace Component.Application.System.Users
             var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null)
             {
-                return new ApiErrorResult<bool>("User không tồn tại");
+                return new ApiErrorResult<bool>("User is not exist");
             }
             user.IsBanned = status;
             await _context.SaveChangesAsync();
@@ -363,19 +363,24 @@ namespace Component.Application.System.Users
         }
 
 
-        public async Task<ApiResult<string>> UpdatePassword(Guid id, string oldPassword, string newPassword)
+        public async Task<ApiResult<string>> UpdatePassword(Guid id, UpdatePasswordRequest request)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
 
             if (user != null)
             {
-                var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+                var isOldPasswordCorrect = await _userManager.CheckPasswordAsync(user, request.oldPassword);
+                if(!isOldPasswordCorrect)
+                {
+                    return new ApiErrorResult<string>("Old password not correct");
+                }
+                var result = await _userManager.ChangePasswordAsync(user, request.oldPassword, request.newPassword);
                 if (result.Succeeded)
                 {
-                    return new ApiSuccessResult<string>();
+                    return new ApiSuccessMessage<string>("Update successfull");
                 }
             }
-            return new ApiErrorResult<string>("Cập nhật không thành công");
+            return new ApiErrorResult<string>("Update fail, please make sure new password is valid format");
         }
 
         public async Task<ApiResult<string>> GetVerifyCode(string email)
