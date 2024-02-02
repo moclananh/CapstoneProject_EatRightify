@@ -301,7 +301,7 @@ namespace Component.Application.System.Users
             user.RefeshTokenExpire = expire;
             await _context.SaveChangesAsync();
             var subject = "Password Reset Request";
-            var body = $"This is your refesh password code: <strong>{r}</strong>";
+            var body = $"This is your refresh password code: <strong>{r}</strong>";
             try
             {
                 // Call the EmailService to send the password reset email
@@ -315,11 +315,11 @@ namespace Component.Application.System.Users
             }
         }
 
-        public async Task<ApiResult<string>> ResetPassword(string email, string code, string newPassword, string confirmPassword)
+        public async Task<ApiResult<string>> ResetPassword(ResetPasswordRequest request)
         {
             string token = "";
             // Find the user by email
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(request.Email);
             if (user == null)
             {
                 // Handle case where email doesn't exist
@@ -333,7 +333,7 @@ namespace Component.Application.System.Users
             Console.WriteLine("Expire Token Time: " + user.RefeshTokenExpire);
             Console.WriteLine("Time Difference: " + timeDifference);
             Console.WriteLine("Total Minutes Difference: " + timeDifference.TotalMinutes);
-            if (code == user.RefeshCode)
+            if (request.VerifyCode == user.RefeshCode)
             {
                 token = user.RefeshToken;
             }
@@ -342,13 +342,13 @@ namespace Component.Application.System.Users
             {
                 return new ApiErrorResult<string>("Token has expired");
             }
-            if (newPassword != confirmPassword)
+            if (request.NewPassword != request.ConfirmNewPassword)
             {
                 return new ApiErrorResult<string>("The new password and confirm password do not match");
             }
 
             // Validate the password reset token
-            var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+            var result = await _userManager.ResetPasswordAsync(user, token, request.NewPassword);
 
             if (result.Succeeded)
             {
@@ -408,15 +408,15 @@ namespace Component.Application.System.Users
             }
         }
 
-        public async Task<ApiResult<string>> VerifyAccount(string email, string code)
+        public async Task<ApiResult<string>> VerifyAccount(VerifyAccountRequest request)
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(request.Email);
             if (user == null)
             {
                 // Handle case where email doesn't exist
                 return new ApiErrorResult<string>("Email not found");
             }
-            if (code == user.VerifyCode)
+            if (request.VerifyCode == user.VerifyCode)
             {
                 user.IsVerify = true;
                 await _context.SaveChangesAsync();

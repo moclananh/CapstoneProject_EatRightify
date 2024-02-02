@@ -105,12 +105,12 @@ namespace Component.UserAPIs.Controllers
 
         [HttpPost("ResetPassword")]
         [AllowAnonymous]
-        public async Task<IActionResult> ResetPassword(string email, string token, string newPassword, string confirmPassword)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _userService.ResetPassword(email, token, newPassword, confirmPassword);
+            var result = await _userService.ResetPassword(request);
             if (!result.IsSuccessed)
             {
                 return BadRequest(result);
@@ -150,12 +150,12 @@ namespace Component.UserAPIs.Controllers
 
         [HttpPost("VerifyAccount")]
         [AllowAnonymous]
-        public async Task<IActionResult> VerifyAccount(string email, string code)
+        public async Task<IActionResult> VerifyAccount([FromBody] VerifyAccountRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _userService.VerifyAccount(email, code);
+            var result = await _userService.VerifyAccount(request);
             if (!result.IsSuccessed)
             {
                 return BadRequest(result);

@@ -27,10 +27,10 @@ namespace Component.Application.System.Users
         Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
         Task<ApiResult<bool>> BanAccount(Guid id, bool status);
         Task<ApiResult<string>> ForgotPassword(string email);
-        Task<ApiResult<string>> ResetPassword(string email, string token, string newPassword, string confirmPassword);
+        Task<ApiResult<string>> ResetPassword(ResetPasswordRequest request);
         Task<ApiResult<string>> UpdatePassword(Guid id, UpdatePasswordRequest request);
         Task<ApiResult<string>> GetVerifyCode(string email);
-        Task<ApiResult<string>> VerifyAccount(string email, string code);
+        Task<ApiResult<string>> VerifyAccount(VerifyAccountRequest request);
         
     }
 }
