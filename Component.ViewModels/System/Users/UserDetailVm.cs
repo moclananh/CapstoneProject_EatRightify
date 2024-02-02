@@ -44,15 +44,15 @@ namespace Component.ViewModels.System.Users
         public StateEnum FeelTired { get; set; }
 
         [Display(Name = "Chiều cao hiện tại")]
-        [Range(56, 244, ErrorMessage = ("Height must be between 56 and 244"))]
+        [Range(0.1, double.MaxValue, ErrorMessage = ("Height must be greater than 0"))]
         public int Height { get; set; }
 
         [Display(Name = "Cân nặng hiện tại")]
-        [Range(0, 1000, ErrorMessage = ("Height must be between 0 and 1000"))]
+        [Range(0.1, double.MaxValue, ErrorMessage = ("Weight must be greater than 0"))]
         public float CurrentWeight { get; set; }
 
         [Display(Name = "Cân nặng mong muốn")]
-        [Range(0, 244, ErrorMessage = ("Height must be between 0 and 244"))]
+        [Range(0.1, double.MaxValue, ErrorMessage = ("Weight must be greater than 0"))]
         public float GoalWeight { get; set; }
 
         [Display(Name = "Thời gian ngủ trung bình")]
