@@ -9,8 +9,7 @@ namespace Component.ManagerAPIs.Controllers
 {
     //api/products
     [Route("api/[controller]")]
-    /* [Authorize(Policy = "ManagerPolicy")]*/
-    [AllowAnonymous]
+    [Authorize(Policy = "ManagerPolicy")]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
