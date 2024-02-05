@@ -34,6 +34,6 @@ namespace Component.ViewModels.Catalog.Products
         public Status Status { set; get; }
 
         public List<string> Categories { get; set; } = new List<string>();
-        public List<Comment> CommentsList { get; set; } = new List<Comment>();
+        public List<CommentVm> CommentsList { get; set; } = new List<CommentVm>();
     }
 }
