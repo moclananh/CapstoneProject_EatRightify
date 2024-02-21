@@ -236,7 +236,7 @@ namespace Component.Application.System.Users
         {
             if (await _userManager.Users.AnyAsync(x => x.Email == request.Email && x.Id != id))
             {
-                return new ApiErrorResult<string>("Emai is exist");
+                return new ApiErrorResult<string>("Email is exist");
             }
             var user = await _userManager.FindByIdAsync(id.ToString());
             user.Dob = request.Dob;
