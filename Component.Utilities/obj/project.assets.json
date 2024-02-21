@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\0202\\capstone_eatrightify\\Component.Utilities\\Component.Utilities.csproj",
+      "projectUniqueName": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\Fix2102\\capstone_eatrightify\\Component.Utilities\\Component.Utilities.csproj",
       "projectName": "Component.Utilities",
-      "projectPath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\0202\\capstone_eatrightify\\Component.Utilities\\Component.Utilities.csproj",
+      "projectPath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\Fix2102\\capstone_eatrightify\\Component.Utilities\\Component.Utilities.csproj",
       "packagesPath": "C:\\Users\\Kristino\\.nuget\\packages\\",
-      "outputPath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\0202\\capstone_eatrightify\\Component.Utilities\\obj\\",
+      "outputPath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\Fix2102\\capstone_eatrightify\\Component.Utilities\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

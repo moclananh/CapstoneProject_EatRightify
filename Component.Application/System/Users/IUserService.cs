@@ -14,7 +14,7 @@ namespace Component.Application.System.Users
 
         Task<ApiResult<bool>> Register(RegisterRequest request);
 
-        Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request);
+        Task<ApiResult<string>> Update(Guid id, UserUpdateRequest request);
         Task<List<UserVm>> GetAll(string keyword);
         Task<int> UpdateUserAvatar(UpdateUserAvatarRequest request);
 

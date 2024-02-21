@@ -232,11 +232,11 @@ namespace Component.Application.System.Users
             return new ApiSuccessResult<bool>();
         }
 
-        public async Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request)
+        public async Task<ApiResult<string>> Update(Guid id, UserUpdateRequest request)
         {
             if (await _userManager.Users.AnyAsync(x => x.Email == request.Email && x.Id != id))
             {
-                return new ApiErrorResult<bool>("Emai is exist");
+                return new ApiErrorResult<string>("Emai is exist");
             }
             var user = await _userManager.FindByIdAsync(id.ToString());
             user.Dob = request.Dob;
@@ -256,9 +256,9 @@ namespace Component.Application.System.Users
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
-                return new ApiSuccessResult<bool>();
+                return new ApiSuccessResult<string>();
             }
-            return new ApiErrorResult<bool>("Update fail");
+            return new ApiErrorResult<string>("Update fail");
         }
         private bool IsBase64String(string s)
         {
