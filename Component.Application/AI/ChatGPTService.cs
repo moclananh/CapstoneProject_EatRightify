@@ -10,7 +10,7 @@ namespace Component.Application.AI
 {
     public class ChatGPTService
     {
-        private const string apiKey = "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";
+        private const string apiKey = "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";
         private const string Model = "gpt-3.5-turbo-1106";
 
         public static async Task<string> CallApi(string request)
