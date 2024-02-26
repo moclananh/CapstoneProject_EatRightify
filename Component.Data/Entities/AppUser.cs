@@ -23,6 +23,7 @@ namespace Component.Data.Entities
         public bool? IsVerify { get; set; }
         public string? Avatar { get; set; }
         public DateTime? CreatedDate { get; set; }
+        public string? RefeshTokenTime { get; set; }
         public List<Cart> Carts { get; set; }
         public List<Order> Orders { get; set; }
         public List<Transaction> Transactions { get; set; }

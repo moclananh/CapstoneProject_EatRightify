@@ -114,6 +114,7 @@ namespace Component.Data.Migrations
                     IsVerify = table.Column<bool>(type: "bit", nullable: true),
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RefeshTokenTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -654,13 +655,13 @@ namespace Component.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "AppUsers",
-                columns: new[] { "Id", "AccessFailedCount", "AccumulatedPoints", "Avatar", "ConcurrencyStamp", "CreatedDate", "Dob", "Email", "EmailConfirmed", "FirstName", "IsBanned", "IsVerify", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefeshCode", "RefeshToken", "RefeshTokenExpire", "SecurityStamp", "TwoFactorEnabled", "UserName", "VIP", "VerifyCode" },
+                columns: new[] { "Id", "AccessFailedCount", "AccumulatedPoints", "Avatar", "ConcurrencyStamp", "CreatedDate", "Dob", "Email", "EmailConfirmed", "FirstName", "IsBanned", "IsVerify", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefeshCode", "RefeshToken", "RefeshTokenExpire", "RefeshTokenTime", "SecurityStamp", "TwoFactorEnabled", "UserName", "VIP", "VerifyCode" },
                 values: new object[,]
                 {
-                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), 0, null, null, "2b11c230-eebc-4628-8b17-795aaf24bb35", null, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "verifier@verifier.com", true, "verifier", false, true, "role", false, null, "verifier@verifier.com", "verifier", "AQAAAAIAAYagAAAAEBbJkLQ4tGBKGK64sTP8LfUKECwPaQf2li4/Yyi8vJ0MurSoMGOSR1jsSiXKgx9GlA==", null, false, null, null, null, "", false, "verifier", null, null },
-                    { new Guid("3f5b49c6-e455-48a2-be45-26423e92afbe"), 0, null, null, "5d226318-917c-4f36-9d8f-07a94954e1ed", null, new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "guest@guest.com", true, "Guest", false, true, "Role", false, null, "guest@guest.com", "guest", "AQAAAAIAAYagAAAAELQUn1G7UJ4dyv0Vj80NVMdgf+wwql4Q2DfiuRcoxa5kGQW2Myg09rafID6IQ9CsBg==", null, false, null, null, null, "", false, "guest", null, null },
-                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), 0, null, null, "9daac6b8-257b-40ad-b7cc-5d310c90caa2", null, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, true, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAEOHxSvWS3VJdT6DRh2sq55sOPBNNT9tq4gp4maByzeAVw0KBcTzEPmzm6+MtlEmk7Q==", null, false, null, null, null, "", false, "manager", null, null },
-                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), 0, null, null, "c14751f8-d55e-41ee-afc1-59bf001336e8", null, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, true, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAEI/jIE9TSZ2AWHet3Mog4txbSR1rg2C7/Qc2TT1HzlN/TfbaR5vDeS53nU+0INIvow==", null, false, null, null, null, "", false, "admin", null, null }
+                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), 0, null, null, "349580aa-a9d1-4e80-a6b0-a1476ba39365", null, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "verifier@verifier.com", true, "verifier", false, true, "role", false, null, "verifier@verifier.com", "verifier", "AQAAAAIAAYagAAAAEIw1vURBINrQ/8KoG9D/b+NMmcRXiYNsB/JduN27hlibBgbEV1zQUmxDIijckvjtYg==", null, false, null, null, null, null, "", false, "verifier", null, null },
+                    { new Guid("3f5b49c6-e455-48a2-be45-26423e92afbe"), 0, null, null, "58b19515-ca21-4c5f-92a3-b03a4fd2acba", null, new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "guest@guest.com", true, "Guest", false, true, "Role", false, null, "guest@guest.com", "guest", "AQAAAAIAAYagAAAAEFo9ab5v0CqaMm1neCbxPAkNE6ifrb6rTft308/LumfIEKhYnwFaodZue/s0CzxBVg==", null, false, null, null, null, null, "", false, "guest", null, null },
+                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), 0, null, null, "d50c6a37-5524-4ec9-ac72-84ff19cbf43a", null, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, true, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAEO+/9AkV2NCROSOQIC1Yj8b6qTK8mWYLurwmp6+/ufAI5BcSV8d3ZZuvBODNJfLTVA==", null, false, null, null, null, null, "", false, "manager", null, null },
+                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), 0, null, null, "2fba5a53-5c9e-478b-bcef-213251023071", null, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, true, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAEImclLfwTxyZnnim0hgPQkCUPFOHY0rpYEVhUJK+DJNhbr7Dz1X79oFCqCTX3RpyfA==", null, false, null, null, null, null, "", false, "admin", null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -688,9 +689,9 @@ namespace Component.Data.Migrations
                 columns: new[] { "Id", "DateCreated", "IsFeatured", "OriginalPrice", "Price", "Status", "Stock" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 2, 26, 9, 20, 19, 883, DateTimeKind.Local).AddTicks(1098), null, 255m, 199m, 1, 100 },
-                    { 2, new DateTime(2024, 2, 26, 9, 20, 19, 883, DateTimeKind.Local).AddTicks(1152), null, 355m, 299m, 1, 100 },
-                    { 3, new DateTime(2024, 2, 26, 9, 20, 19, 883, DateTimeKind.Local).AddTicks(1173), null, 455m, 399m, 1, 100 }
+                    { 1, new DateTime(2024, 2, 26, 10, 5, 49, 831, DateTimeKind.Local).AddTicks(3790), null, 255m, 199m, 1, 100 },
+                    { 2, new DateTime(2024, 2, 26, 10, 5, 49, 831, DateTimeKind.Local).AddTicks(3852), null, 355m, 299m, 1, 100 },
+                    { 3, new DateTime(2024, 2, 26, 10, 5, 49, 831, DateTimeKind.Local).AddTicks(3875), null, 455m, 399m, 1, 100 }
                 });
 
             migrationBuilder.InsertData(
