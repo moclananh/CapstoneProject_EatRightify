@@ -34,5 +34,6 @@ namespace Component.ViewModels.System.Users
         public decimal? AccumulatedPoints { get; set; }
         public bool IsBanned { get; set; }
         public string Avatar { get; set; }
+        public DateTime? CreatedDate { get; set; }
     }
 }

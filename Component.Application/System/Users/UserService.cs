@@ -192,7 +192,8 @@ namespace Component.Application.System.Users
                 LastName = request.LastName,
                 UserName = request.UserName,
                 PhoneNumber = request.PhoneNumber,
-                IsVerify = false
+                IsVerify = false,
+                CreatedDate = DateTime.UtcNow
                 
             };
             var result = await _userManager.CreateAsync(user, request.Password);
@@ -431,9 +432,10 @@ namespace Component.Application.System.Users
             if (!string.IsNullOrEmpty(keyword))
             {
                 query = query.Where(x => x.UserName.Contains(keyword)
-                 || x.PhoneNumber.Contains(keyword));
+                                        || x.PhoneNumber.Contains(keyword));
             }
-            return await query.Select(x => new UserVm()
+
+            var users = await query.Select(x => new UserVm()
             {
                 Email = x.Email,
                 PhoneNumber = x.PhoneNumber,
@@ -446,7 +448,13 @@ namespace Component.Application.System.Users
                 VIP = x.VIP,
                 AccumulatedPoints = x.AccumulatedPoints,
                 Avatar = x.Avatar,
+                CreatedDate = x.CreatedDate,
             }).Distinct().ToListAsync();
+
+            // Sort the users by CreatedDate after projection
+            users = users.OrderByDescending(x => x.CreatedDate).ToList();
+
+            return users;
         }
 
         public async Task<int> UpdateUserAvatar(UpdateUserAvatarRequest request)
