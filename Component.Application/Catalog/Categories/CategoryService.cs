@@ -68,9 +68,6 @@ namespace Component.Application.Catalog.Categories
                 var category = await _context.Categories.FindAsync(request.Id);
                 var categoryTranslations = await _context.CategoryTranslations.FirstOrDefaultAsync(x => x.CategoryId == request.Id
                 && x.LanguageId == request.LanguageId);
-
-
-
                 if (category == null || categoryTranslations == null) throw new EShopException($"Cannot find a category with id: {request.Id}");
 
                 categoryTranslations.Name = request.Name;
@@ -104,7 +101,8 @@ namespace Component.Application.Catalog.Categories
             {
                 Id = x.c.Id,
                 Name = x.ct.Name,
-                ParentId = x.c.ParentId
+                ParentId = x.c.ParentId,
+                LanguageId = x.ct.LanguageId,
             }).ToListAsync();
         }
 
@@ -118,7 +116,8 @@ namespace Component.Application.Catalog.Categories
             {
                 Id = x.c.Id,
                 Name = x.ct.Name,
-                ParentId = x.c.ParentId
+                ParentId = x.c.ParentId,
+                LanguageId = x.ct.LanguageId,
             }).FirstOrDefaultAsync();
         }
 
