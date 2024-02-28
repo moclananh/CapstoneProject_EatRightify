@@ -353,12 +353,13 @@ namespace Component.Application.Sales
             }
 
             var status = query.Select(x => x.o.Status).FirstOrDefault();
-
+            var orderDate = query.Select(x => x.o.OrderDate).FirstOrDefault();
             // Assuming you have an enum defined for OrderStatus
             var result = new CheckOrderResult<CheckOrderByCodeVm>
             {
                 Status = status, 
-                Items = distinctProducts
+                Items = distinctProducts,
+                OrderDate = orderDate
             };
 
             return result;

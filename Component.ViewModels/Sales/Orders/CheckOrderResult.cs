@@ -10,12 +10,8 @@ namespace Component.ViewModels.Sales.Orders
 {
     public class CheckOrderResult<T> 
     {
+        public DateTime OrderDate { get; set; }
         public OrderStatus Status { get; set; }
         public List<T> Items { set; get; }
-
-        public static implicit operator CheckOrderResult<T>(CheckOrderResult<OrderDetailView> v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
