@@ -4011,11 +4011,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\FixAI\\capstone_eatrightify\\Component.ViewModels\\Component.ViewModels.csproj",
+      "projectUniqueName": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\FIxLanguage\\capstone_eatrightify\\Component.ViewModels\\Component.ViewModels.csproj",
       "projectName": "Component.ViewModels",
-      "projectPath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\FixAI\\capstone_eatrightify\\Component.ViewModels\\Component.ViewModels.csproj",
+      "projectPath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\FIxLanguage\\capstone_eatrightify\\Component.ViewModels\\Component.ViewModels.csproj",
       "packagesPath": "C:\\Users\\Kristino\\.nuget\\packages\\",
-      "outputPath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\FixAI\\capstone_eatrightify\\Component.ViewModels\\obj\\",
+      "outputPath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\FIxLanguage\\capstone_eatrightify\\Component.ViewModels\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -4037,8 +4037,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\FixAI\\capstone_eatrightify\\Component.Data\\Component.Data.csproj": {
-              "projectPath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\FixAI\\capstone_eatrightify\\Component.Data\\Component.Data.csproj"
+            "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\FIxLanguage\\capstone_eatrightify\\Component.Data\\Component.Data.csproj": {
+              "projectPath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\FIxLanguage\\capstone_eatrightify\\Component.Data\\Component.Data.csproj"
             }
           }
         }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rpRK2u5Kfi7X4KbGtxUnOX/HeV5DsVpt+zRyUnfo8/kOtne3PagPr4o+JNQQySubak9pVbXVwtTdFIWKrD21tw==",
+  "dgSpecHash": "qgoIysweIcVB8U3hOOHtGlplRwPErUSTNeCbwa24aptneLkkFZdBOAVBEHFvDIVBdkTf5NNSDeo70r3HIFd0ig==",
   "success": true,
-  "projectFilePath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\FixAI\\capstone_eatrightify\\Component.ViewModels\\Component.ViewModels.csproj",
+  "projectFilePath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\Gitlab\\FIxLanguage\\capstone_eatrightify\\Component.ViewModels\\Component.ViewModels.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Kristino\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\Kristino\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
