@@ -317,38 +317,53 @@ namespace Component.Application.Sales
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<BillHistoryDetailVM> GetByCode(Guid code)
+        public async Task<CheckOrderResult<CheckOrderByCodeVm>> GetByCode(Guid code)
         {
-            var result = new BillHistoryDetailVM();
-
-            var query = await (from o in _context.Orders
-                               join a in _context.AppUsers on o.UserId equals a.Id
-                               join od in _context.OrderDetails on o.Id equals od.OrderId
-                               join p in _context.Products on od.ProductId equals p.Id
-                               join pt in _context.ProductTranslations on p.Id equals pt.ProductId
-                               where o.OrderCode == code
-                               select new
-                               {
-                                   ID = o.Id,
-                                   Name = pt.Name,
-                                   Quantity = od.Quantity,
-                                   Price = od.Price,
-                                   Status = o.Status
-                               }).ToListAsync();
-
-            if (query.Any())
+            var query = from o in _context.Orders
+                        join od in _context.OrderDetails on o.Id equals od.OrderId
+                        join p in _context.Products on od.ProductId equals p.Id
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId
+                        join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+                        join l in _context.Languages on pt.LanguageId equals l.Id
+                        where o.OrderCode == code
+                        select new 
+                        { 
+                            o, od, p , pi, pt
+                        };
+            var orderDetails = await query.Select(x => new CheckOrderByCodeVm()
             {
-                result.ID = query.First().ID;
-                result.status = query.First().Status;
+                ProductId = x.p.Id,
+                ProductName = x.pt.Name,
+                ImagePath = x.pi.ImagePath,
+                Quantity = x.od.Quantity,
+                Price = x.od.Price
+            }).ToListAsync();
 
-                // Populate the lists
-                result.name = query.Select(item => item.Name).ToList();
-                result.quantity = query.Select(item => item.Quantity).ToList();
-                result.price = query.Select(item => item.Price).ToList();
+
+            // Create a list to store distinct products
+            List<CheckOrderByCodeVm> distinctProducts = new List<CheckOrderByCodeVm>();
+
+            foreach (var productVm in orderDetails)
+            {
+                // Check if the product with the same ID is already in the distinctProducts list
+                if (!distinctProducts.Any(p => p.ProductId== productVm.ProductId))
+                {
+                    distinctProducts.Add(productVm);
+                }
             }
+
+            var status = query.Select(x => x.o.Status).FirstOrDefault();
+
+            // Assuming you have an enum defined for OrderStatus
+            var result = new CheckOrderResult<CheckOrderByCodeVm>
+            {
+                Status = status, 
+                Items = distinctProducts
+            };
 
             return result;
         }
+
         public async Task<decimal> PriceCalculator(decimal price, int quantity, string vip)
         {
             decimal totalPrice = 0;
