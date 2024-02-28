@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Component.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240226030550_updateDatabase")]
-    partial class updateDatabase
+    [Migration("20240226062442_updateDB3")]
+    partial class updateDB3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -207,7 +207,7 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2fba5a53-5c9e-478b-bcef-213251023071",
+                            ConcurrencyStamp = "ac0d7b16-897e-458d-ab1b-f9a51cf9b362",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -218,7 +218,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@admin.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEImclLfwTxyZnnim0hgPQkCUPFOHY0rpYEVhUJK+DJNhbr7Dz1X79oFCqCTX3RpyfA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOIpwmQ7c29JEiYXtko5pw+3X3LsXkSrZMcPBMuKTWVWYp/6Wl5SMyk6yzofh0E7Dw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -228,7 +228,7 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d50c6a37-5524-4ec9-ac72-84ff19cbf43a",
+                            ConcurrencyStamp = "8d517c00-0189-4ea4-981a-ef49a4eb01c9",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "manager@manager.com",
                             EmailConfirmed = true,
@@ -239,7 +239,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "manager@manager.com",
                             NormalizedUserName = "manager",
-                            PasswordHash = "AQAAAAIAAYagAAAAEO+/9AkV2NCROSOQIC1Yj8b6qTK8mWYLurwmp6+/ufAI5BcSV8d3ZZuvBODNJfLTVA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMWozeTVFS0VpPsKZvugYakD+9uwD3tn7zj3BWGVuZkGiM/zAhFGxbmaklXFyjREGQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -249,7 +249,7 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "349580aa-a9d1-4e80-a6b0-a1476ba39365",
+                            ConcurrencyStamp = "602ae23f-3485-441a-ac75-06421898c48a",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "verifier@verifier.com",
                             EmailConfirmed = true,
@@ -260,7 +260,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "verifier@verifier.com",
                             NormalizedUserName = "verifier",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIw1vURBINrQ/8KoG9D/b+NMmcRXiYNsB/JduN27hlibBgbEV1zQUmxDIijckvjtYg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEV6tOnmsjYQZYZfYUJk1bwkzkwNBgAcYj7njRwff/AL1fBONF8lqbttUz1TEMl3uQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -270,7 +270,7 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("3f5b49c6-e455-48a2-be45-26423e92afbe"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "58b19515-ca21-4c5f-92a3-b03a4fd2acba",
+                            ConcurrencyStamp = "262159d5-c189-4ff3-841f-08283f2bd4e8",
                             Dob = new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "guest@guest.com",
                             EmailConfirmed = true,
@@ -281,7 +281,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@guest.com",
                             NormalizedUserName = "guest",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFo9ab5v0CqaMm1neCbxPAkNE6ifrb6rTft308/LumfIEKhYnwFaodZue/s0CzxBVg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBRrKZoNuKkzFZRMJw6dJvZA93Sgo+1ZoTVKUngiEDpAsMVkW9sahyIR2l5rAyf+vg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -824,7 +824,7 @@ namespace Component.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2024, 2, 26, 10, 5, 49, 831, DateTimeKind.Local).AddTicks(3790),
+                            DateCreated = new DateTime(2024, 2, 26, 13, 24, 41, 338, DateTimeKind.Local).AddTicks(1774),
                             OriginalPrice = 255m,
                             Price = 199m,
                             Status = 1,
@@ -834,7 +834,7 @@ namespace Component.Data.Migrations
                         new
                         {
                             Id = 2,
-                            DateCreated = new DateTime(2024, 2, 26, 10, 5, 49, 831, DateTimeKind.Local).AddTicks(3852),
+                            DateCreated = new DateTime(2024, 2, 26, 13, 24, 41, 338, DateTimeKind.Local).AddTicks(1854),
                             OriginalPrice = 355m,
                             Price = 299m,
                             Status = 1,
@@ -844,7 +844,7 @@ namespace Component.Data.Migrations
                         new
                         {
                             Id = 3,
-                            DateCreated = new DateTime(2024, 2, 26, 10, 5, 49, 831, DateTimeKind.Local).AddTicks(3875),
+                            DateCreated = new DateTime(2024, 2, 26, 13, 24, 41, 338, DateTimeKind.Local).AddTicks(1898),
                             OriginalPrice = 455m,
                             Price = 399m,
                             Status = 1,

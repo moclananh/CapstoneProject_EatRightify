@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Component.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class updateDatabase : Migration
+    public partial class updateDB3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -658,10 +658,10 @@ namespace Component.Data.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "AccumulatedPoints", "Avatar", "ConcurrencyStamp", "CreatedDate", "Dob", "Email", "EmailConfirmed", "FirstName", "IsBanned", "IsVerify", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefeshCode", "RefeshToken", "RefeshTokenExpire", "RefeshTokenTime", "SecurityStamp", "TwoFactorEnabled", "UserName", "VIP", "VerifyCode" },
                 values: new object[,]
                 {
-                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), 0, null, null, "349580aa-a9d1-4e80-a6b0-a1476ba39365", null, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "verifier@verifier.com", true, "verifier", false, true, "role", false, null, "verifier@verifier.com", "verifier", "AQAAAAIAAYagAAAAEIw1vURBINrQ/8KoG9D/b+NMmcRXiYNsB/JduN27hlibBgbEV1zQUmxDIijckvjtYg==", null, false, null, null, null, null, "", false, "verifier", null, null },
-                    { new Guid("3f5b49c6-e455-48a2-be45-26423e92afbe"), 0, null, null, "58b19515-ca21-4c5f-92a3-b03a4fd2acba", null, new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "guest@guest.com", true, "Guest", false, true, "Role", false, null, "guest@guest.com", "guest", "AQAAAAIAAYagAAAAEFo9ab5v0CqaMm1neCbxPAkNE6ifrb6rTft308/LumfIEKhYnwFaodZue/s0CzxBVg==", null, false, null, null, null, null, "", false, "guest", null, null },
-                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), 0, null, null, "d50c6a37-5524-4ec9-ac72-84ff19cbf43a", null, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, true, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAEO+/9AkV2NCROSOQIC1Yj8b6qTK8mWYLurwmp6+/ufAI5BcSV8d3ZZuvBODNJfLTVA==", null, false, null, null, null, null, "", false, "manager", null, null },
-                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), 0, null, null, "2fba5a53-5c9e-478b-bcef-213251023071", null, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, true, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAEImclLfwTxyZnnim0hgPQkCUPFOHY0rpYEVhUJK+DJNhbr7Dz1X79oFCqCTX3RpyfA==", null, false, null, null, null, null, "", false, "admin", null, null }
+                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), 0, null, null, "602ae23f-3485-441a-ac75-06421898c48a", null, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "verifier@verifier.com", true, "verifier", false, true, "role", false, null, "verifier@verifier.com", "verifier", "AQAAAAIAAYagAAAAEEV6tOnmsjYQZYZfYUJk1bwkzkwNBgAcYj7njRwff/AL1fBONF8lqbttUz1TEMl3uQ==", null, false, null, null, null, null, "", false, "verifier", null, null },
+                    { new Guid("3f5b49c6-e455-48a2-be45-26423e92afbe"), 0, null, null, "262159d5-c189-4ff3-841f-08283f2bd4e8", null, new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "guest@guest.com", true, "Guest", false, true, "Role", false, null, "guest@guest.com", "guest", "AQAAAAIAAYagAAAAEBRrKZoNuKkzFZRMJw6dJvZA93Sgo+1ZoTVKUngiEDpAsMVkW9sahyIR2l5rAyf+vg==", null, false, null, null, null, null, "", false, "guest", null, null },
+                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), 0, null, null, "8d517c00-0189-4ea4-981a-ef49a4eb01c9", null, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, true, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAEMWozeTVFS0VpPsKZvugYakD+9uwD3tn7zj3BWGVuZkGiM/zAhFGxbmaklXFyjREGQ==", null, false, null, null, null, null, "", false, "manager", null, null },
+                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), 0, null, null, "ac0d7b16-897e-458d-ab1b-f9a51cf9b362", null, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, true, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAEOIpwmQ7c29JEiYXtko5pw+3X3LsXkSrZMcPBMuKTWVWYp/6Wl5SMyk6yzofh0E7Dw==", null, false, null, null, null, null, "", false, "admin", null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -689,9 +689,9 @@ namespace Component.Data.Migrations
                 columns: new[] { "Id", "DateCreated", "IsFeatured", "OriginalPrice", "Price", "Status", "Stock" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 2, 26, 10, 5, 49, 831, DateTimeKind.Local).AddTicks(3790), null, 255m, 199m, 1, 100 },
-                    { 2, new DateTime(2024, 2, 26, 10, 5, 49, 831, DateTimeKind.Local).AddTicks(3852), null, 355m, 299m, 1, 100 },
-                    { 3, new DateTime(2024, 2, 26, 10, 5, 49, 831, DateTimeKind.Local).AddTicks(3875), null, 455m, 399m, 1, 100 }
+                    { 1, new DateTime(2024, 2, 26, 13, 24, 41, 338, DateTimeKind.Local).AddTicks(1774), null, 255m, 199m, 1, 100 },
+                    { 2, new DateTime(2024, 2, 26, 13, 24, 41, 338, DateTimeKind.Local).AddTicks(1854), null, 355m, 299m, 1, 100 },
+                    { 3, new DateTime(2024, 2, 26, 13, 24, 41, 338, DateTimeKind.Local).AddTicks(1898), null, 455m, 399m, 1, 100 }
                 });
 
             migrationBuilder.InsertData(
