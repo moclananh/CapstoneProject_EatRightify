@@ -393,6 +393,9 @@ namespace Component.Application.Catalog.Products
             productTranslations.Details = request.Details;
             product.IsFeatured = request.IsFeatured;
             product.Status = request.Status;
+            product.Price = request.Price;
+            product.OriginalPrice = request.OriginalPrice;
+            product.Stock = request.Stock;
 
             //Save image
             // Check if ThumbnailImage is a base64-encoded string
