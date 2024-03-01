@@ -161,7 +161,8 @@ namespace Component.Application.Utilities.Blogs
                 SortOrder = x.b.SortOrder,
                 DateCreate = x.b.DateCreate,
                 Status = x.b.Status,
-                CreatedBy = x.u.UserName
+                CreatedBy = x.u.UserName,
+                UserAvater = x.u.Avatar
             }).FirstOrDefaultAsync();
         }
 
