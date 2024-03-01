@@ -128,6 +128,7 @@ namespace Component.Application.System.Users
                 VIP = user.VIP,
                 AccumulatedPoints = user.AccumulatedPoints,
                 Avatar = user.Avatar,
+                AcceptedTermOfUse = user.AcceptedTermOfUse,
             };
             return new ApiSuccessResult<UserVm>(userVm);
         }
@@ -193,7 +194,8 @@ namespace Component.Application.System.Users
                 UserName = request.UserName,
                 PhoneNumber = request.PhoneNumber,
                 IsVerify = false,
-                CreatedDate = DateTime.UtcNow
+                CreatedDate = DateTime.UtcNow,
+                AcceptedTermOfUse = false
                 
             };
             var result = await _userManager.CreateAsync(user, request.Password);
@@ -449,6 +451,7 @@ namespace Component.Application.System.Users
                 AccumulatedPoints = x.AccumulatedPoints,
                 Avatar = x.Avatar,
                 CreatedDate = x.CreatedDate,
+                AcceptedTermOfUse = x.AcceptedTermOfUse,
             }).Distinct().ToListAsync();
 
             // Sort the users by CreatedDate after projection
@@ -468,6 +471,17 @@ namespace Component.Application.System.Users
             {
                 request.AvatarImage = user.Avatar;
             }
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> UpdateAcceptedTermOfUse(AcceptedTermOfUseRequest request)
+        {
+            var user = await _userManager.FindByIdAsync(request.UserId.ToString());
+            if (user == null)
+            {
+                throw new Exception("User not exist!");
+            }
+            user.AcceptedTermOfUse = request.IsAccepted;
             return await _context.SaveChangesAsync();
         }
     }

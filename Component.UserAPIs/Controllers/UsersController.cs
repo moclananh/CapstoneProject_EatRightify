@@ -82,6 +82,7 @@ namespace Component.UserAPIs.Controllers
 
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById(Guid id)
         {
             var user = await _userService.GetById(id);
@@ -161,6 +162,23 @@ namespace Component.UserAPIs.Controllers
                 return BadRequest(result);
             }
             return Ok(result);
+        }
+
+        [HttpPut("UpdateAcceptedTermOfUse")]
+        public async Task<IActionResult> UpdateAcceptedTermOfUse([FromBody] AcceptedTermOfUseRequest request)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var check = await _userService.GetById(request.UserId);
+            if (check == null) return BadRequest();
+            try
+            {
+                var result = await _userService.UpdateAcceptedTermOfUse(request);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
     }
 }

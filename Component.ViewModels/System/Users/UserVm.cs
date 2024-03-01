@@ -35,5 +35,6 @@ namespace Component.ViewModels.System.Users
         public bool IsBanned { get; set; }
         public string Avatar { get; set; }
         public DateTime? CreatedDate { get; set; }
+        public bool AcceptedTermOfUse { get; set; }
     }
 }

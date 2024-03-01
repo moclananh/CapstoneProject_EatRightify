@@ -205,7 +205,9 @@ namespace Component.Data.Extensions
                 LastName = "minator",
                 Dob = new DateTime(2023, 01, 01),
                 IsVerify= true,
-                Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png"
+                Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png",
+                AcceptedTermOfUse = false,
+                CreatedDate = new DateTime(1997, 01, 01),
             });
 
             modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
@@ -240,7 +242,9 @@ namespace Component.Data.Extensions
                 LastName = "minator",
                 Dob = new DateTime(2023, 01, 01),
                 IsVerify = true,
-                Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png"
+                Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png",
+                AcceptedTermOfUse = false,
+                CreatedDate = new DateTime(1998, 01, 01),
             });
 
             modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
@@ -275,7 +279,9 @@ namespace Component.Data.Extensions
                 LastName = "role",
                 Dob = new DateTime(2023, 01, 01),
                 IsVerify = true,
-                Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png"
+                Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png",
+                AcceptedTermOfUse = false,
+                CreatedDate = new DateTime(1999, 01, 01),
             });
 
             modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
@@ -301,6 +307,8 @@ namespace Component.Data.Extensions
                 LastName = "Role",
                 Dob = new DateTime(1999, 01, 01),
                 IsVerify = true,
+                AcceptedTermOfUse = false,
+                CreatedDate = new DateTime(2000, 01, 01),
             });
 
 
