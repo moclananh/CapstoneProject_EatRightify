@@ -162,7 +162,7 @@ namespace Component.Application.Utilities.Blogs
                 DateCreate = x.b.DateCreate,
                 Status = x.b.Status,
                 CreatedBy = x.u.UserName,
-                UserAvater = x.u.Avatar
+                UserAvatar = x.u.Avatar
             }).FirstOrDefaultAsync();
         }
 

@@ -18,6 +18,6 @@ namespace Component.ViewModels.Utilities.Blogs
         public DateTime DateCreate { get; set; }
         public Status Status { set; get; }
         public string? CreatedBy { get; set; }
-        public string? UserAvater {  get; set; }
+        public string? UserAvatar {  get; set; }
     }
 }
