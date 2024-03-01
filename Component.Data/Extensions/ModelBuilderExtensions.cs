@@ -86,6 +86,18 @@ namespace Component.Data.Extensions
             modelBuilder.Entity<ProductInCategory>().HasData(
                 new ProductInCategory() { ProductId = 1, CategoryId = 1 }
                 );
+            modelBuilder.Entity<ProductImage>().HasData(
+                            new ProductImage()
+                            {
+                                Id = 1,
+                                ProductId = 1,
+                                ImagePath = "https://erssystem.blob.core.windows.net/ersimages/de8d2577-6b43-47c0-a600-a38194ad7851.png",
+                                Caption = "Thumbnail image",
+                                IsDefault = true,
+                                DateCreated = new DateTime(2023, 01, 01),
+                                SortOrder = 1,
+                                FileSize = 497284,
+                            });
 
             modelBuilder.Entity<Product>().HasData(
          new Product()
@@ -112,8 +124,20 @@ namespace Component.Data.Extensions
                      Description = "Eat Clean weekly weight loss meal package 1 meal per day for 14 days\r\n– Low starch\r\n– Deliver meal packages to your home from Monday to Sunday\r\n– Calories range from 700 – 900 per day\r\n– Low sugar, no MSG, clean green vegetables selected from the supermarket\r\n– Provides adequate protein for the body\r\n- Suitable for those who are sedentary and often sit in the office."
                  });
             modelBuilder.Entity<ProductInCategory>().HasData(
-                new ProductInCategory() { ProductId = 2, CategoryId = 1 }
+                new ProductInCategory() { ProductId = 2, CategoryId = 2 }
                 );
+            modelBuilder.Entity<ProductImage>().HasData(
+                           new ProductImage()
+                           {
+                               Id = 2,
+                               ProductId = 2,
+                               ImagePath = "https://erssystem.blob.core.windows.net/ersimages/de8d2577-6b43-47c0-a600-a38194ad7851.png",
+                               Caption = "Thumbnail image",
+                               IsDefault = true,
+                               DateCreated = new DateTime(2023, 01, 01),
+                               SortOrder = 1,
+                               FileSize = 497284,
+                           });
 
             modelBuilder.Entity<Product>().HasData(
          new Product()
@@ -140,8 +164,20 @@ namespace Component.Data.Extensions
                      Description = "Eat Clean weekly weight loss meal package 1 meal per day for 32 days\r\n– Low starch\r\n– Deliver meal packages to your home from Monday to Sunday\r\n– Calories range from 900 – 1200 per day\r\n– Low sugar, no MSG, clean green vegetables selected from the supermarket\r\n– Provides adequate protein for the body\r\n- Suitable for those who are sedentary and often sit in the office."
                  });
             modelBuilder.Entity<ProductInCategory>().HasData(
-                new ProductInCategory() { ProductId = 3, CategoryId = 1 }
+                new ProductInCategory() { ProductId = 3, CategoryId = 3 }
                 );
+            modelBuilder.Entity<ProductImage>().HasData(
+                          new ProductImage()
+                          {
+                              Id = 3,
+                              ProductId = 3,
+                              ImagePath = "https://erssystem.blob.core.windows.net/ersimages/de8d2577-6b43-47c0-a600-a38194ad7851.png",
+                              Caption = "Thumbnail image",
+                              IsDefault = true,
+                              DateCreated = new DateTime(2023, 01, 01),
+                              SortOrder = 1,
+                              FileSize = 497284,
+                          });
 
             // any guid
             var adminRoleId = new Guid("46f889a9-662d-4969-84f3-6ff4e199ecf5");
@@ -169,6 +205,7 @@ namespace Component.Data.Extensions
                 LastName = "minator",
                 Dob = new DateTime(2023, 01, 01),
                 IsVerify= true,
+                Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png"
             });
 
             modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
@@ -203,6 +240,7 @@ namespace Component.Data.Extensions
                 LastName = "minator",
                 Dob = new DateTime(2023, 01, 01),
                 IsVerify = true,
+                Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png"
             });
 
             modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
@@ -237,6 +275,7 @@ namespace Component.Data.Extensions
                 LastName = "role",
                 Dob = new DateTime(2023, 01, 01),
                 IsVerify = true,
+                Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png"
             });
 
             modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>

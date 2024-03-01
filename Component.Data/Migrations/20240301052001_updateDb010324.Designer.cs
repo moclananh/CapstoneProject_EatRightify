@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Component.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240226062442_updateDB3")]
-    partial class updateDB3
+    [Migration("20240301052001_updateDb010324")]
+    partial class updateDb010324
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,6 +109,9 @@ namespace Component.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool?>("AcceptedTermOfUse")
+                        .HasColumnType("bit");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -207,7 +210,8 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ac0d7b16-897e-458d-ab1b-f9a51cf9b362",
+                            Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png",
+                            ConcurrencyStamp = "baa7572c-adcc-4faa-8af3-feb30345d13f",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -218,7 +222,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@admin.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOIpwmQ7c29JEiYXtko5pw+3X3LsXkSrZMcPBMuKTWVWYp/6Wl5SMyk6yzofh0E7Dw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAH50nPGEhLvlkTAw9vb4TaiiI/Jy088VUQKSYzzqUKmS2XWJoXZgRx21/lKYtuQxw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -228,7 +232,8 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8d517c00-0189-4ea4-981a-ef49a4eb01c9",
+                            Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png",
+                            ConcurrencyStamp = "c05d1eee-4598-4108-9294-cfb2ca766f12",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "manager@manager.com",
                             EmailConfirmed = true,
@@ -239,7 +244,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "manager@manager.com",
                             NormalizedUserName = "manager",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMWozeTVFS0VpPsKZvugYakD+9uwD3tn7zj3BWGVuZkGiM/zAhFGxbmaklXFyjREGQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFZJUhRp268ojcu+9zDRxA1cH7LvJ20F+yGeyyD4ZxXHu0qI5e8CzDkogeFGvPFYGQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -249,7 +254,8 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "602ae23f-3485-441a-ac75-06421898c48a",
+                            Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png",
+                            ConcurrencyStamp = "77dc26ca-a4f7-4e26-b223-ddec1ee8b0a3",
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "verifier@verifier.com",
                             EmailConfirmed = true,
@@ -260,7 +266,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "verifier@verifier.com",
                             NormalizedUserName = "verifier",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEV6tOnmsjYQZYZfYUJk1bwkzkwNBgAcYj7njRwff/AL1fBONF8lqbttUz1TEMl3uQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEF5YEK8ndBYsNfA30obCADVYEFDm/G7hnnAefDvHSx2G3f02wkCOafptjd4MKosNsg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -270,7 +276,7 @@ namespace Component.Data.Migrations
                         {
                             Id = new Guid("3f5b49c6-e455-48a2-be45-26423e92afbe"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "262159d5-c189-4ff3-841f-08283f2bd4e8",
+                            ConcurrencyStamp = "2d5078f3-62d0-4325-9a86-fb1172bfacd7",
                             Dob = new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "guest@guest.com",
                             EmailConfirmed = true,
@@ -281,7 +287,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@guest.com",
                             NormalizedUserName = "guest",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBRrKZoNuKkzFZRMJw6dJvZA93Sgo+1ZoTVKUngiEDpAsMVkW9sahyIR2l5rAyf+vg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEExrjPqTP4uSC+eWkQIQfiAIOVLvxSPkPqZwHhULFXtIZsO836XBYdcFj9vgC9lx4A==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -824,7 +830,7 @@ namespace Component.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2024, 2, 26, 13, 24, 41, 338, DateTimeKind.Local).AddTicks(1774),
+                            DateCreated = new DateTime(2024, 3, 1, 12, 20, 1, 95, DateTimeKind.Local).AddTicks(9540),
                             OriginalPrice = 255m,
                             Price = 199m,
                             Status = 1,
@@ -834,7 +840,7 @@ namespace Component.Data.Migrations
                         new
                         {
                             Id = 2,
-                            DateCreated = new DateTime(2024, 2, 26, 13, 24, 41, 338, DateTimeKind.Local).AddTicks(1854),
+                            DateCreated = new DateTime(2024, 3, 1, 12, 20, 1, 95, DateTimeKind.Local).AddTicks(9625),
                             OriginalPrice = 355m,
                             Price = 299m,
                             Status = 1,
@@ -844,7 +850,7 @@ namespace Component.Data.Migrations
                         new
                         {
                             Id = 3,
-                            DateCreated = new DateTime(2024, 2, 26, 13, 24, 41, 338, DateTimeKind.Local).AddTicks(1898),
+                            DateCreated = new DateTime(2024, 3, 1, 12, 20, 1, 95, DateTimeKind.Local).AddTicks(9660),
                             OriginalPrice = 455m,
                             Price = 399m,
                             Status = 1,
@@ -891,6 +897,41 @@ namespace Component.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductImages", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Caption = "Thumbnail image",
+                            DateCreated = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FileSize = 497284L,
+                            ImagePath = "https://erssystem.blob.core.windows.net/ersimages/de8d2577-6b43-47c0-a600-a38194ad7851.png",
+                            IsDefault = true,
+                            ProductId = 1,
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Caption = "Thumbnail image",
+                            DateCreated = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FileSize = 497284L,
+                            ImagePath = "https://erssystem.blob.core.windows.net/ersimages/de8d2577-6b43-47c0-a600-a38194ad7851.png",
+                            IsDefault = true,
+                            ProductId = 2,
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Caption = "Thumbnail image",
+                            DateCreated = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FileSize = 497284L,
+                            ImagePath = "https://erssystem.blob.core.windows.net/ersimages/de8d2577-6b43-47c0-a600-a38194ad7851.png",
+                            IsDefault = true,
+                            ProductId = 3,
+                            SortOrder = 1
+                        });
                 });
 
             modelBuilder.Entity("Component.Data.Entities.ProductInCategory", b =>
@@ -915,12 +956,12 @@ namespace Component.Data.Migrations
                         },
                         new
                         {
-                            CategoryId = 1,
+                            CategoryId = 2,
                             ProductId = 2
                         },
                         new
                         {
-                            CategoryId = 1,
+                            CategoryId = 3,
                             ProductId = 3
                         });
                 });

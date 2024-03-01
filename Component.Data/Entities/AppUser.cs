@@ -24,6 +24,7 @@ namespace Component.Data.Entities
         public string? Avatar { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string? RefeshTokenTime { get; set; }
+        public bool? AcceptedTermOfUse { get; set; }
         public List<Cart> Carts { get; set; }
         public List<Order> Orders { get; set; }
         public List<Transaction> Transactions { get; set; }
