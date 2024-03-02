@@ -31,6 +31,6 @@ namespace Component.Application.System.Users
         Task<ApiResult<string>> UpdatePassword(Guid id, UpdatePasswordRequest request);
         Task<ApiResult<string>> GetVerifyCode(string email);
         Task<ApiResult<string>> VerifyAccount(VerifyAccountRequest request);
-        
+        Task<LoginRespone<string>> RefreshToken(string token);
     }
 }

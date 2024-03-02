@@ -115,5 +115,18 @@ namespace Component.ConfirminatorAPIs.Controllers
             }
             return Ok(result);
         }
+
+        [HttpPost("RefreshToken")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RefreshToken(string token)
+        {
+            var response = await _userService.RefreshToken(token);
+            if (!response.IsSuccessed)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
     }
 }

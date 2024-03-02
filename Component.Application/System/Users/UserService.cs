@@ -86,7 +86,7 @@ namespace Component.Application.System.Users
             var token = new JwtSecurityToken(_config["Tokens:Issuer"],
                 _config["Tokens:Issuer"],
                 claims,
-                expires: DateTime.Now.AddHours(3),
+                expires: DateTime.Now.AddHours(1),
                 signingCredentials: creds);
 
             return new LoginRespone<string>(new JwtSecurityTokenHandler().WriteToken(token), id);
@@ -483,6 +483,63 @@ namespace Component.Application.System.Users
             }
             user.AcceptedTermOfUse = request.IsAccepted;
             return await _context.SaveChangesAsync();
+        }
+
+        public async Task<LoginRespone<string>> RefreshToken(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_config["Tokens:Key"]);
+
+            // Token validation parameters
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ClockSkew = TimeSpan.Zero, // Set ClockSkew to TimeSpan.Zero to ignore token expiration
+                RequireExpirationTime = false // Set RequireExpirationTime to false to ignore token expiration
+            };
+            // Get the user ID from the token payload
+            var claims = tokenHandler.ReadJwtToken(token).Claims;
+            var userIdClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Dsa);
+            if (userIdClaim == null || string.IsNullOrEmpty(userIdClaim.Value))
+            {
+                return new LoginErrorRespone<string>("User ID not found in token claims");
+            }
+
+            var userId = userIdClaim.Value;
+
+            // Retrieve user from the database based on userId
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return new LoginErrorRespone<string>("User not found");
+            }
+
+            // Generate new token
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var newClaims = new[]
+            {
+        new Claim(ClaimTypes.Email, user.Email),
+        new Claim(ClaimTypes.GivenName, user.FirstName),
+        new Claim(ClaimTypes.Role, string.Join(";", roles)),
+        new Claim(ClaimTypes.Name, user.UserName),
+        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+    };
+
+            var newToken = new JwtSecurityToken(
+                _config["Tokens:Issuer"],
+                _config["Tokens:Issuer"],
+                newClaims,
+                expires: DateTime.Now.AddHours(1), // You can adjust the expiration time here
+                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
+            );
+
+            var newJwtToken = tokenHandler.WriteToken(newToken);
+
+            return new LoginRespone<string>(newJwtToken, user.Id);
         }
     }
 }

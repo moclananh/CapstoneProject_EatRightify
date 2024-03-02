@@ -101,19 +101,17 @@ namespace Component.ManagerAPIs.Controllers
             return Ok(result);
         }
 
-        [HttpPost("VerifyAccount")]
+        [HttpPost("RefreshToken")]
         [AllowAnonymous]
-        public async Task<IActionResult> VerifyAccount([FromBody] VerifyAccountRequest request)
+        public async Task<IActionResult> RefreshToken(string token)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var result = await _userService.VerifyAccount(request);
-            if (!result.IsSuccessed)
+            var response = await _userService.RefreshToken(token);
+            if (!response.IsSuccessed)
             {
-                return BadRequest(result);
+                return BadRequest(response);
             }
-            return Ok(result);
+
+            return Ok(response);
         }
     } 
 }
