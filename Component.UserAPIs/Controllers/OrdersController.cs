@@ -105,5 +105,11 @@ namespace Component.UserAPIs.Controllers
             return Ok(order);
         }
 
+        [HttpGet("GetUserOrderHistoryByOrderStatus")]
+        public async Task<IActionResult> GetUserOrderHistoryByOrderStatus([FromQuery] GetUserOrderHistoryByOrderStatusRequest request)
+        {
+            var item = await _orderService.GetUserOrderHistoryByOrderCode(request);
+            return Ok(item);
+        }
     }
 }

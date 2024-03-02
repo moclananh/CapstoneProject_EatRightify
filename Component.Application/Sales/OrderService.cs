@@ -2,19 +2,12 @@
 using Component.Data.Entities;
 using Component.Data.Enums;
 using Component.Utilities.Exceptions;
-using Component.ViewModels.Catalog.Products;
 using Component.ViewModels.Common;
 using Component.ViewModels.Sales.Bills;
 using Component.ViewModels.Sales.Orders;
-using Component.ViewModels.Utilities.Blogs;
-using Component.ViewModels.Utilities.Promotions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Component.Application.Sales
 {
@@ -489,6 +482,79 @@ namespace Component.Application.Sales
                 Quantity = x.od.Quantity,
                 Price = x.od.Price
             }).Distinct().ToListAsync();
+        }
+
+        public async Task<List<OrderVm>> GetAllOrderByOrderStatus(GetOrderByOrderStatusRequest request)
+        {
+            //1. Select join
+            var query = from o in _context.Orders
+                        join od in _context.OrderDetails on o.Id equals od.OrderId
+                        join p in _context.Products on od.ProductId equals p.Id
+                        join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+                        select new { o, od, p, pt };
+
+            //2. filter
+            if (!string.IsNullOrEmpty(request.Keyword))
+                query = query.Where(x => x.o.OrderCode.ToString().Contains(request.Keyword));
+
+            //3. filter by order status
+            if (request.Status != null)
+            {
+                query = query.Where(x => x.o.Status == request.Status);
+            }
+
+           var orders =  await query.Select(x => new OrderVm()
+            {
+                Id = x.o.Id,
+                OrderDate = x.o.OrderDate,
+                UserId = x.o.UserId,
+                ShipName = x.o.ShipName,
+                ShipAddress = x.o.ShipAddress,
+                ShipEmail = x.o.ShipAddress,
+                ShipPhoneNumber = x.o.ShipAddress,
+                OrderCode = x.o.OrderCode,
+                Status = x.o.Status,
+            }).Distinct().ToListAsync();
+            // Sort the users by CreatedDate after projection
+            orders = orders.OrderByDescending(x => x.OrderDate).ToList();
+            return orders;
+        }
+
+        public async Task<List<OrderVm>> GetUserOrderHistoryByOrderCode(GetUserOrderHistoryByOrderStatusRequest request)
+        {
+            //1. Select join
+            var query = from o in _context.Orders
+                        join od in _context.OrderDetails on o.Id equals od.OrderId
+                        join p in _context.Products on od.ProductId equals p.Id
+                        join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+                        where o.UserId == request.UserId
+                        select new { o, od, p, pt };
+
+            //2. filter
+            if (!string.IsNullOrEmpty(request.Keyword))
+                query = query.Where(x => x.o.OrderCode.ToString().Contains(request.Keyword));
+
+            //3. filter by order status
+            if (request.Status != null)
+            {
+                query = query.Where(x => x.o.Status == request.Status);
+            }
+
+            var orders = await query.Select(x => new OrderVm()
+            {
+                Id = x.o.Id,
+                OrderDate = x.o.OrderDate,
+                UserId = x.o.UserId,
+                ShipName = x.o.ShipName,
+                ShipAddress = x.o.ShipAddress,
+                ShipEmail = x.o.ShipAddress,
+                ShipPhoneNumber = x.o.ShipAddress,
+                OrderCode = x.o.OrderCode,
+                Status = x.o.Status,
+            }).Distinct().ToListAsync();
+            // Sort the users by CreatedDate after projection
+            orders = orders.OrderByDescending(x => x.OrderDate).ToList();
+            return orders;
         }
     }
 }

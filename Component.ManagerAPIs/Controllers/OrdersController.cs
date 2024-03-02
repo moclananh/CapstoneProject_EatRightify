@@ -33,6 +33,13 @@ namespace Component.ManagerAPIs.Controllers
             return Ok(item);
         }
 
+        [HttpGet("GetAllByOrderStatus")]
+        public async Task<IActionResult> GetAllByOrderStatus([FromQuery] GetOrderByOrderStatusRequest request)
+        {
+            var item = await _orderService.GetAllOrderByOrderStatus(request);
+            return Ok(item);
+        }
+
         [HttpGet("GetOrderDetailPagingRequest")]
         public async Task<IActionResult> GetOrderDetailPagingRequest([FromQuery] OrderDetailPagingRequest request)
         {

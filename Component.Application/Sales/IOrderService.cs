@@ -19,6 +19,9 @@ namespace Component.Application.Sales
         Task<CheckOrderResult<CheckOrderByCodeVm>> GetByCode(Guid code);
         Task<Order> GetLastestOrderId();
         Task<List<OrderVm>> GetAll(string keyword);
+        Task<List<OrderVm>> GetAllOrderByOrderStatus(GetOrderByOrderStatusRequest request);
+        Task<List<OrderVm>> GetUserOrderHistoryByOrderCode(GetUserOrderHistoryByOrderStatusRequest request);
+
         Task<PagedResult<OrderVm>> GetAllPaging(OrderPagingRequest request);
         Task<PagedResult<OrderDetailView>> GetOrderDetailPagingRequest(OrderDetailPagingRequest request);
         Task<List<OrderDetailView>> GetOrderDetail(int id);
