@@ -59,7 +59,7 @@ namespace Component.Application.AI
             return status;
         }
 
-        public async Task<List<ResultVM>> GetAll(string keyword)
+        public async Task<List<ResultVM>> GetAll(string keyword, ResultStatus? status)
         {
             var query = from r in _context.Results
                         join u in _context.AppUsers on r.UserId equals u.Id
@@ -69,7 +69,12 @@ namespace Component.Application.AI
             if (!string.IsNullOrEmpty(keyword))
                 query = query.Where(x => x.r.Title.Contains(keyword));
 
-            return await query.Select(x => new ResultVM()
+            if (status != null)
+            {
+                query = query.Where(x => x.r.Status == status);
+            }
+
+            var result = await query.Select(x => new ResultVM()
             {
                 Id = x.r.ResultId,
                 Title = x.r.Title,
@@ -79,9 +84,10 @@ namespace Component.Application.AI
                 Status = x.r.Status,
                 IsSend = x.r.IsSended
             }).Distinct().ToListAsync();
-
-
+            result.OrderByDescending(x => x.ResultDate).ToList();
+            return result;
         }
+
         public async Task<PagedResult<ResultVM>> GetAllPaging(ResultPagingRequest request)
         {
             var query = from r in _context.Results
@@ -180,7 +186,7 @@ namespace Component.Application.AI
             var result = new Result()
             {
                 UserId = request.UserId,
-                Title = "Result for user " + user.ResultObj.UserName + " On " + DateTime.UtcNow,
+                Title = "Result for: " + user.ResultObj.UserName,
                 ResultDate = DateTime.UtcNow,
                 Description = gptResult,
                 Status = Data.Enums.ResultStatus.InProgress,

@@ -1,4 +1,5 @@
 ﻿using Component.Data.Entities;
+using Component.Data.Enums;
 using Component.ViewModels.AI;
 using Component.ViewModels.Common;
 using Component.ViewModels.Utilities.Blogs;
@@ -12,7 +13,7 @@ namespace Component.Application.AI
         Task<UpdateStatusResult> UpdateStatus(int id, UpdateStatusResult status);
         Task<int> UpdateIsSend(int id, UpdateIsSendRequest request);
         Task<PagedResult<ResultVM>> GetAllPaging(ResultPagingRequest request);
-        Task<List<ResultVM>> GetAll(string keyword);
+        Task<List<ResultVM>> GetAll(string keyword, ResultStatus? status);
         Task<ResultVM> GetById(int id);
         Task<ResultVM> GetByUserId(Guid userId);
         Task<int> Delete(int id);

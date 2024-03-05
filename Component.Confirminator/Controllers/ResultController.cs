@@ -1,4 +1,5 @@
 ﻿using Component.Application.AI;
+using Component.Data.Enums;
 using Component.ViewModels.AI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -67,9 +68,9 @@ namespace Component.ConfirminatorAPIs.Controllers
         }
 
         [HttpGet("getAll")]
-        public async Task<IActionResult> GetAll(string? keyword)
+        public async Task<IActionResult> GetAll(string? keyword, ResultStatus? status)
         {
-            var item = await _aiService.GetAll(keyword);
+            var item = await _aiService.GetAll(keyword, status);
             return Ok(item);
         }
 
