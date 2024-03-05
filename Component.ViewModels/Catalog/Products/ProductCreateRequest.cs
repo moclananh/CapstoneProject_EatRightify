@@ -13,7 +13,7 @@ namespace Component.ViewModels.Catalog.Products
         public decimal Price { set; get; }
         public decimal Cost { set; get; }
         public decimal OriginalPrice { set; get; }
-        public int Stock { set; get; }
+        public int InputStock { set; get; }
 
         [Required(ErrorMessage = "Bạn phải nhập tên sản phẩm")]
         public string Name { set; get; }

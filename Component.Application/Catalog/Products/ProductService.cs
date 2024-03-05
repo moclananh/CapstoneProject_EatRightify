@@ -120,7 +120,8 @@ namespace Component.Application.Catalog.Products
                 Cost = request.Cost,
                 Price = request.Price,
                 OriginalPrice = request.OriginalPrice,
-                Stock = request.Stock,
+                InputStock = request.InputStock,
+                Stock = request.InputStock,
                 ViewCount = 0,
                 DateCreated = DateTime.Now,
                 DateModified = DateTime.Now,
@@ -398,6 +399,8 @@ namespace Component.Application.Catalog.Products
             product.Price = request.Price;
             product.OriginalPrice = request.OriginalPrice;
             product.Stock = request.Stock;
+            var temp = request.Stock - product.Stock;
+            product.InputStock += temp;
             product.DateModified = DateTime.Now;
 
             //Save image

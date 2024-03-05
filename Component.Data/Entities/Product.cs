@@ -19,6 +19,7 @@ namespace Component.Data.Entities
         public Status Status { set; get; }
         public bool? IsFeatured { get; set; }
         public decimal Cost { set; get; }
+        public int InputStock { set; get; }
 
         public List<ProductInCategory> ProductInCategories { get; set; }
 

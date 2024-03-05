@@ -12,9 +12,11 @@ namespace Component.ViewModels.Catalog.Products
     public class ProductVm
     {
         public int Id { set; get; }
+        public decimal Cost { set; get; }
         public decimal Price { set; get; }
         public decimal OriginalPrice { set; get; }
         public int Stock { set; get; }
+        public int InputStock { set; get; }
         public int ViewCount { set; get; }
         public DateTime DateCreated { set; get; }
 
