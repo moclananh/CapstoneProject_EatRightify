@@ -449,7 +449,7 @@ namespace Component.Application.Sales
             if (!string.IsNullOrEmpty(keyword))
                 query = query.Where(x => x.o.ShipPhoneNumber.Contains(keyword));
 
-            return await query.Select(x => new OrderVm()
+            var result =  await query.Select(x => new OrderVm()
             {
                Id = x.o.Id,
                OrderDate  = x.o.OrderDate,
@@ -461,6 +461,8 @@ namespace Component.Application.Sales
                OrderCode= x.o.OrderCode,
                Status= x.o.Status,
             }).Distinct().ToListAsync();
+            result = result.OrderByDescending(x => x.OrderDate).ToList();
+            return result;
         }
 
         public async Task<List<OrderDetailView>> GetOrderDetail(int id)
