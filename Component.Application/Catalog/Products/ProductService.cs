@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Component.Application.Catalog.Products
@@ -190,7 +191,7 @@ namespace Component.Application.Catalog.Products
                         from c in picc.DefaultIfEmpty()
                         join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
                         from pi in ppi.DefaultIfEmpty()
-                        where pt.LanguageId == request.LanguageId 
+                        where pt.LanguageId == request.LanguageId
                         select new ProductVm()
                         {
                             Id = p.Id,
@@ -208,10 +209,10 @@ namespace Component.Application.Catalog.Products
                             ViewCount = p.ViewCount,
                             IsFeatured = p.IsFeatured,
                             ThumbnailImage = pi.ImagePath,
-                            Status= p.Status,
+                            Status = p.Status,
                             CategoryId = pic.CategoryId // Add CategoryId to ProductVm
                         };
-            
+
             if (!string.IsNullOrEmpty(request.Keyword))
             {
                 query = query.Where(x => x.Name.Contains(request.Keyword));
@@ -282,7 +283,7 @@ namespace Component.Application.Catalog.Products
                                       Grade = c.Grade,
                                       UserAvatar = u.Avatar
                                   }).AsNoTracking().AsQueryable().ToListAsync(); // phai co asNoTracking de ignore vong lap vo hang
-          
+
             var image = await _context.ProductImages.Where(x => x.ProductId == productId && x.IsDefault == true).FirstOrDefaultAsync();
 
             var productViewModel = new ProductVm()
@@ -305,8 +306,10 @@ namespace Component.Application.Catalog.Products
                 CommentsList = comments,
                 IsFeatured = product.IsFeatured,
                 ThumbnailImage = image != null ? image.ImagePath : "no-image.jpg",
-              
-                
+                InputStock = product.InputStock,
+                Cost = product.Cost,
+                DateModified = product.DateModified,
+
             };
             return productViewModel;
         }
@@ -398,9 +401,9 @@ namespace Component.Application.Catalog.Products
             product.Status = request.Status;
             product.Price = request.Price;
             product.OriginalPrice = request.OriginalPrice;
-            product.Stock = request.Stock;
-            var temp = request.Stock - product.Stock;
+            int temp = request.Stock - product.Stock;
             product.InputStock += temp;
+            product.Stock = request.Stock;
             product.DateModified = DateTime.Now;
 
             //Save image
@@ -519,7 +522,7 @@ namespace Component.Application.Catalog.Products
                     Stock = x.p.Stock,
                     IsFeatured = x.p.IsFeatured,
                     ViewCount = x.p.ViewCount,
-                    Status= x.p.Status,
+                    Status = x.p.Status,
                 }).ToListAsync();
 
             //4. Select and projection
@@ -609,7 +612,7 @@ namespace Component.Application.Catalog.Products
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
                     IsFeatured = x.p.IsFeatured,
-                    Status= x.p.Status,
+                    Status = x.p.Status,
                     ThumbnailImage = x.pi.ImagePath
                 }).Where(x => x.Name != "N/A").Distinct().ToListAsync();
 
@@ -647,7 +650,7 @@ namespace Component.Application.Catalog.Products
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
                     IsFeatured = x.p.IsFeatured,
-                    Status= x.p.Status,
+                    Status = x.p.Status,
                     ThumbnailImage = x.pi.ImagePath
                 }).Where(x => x.Name != "N/A").Distinct().ToListAsync();
 
@@ -683,7 +686,10 @@ namespace Component.Application.Catalog.Products
                             IsFeatured = p.IsFeatured,
                             ThumbnailImage = pi.ImagePath,
                             Status = p.Status,
-                            CategoryId = pic.CategoryId // Add CategoryId to ProductVm
+                            CategoryId = pic.CategoryId, // Add CategoryId to ProductVm
+                            InputStock = p.InputStock,
+                            Cost = p.Cost,
+                            DateModified = p.DateModified,
                         };
 
             if (!string.IsNullOrEmpty(request.Keyword))
@@ -725,6 +731,50 @@ namespace Component.Application.Catalog.Products
                 string base64Image = Convert.ToBase64String(imageBytes);
                 return base64Image;
             }
+        }
+
+        public async Task<decimal> SumOfCost(DateTime? startDate, DateTime? endDate)
+        {
+            var query = from p in _context.Products
+                        select new ProductVm()
+                        {
+                            Id = p.Id,
+                            DateCreated = p.DateCreated,
+                            OriginalPrice = p.OriginalPrice,
+                            Price = p.Price,
+                            Stock = p.Stock,
+                            ViewCount = p.ViewCount,
+                            IsFeatured = p.IsFeatured,
+                            Status = p.Status,
+                            InputStock = p.InputStock,
+                            Cost = p.Cost,
+                            DateModified = p.DateModified,
+                        };
+
+            //2. filter
+            if (startDate != null && endDate != null)
+            {
+                query = query.Where(x => x.DateCreated >= startDate && x.DateCreated <= endDate);
+            }
+
+            List<ProductVm> distinctProducts = new List<ProductVm>();
+
+            foreach (var productVm in query)
+            {
+                // Check if the product with the same ID is already in the distinctProducts list
+                if (!distinctProducts.Any(p => p.Id == productVm.Id) /*&& !(productVm.Name == "N/A")*/)
+                {
+                    distinctProducts.Add(productVm);
+                }
+            }
+
+            // Tính tổng Cost nhân với InputStock tương ứng
+            decimal sumOfCost = distinctProducts
+                .Select(x => x.Cost * x.InputStock) // Nhân giá trị Cost với InputStock của mỗi sản phẩm
+                .DefaultIfEmpty(0) // Nếu không có sản phẩm nào, mặc định là 0
+                .Sum(); // Tính tổng của các giá trị
+
+            return sumOfCost;
         }
     }
 }

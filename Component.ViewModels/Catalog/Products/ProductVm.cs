@@ -19,7 +19,7 @@ namespace Component.ViewModels.Catalog.Products
         public int InputStock { set; get; }
         public int ViewCount { set; get; }
         public DateTime DateCreated { set; get; }
-
+        public DateTime DateModified { set; get; }
         public string Name { set; get; }
         public string Description { set; get; }
         public string Details { set; get; }

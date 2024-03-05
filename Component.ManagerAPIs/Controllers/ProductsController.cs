@@ -9,7 +9,8 @@ namespace Component.ManagerAPIs.Controllers
 {
     //api/products
     [Route("api/[controller]")]
-    [Authorize(Policy = "ManagerPolicy")]
+    /*[Authorize(Policy = "ManagerPolicy")]*/
+    [AllowAnonymous]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -41,6 +42,13 @@ namespace Component.ManagerAPIs.Controllers
             if (product == null)
                 return BadRequest("Cannot find product");
             return Ok(product);
+        }
+
+        [HttpGet("GetSumOfCost")]
+        public async Task<IActionResult> GetSumOfCost([FromQuery]DateTime? startDate,[FromQuery]DateTime? endDate)
+        {
+            var result = await _productService.SumOfCost(startDate, endDate);
+            return Ok(result);
         }
 
         [HttpGet("featured/{languageId}/{take}")]

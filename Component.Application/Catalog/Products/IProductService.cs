@@ -49,5 +49,6 @@ namespace Component.Application.Catalog.Products
         Task<List<ProductVm>> GetLatestProducts(string languageId, int take);
         Task<List<ProductVm>> GetAll(GetAllProductRequest request);
         Task<string> CreateBase64Image(IFormFile image);
+        Task<decimal> SumOfCost (DateTime? startDate, DateTime? endDate);
     }
 }
