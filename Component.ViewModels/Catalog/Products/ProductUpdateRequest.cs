@@ -23,6 +23,7 @@ namespace Component.ViewModels.Catalog.Products
         public bool? IsFeatured { get; set; }
         public string ThumbnailImage { get; set; }
         public decimal Price { set; get; }
+        public decimal Cost { set; get; }
         public decimal OriginalPrice { set; get; }
         public int Stock { set; get; }
     }

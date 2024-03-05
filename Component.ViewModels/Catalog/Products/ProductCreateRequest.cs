@@ -11,6 +11,7 @@ namespace Component.ViewModels.Catalog.Products
     public class ProductCreateRequest
     {
         public decimal Price { set; get; }
+        public decimal Cost { set; get; }
         public decimal OriginalPrice { set; get; }
         public int Stock { set; get; }
 

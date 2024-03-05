@@ -117,11 +117,13 @@ namespace Component.Application.Catalog.Products
             }
             var product = new Product()
             {
+                Cost = request.Cost,
                 Price = request.Price,
                 OriginalPrice = request.OriginalPrice,
                 Stock = request.Stock,
                 ViewCount = 0,
                 DateCreated = DateTime.Now,
+                DateModified = DateTime.Now,
                 IsFeatured = request.IsFeatured,
                 ProductTranslations = translations,
                 Status = Data.Enums.Status.Active
@@ -396,6 +398,7 @@ namespace Component.Application.Catalog.Products
             product.Price = request.Price;
             product.OriginalPrice = request.OriginalPrice;
             product.Stock = request.Stock;
+            product.DateModified = DateTime.Now;
 
             //Save image
             // Check if ThumbnailImage is a base64-encoded string
