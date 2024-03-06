@@ -522,7 +522,7 @@ namespace Component.Application.System.Users
         new Claim(ClaimTypes.GivenName, user.FirstName),
         new Claim(ClaimTypes.Role, string.Join(";", roles)),
         new Claim(ClaimTypes.Name, user.UserName),
-        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+        new Claim(ClaimTypes.Dsa, user.Id.ToString()),
     };
 
             var newToken = new JwtSecurityToken(
