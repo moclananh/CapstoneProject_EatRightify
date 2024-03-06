@@ -44,6 +44,7 @@ namespace Component.Application.Sales
                         ShipAddress = request.Address,
                         ShipEmail = request.Email,
                         ShipPhoneNumber = request.PhoneNumber,
+                        TotalPriceOfOrder = request.TotalPriceOfOrder,
                         Status = OrderStatus.InProgress,
                         OrderCode = Guid.NewGuid(),
                         OrderDetails = new List<OrderDetail>() { }

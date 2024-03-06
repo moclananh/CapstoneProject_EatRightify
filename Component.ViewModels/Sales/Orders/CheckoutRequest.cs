@@ -20,7 +20,7 @@ namespace Component.ViewModels.Sales.Orders
         public string Email { get; set; }
 
         public string PhoneNumber { get; set; }
-
+        public decimal TotalPriceOfOrder { set; get; }
 
 
         public List<OrderDetailVm> OrderDetails { set; get; } = new List<OrderDetailVm>();
