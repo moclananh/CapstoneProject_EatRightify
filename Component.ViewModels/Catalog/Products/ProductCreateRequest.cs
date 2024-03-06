@@ -28,5 +28,6 @@ namespace Component.ViewModels.Catalog.Products
 
         public bool IsFeatured { get; set; }
         public string ThumbnailImage { get; set; }
+        public DateTime DateCreated { set; get; }   
     }
 }

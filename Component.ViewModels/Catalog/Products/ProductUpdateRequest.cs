@@ -26,5 +26,6 @@ namespace Component.ViewModels.Catalog.Products
         public decimal Cost { set; get; }
         public decimal OriginalPrice { set; get; }
         public int Stock { set; get; }
+        public DateTime DateModified {  set; get; }
     }
 }

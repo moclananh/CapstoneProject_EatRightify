@@ -124,8 +124,8 @@ namespace Component.Application.Catalog.Products
                 InputStock = request.InputStock,
                 Stock = request.InputStock,
                 ViewCount = 0,
-                DateCreated = DateTime.Now,
-                DateModified = DateTime.Now,
+                DateCreated = request.DateCreated,
+                DateModified = request.DateCreated,
                 IsFeatured = request.IsFeatured,
                 ProductTranslations = translations,
                 Status = Data.Enums.Status.Active
@@ -404,7 +404,8 @@ namespace Component.Application.Catalog.Products
             int temp = request.Stock - product.Stock;
             product.InputStock += temp;
             product.Stock = request.Stock;
-            product.DateModified = DateTime.Now;
+            product.DateModified = request.DateModified;
+            product.Cost = request.Cost;
 
             //Save image
             // Check if ThumbnailImage is a base64-encoded string
