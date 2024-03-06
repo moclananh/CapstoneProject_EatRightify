@@ -26,6 +26,14 @@ namespace Component.ManagerAPIs.Controllers
             return Ok(statistical);
         }
 
+        [HttpGet("GetTotalQuantity")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetTotalQuantity([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+        {
+            var item = await _statisticalService.TotalQuantityOfOrder(startDate, endDate);
+            return Ok(item);
+        }
+
         [HttpGet("getAll")]
         public async Task<IActionResult> GetAll([FromQuery] StatisticalRequest request)
         {

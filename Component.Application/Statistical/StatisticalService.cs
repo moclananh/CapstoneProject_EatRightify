@@ -260,5 +260,26 @@ namespace Component.Application.Statistical
             };
             return pagedResult;
         }
+
+        public async Task<decimal> TotalQuantityOfOrder(DateTime? startDate, DateTime? endDate)
+        {
+            //1. Select join
+            var query = from o in _context.Orders
+                        join od in _context.OrderDetails on o.Id equals od.OrderId
+                        join p in _context.Products on od.ProductId equals p.Id
+                        join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+                        select new { o, od, p, pt };
+
+            //2. filter
+            if (startDate != null && endDate != null)
+            {
+                query = query.Where(x => x.o.OrderDate >= startDate && x.o.OrderDate <= endDate);
+            }
+
+            //3. Compute total price and total cost
+            decimal totalQuantity = query.Sum(x => x.od.Quantity);
+            //4. Calculate profit
+            return totalQuantity;
+        }
     }
 }

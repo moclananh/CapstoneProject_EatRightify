@@ -16,6 +16,6 @@ namespace Component.Application.Statistical
         Task<List<ProductInteractionRequest>> GetListProductInteractions(string keyword);
         Task<List<UserInteractionRequest>> GetListUserInteractions(string keyword);
         Task<List<CustomerLoyalRequest>> GetListCustomerLoyal(string keyword);
-
+        Task<decimal> TotalQuantityOfOrder(DateTime? startDate, DateTime? endDate);
     }
 }
