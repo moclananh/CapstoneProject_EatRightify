@@ -187,12 +187,8 @@ namespace Component.Application.System.Users
 
             user = new AppUser()
             {
-                Dob = request.Dob,
                 Email = request.Email,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
                 UserName = request.UserName,
-                PhoneNumber = request.PhoneNumber,
                 IsVerify = false,
                 CreatedDate = DateTime.UtcNow,
                 AcceptedTermOfUse = false
@@ -540,6 +536,21 @@ namespace Component.Application.System.Users
             var newJwtToken = tokenHandler.WriteToken(newToken);
 
             return new LoginRespone<string>(newJwtToken, user.Id);
+        }
+
+        public async Task<int> TotalUser(DateTime? startDate, DateTime? endDate)
+        {
+            var query = _userManager.Users;
+
+            // Filter by registration date if provided
+            if (startDate != null && endDate != null)
+            {
+                query = query.Where(u => u.CreatedDate >= startDate && u.CreatedDate <= endDate);
+            }
+
+            int totalUsers = await query.CountAsync();
+
+            return totalUsers;
         }
     }
 }

@@ -10,9 +10,9 @@ namespace Component.Data.Entities
 {
     public class AppUser : IdentityUser<Guid>
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public DateTime Dob { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public DateTime? Dob { get; set; }
         public string? VIP { get; set; }
         public decimal? AccumulatedPoints { get; set; }
         public bool IsBanned { get; set; }

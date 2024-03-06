@@ -558,5 +558,29 @@ namespace Component.Application.Sales
             orders = orders.OrderByDescending(x => x.OrderDate).ToList();
             return orders;
         }
+
+        public async Task<decimal> TotalProfit(DateTime? startDate, DateTime? endDate)
+        {
+            //1. Select join
+            var query = from o in _context.Orders
+                        join od in _context.OrderDetails on o.Id equals od.OrderId
+                        join p in _context.Products on od.ProductId equals p.Id
+                        join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+                        select new { o, od, p, pt };
+
+            //2. filter
+            if (startDate != null && endDate != null)
+            {
+                query = query.Where(x => x.o.OrderDate >= startDate && x.o.OrderDate <= endDate);
+            }
+
+            //3. Compute total price and total cost
+            decimal totalPrice = query.Sum(x => x.od.Price);
+            decimal totalCost = query.Sum(x => x.p.Cost * x.od.Quantity);
+
+            //4. Calculate profit
+            decimal totalProfit = totalPrice - totalCost;
+            return totalProfit;
+        }
     }
 }

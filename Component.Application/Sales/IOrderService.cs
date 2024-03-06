@@ -32,6 +32,7 @@ namespace Component.Application.Sales
         Task<decimal> PriceCalculator(decimal price, int quantity, string vip); // tinh gia san pham co discount
         Task<decimal> AccumulatedPoints(string uid, decimal price); // cong diem tich luy
         Task<int> Vip(string uid, int point); // set trang thai vip
+        Task<decimal> TotalProfit (DateTime? startDate, DateTime? endDate);
 
     }
 }

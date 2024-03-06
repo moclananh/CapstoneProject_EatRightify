@@ -33,6 +33,14 @@ namespace Component.ManagerAPIs.Controllers
             return Ok(item);
         }
 
+        [HttpGet("GetTotalProfit")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetTotalProfit([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+        {
+            var item = await _orderService.TotalProfit(startDate, endDate);
+            return Ok(item);
+        }
+
         [HttpGet("GetAllByOrderStatus")]
         public async Task<IActionResult> GetAllByOrderStatus([FromQuery] GetOrderByOrderStatusRequest request)
         {

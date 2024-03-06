@@ -32,5 +32,6 @@ namespace Component.Application.System.Users
         Task<ApiResult<string>> GetVerifyCode(string email);
         Task<ApiResult<string>> VerifyAccount(VerifyAccountRequest request);
         Task<LoginRespone<string>> RefreshToken(string token);
+        Task<int> TotalUser(DateTime? startDate, DateTime? endDate);
     }
 }

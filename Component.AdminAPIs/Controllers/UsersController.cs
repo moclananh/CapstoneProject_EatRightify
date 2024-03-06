@@ -92,6 +92,14 @@ namespace Component.AdminAPIs.Controllers
             return Ok(item);
         }
 
+        [HttpGet("GetTotalUser")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetTotalUser([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+        {
+            var item = await _userService.TotalUser(startDate, endDate);
+            return Ok(item);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {

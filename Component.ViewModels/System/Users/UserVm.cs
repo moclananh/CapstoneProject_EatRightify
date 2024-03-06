@@ -12,10 +12,10 @@ namespace Component.ViewModels.System.Users
         public Guid Id { get; set; }
 
         [Display(Name = "Tên")]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         [Display(Name = "Họ")]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         [Display(Name = "Số điện thoại")]
         public string PhoneNumber { get; set; }
@@ -27,7 +27,7 @@ namespace Component.ViewModels.System.Users
         public string Email { get; set; }
 
         [Display(Name = "Ngày sinh")]
-        public DateTime Dob { get; set; }
+        public DateTime? Dob { get; set; }
 
         public IList<string> Roles { get; set; }
         public string? VIP { get; set; }
