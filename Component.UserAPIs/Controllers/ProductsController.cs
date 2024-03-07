@@ -27,6 +27,14 @@ namespace Component.UserAPIs.Controllers
             return Ok(products);
         }
 
+        [HttpGet("getProductForAI")]
+        [AllowAnonymous]
+        public async Task<IActionResult> getProductForAI()
+        {
+            var products = await _productService.GetProductForAI();
+            return Ok(products);
+        }
+
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request)
         {

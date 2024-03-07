@@ -180,13 +180,13 @@ namespace Component.Application.AI
 
         public async Task<Result> Create(CreateResultRequest request)
         {
-            string userDetail = await GetResultByUserIdAsync(request.UserId, request.LanguageId);
+            string userDetail = await GetResultByUserIdAsync(request.UserId);
             string gptResult = await ChatGPTService.GetGPTResult(userDetail);
             var user = await _userService.GetById(request.UserId);
             var result = new Result()
             {
                 UserId = request.UserId,
-                Title = "Result for: " + user.ResultObj.UserName,
+                Title = "Result for: "+ user.ResultObj.UserName,
                 ResultDate = DateTime.UtcNow,
                 Description = gptResult,
                 Status = Data.Enums.ResultStatus.InProgress,
@@ -201,15 +201,14 @@ namespace Component.Application.AI
 
 
         private const string ResultApiBaseUrl = "https://eatright2.azurewebsites.net/api/UserDetail";
-        private const string ProductApiBaseUrl = "https://eatright2.azurewebsites.net/api/Products/getAll?LanguageId";
+        private const string ProductApiBaseUrl = "https://eatright2.azurewebsites.net/api/Products/getProductForAI";
         private const string LinkProduct = "https://eatright2.azurewebsites.net/api/Products/";
-
-        public static async Task<string> GetResultByUserIdAsync(Guid userId, string languageId)
+        public static async Task<string> GetResultByUserIdAsync(Guid userId)
         {
             using (HttpClient client = new HttpClient())
             {
                 string apiUrl = $"{ResultApiBaseUrl}/{userId}";
-                string productApi = $"{ProductApiBaseUrl}={languageId}";
+                string productApi = $"{ProductApiBaseUrl}";
 
                 var response = await client.GetAsync(apiUrl);
                 var productResponse = await client.GetAsync(productApi);

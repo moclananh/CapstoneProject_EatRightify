@@ -10,6 +10,6 @@ namespace Component.ViewModels.AI
     public class CreateResultRequest
     {
         public Guid UserId { get; set; }
-        public string LanguageId { get; set; }
+       /* public string LanguageId { get; set; }*/
     }
 }

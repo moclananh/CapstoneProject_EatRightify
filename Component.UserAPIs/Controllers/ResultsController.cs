@@ -45,7 +45,7 @@ namespace Component.UserAPIs.Controllers
                 return BadRequest();
             }
 
-            return Ok(result);
+            return Ok();
         }     
     }
 }
