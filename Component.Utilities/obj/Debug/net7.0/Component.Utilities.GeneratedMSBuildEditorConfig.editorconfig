@@ -8,6 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Component.Utilities
-build_property.ProjectDir = D:\FU_Hub\SP24_CapstoneProject\SEP490\Project\CodeBE\FormatDay\capstone_eatrightify\Component.Utilities\
-build_property.EnableComHosting = 
-build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.ProjectDir = D:\study\C_Project\do_an\new25\capstone_eatrightify\Component.Utilities\
