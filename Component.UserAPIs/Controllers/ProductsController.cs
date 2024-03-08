@@ -1,4 +1,5 @@
 ﻿using Component.Application.Catalog.Products;
+using Component.ViewModels.Catalog.ProductImages;
 using Component.ViewModels.Catalog.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -67,6 +68,19 @@ namespace Component.UserAPIs.Controllers
             return Ok(products);
         }
 
-
+        [HttpPut("AddViewcount")]
+        [AllowAnonymous]
+        public async Task<IActionResult> AddViewcount(int productId)
+        {
+            try
+            {
+                await _productService.AddViewcount(productId);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+               return BadRequest(e.Message);
+            }
+        }
     }
 }

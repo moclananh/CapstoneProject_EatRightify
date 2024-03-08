@@ -19,7 +19,7 @@ namespace Component.Application.Utilities.Blogs
         Task<Blog> Create(BlogCreateRequest request);
 
         Task<int> Update(BlogUpdateRequest request);
-
+        Task AddViewcount(int blogId);
         Task<int> Delete(int blogId);
     }
 }

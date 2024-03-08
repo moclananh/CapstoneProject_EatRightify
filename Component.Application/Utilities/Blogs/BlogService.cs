@@ -4,6 +4,7 @@ using Component.Data.EF;
 using Component.Data.Entities;
 using Component.Utilities.Exceptions;
 using Component.ViewModels.Catalog.Categories;
+using Component.ViewModels.Catalog.Products;
 using Component.ViewModels.Common;
 using Component.ViewModels.Utilities.Blogs;
 using Component.ViewModels.Utilities.Locations;
@@ -187,5 +188,13 @@ namespace Component.Application.Utilities.Blogs
             }
             return await _context.SaveChangesAsync();
         }
+
+        public async Task AddViewcount(int blogId)
+        {
+            var blog = await _context.Products.FindAsync(blogId);
+            blog.ViewCount += 1;
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

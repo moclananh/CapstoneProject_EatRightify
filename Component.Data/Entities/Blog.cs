@@ -18,6 +18,7 @@ namespace Component.Data.Entities
         public DateTime DateCreate { get; set; }
         public Status Status { set; get; }
         public Guid? CreatedBy { get; set; }
+        public int ViewCount { set; get; }
         public AppUser User { get; set; }
     }
 }

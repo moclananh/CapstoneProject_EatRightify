@@ -1,5 +1,6 @@
 ﻿using Component.Application.Utilities.Blogs;
 using Component.ViewModels.Utilities.Blogs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,6 +41,21 @@ namespace Component.UserAPIs.Controllers
                 return BadRequest();
             }
             return Ok(blogs);
+        }
+
+        [HttpPut("AddViewcount")]
+        [AllowAnonymous]
+        public async Task<IActionResult> AddViewcount(int blogId)
+        {
+            try
+            {
+                await _blogService.AddViewcount(blogId);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

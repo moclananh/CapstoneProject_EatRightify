@@ -829,5 +829,7 @@ namespace Component.Application.Catalog.Products
 
             return queryFilter;
         }
+
+     
     }
 }
