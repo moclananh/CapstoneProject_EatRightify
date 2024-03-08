@@ -68,7 +68,8 @@ namespace Component.Application.Utilities.Comments
                 CreatedAt = x.c.CreatedAt,
                 Status = x.c.Status,
                 Grade= x.c.Grade,
-                UserAvatar = x.u.Avatar
+                UserAvatar = x.u.Avatar,
+                ModifieddAt = x.c.ModifiedAt,
             }).ToListAsync();
         }
 
@@ -124,7 +125,8 @@ namespace Component.Application.Utilities.Comments
                 CreatedAt = x.c.CreatedAt,
                 Status = x.c.Status,
                 Grade = x.c.Grade,
-                UserAvatar = x.u.Avatar
+                UserAvatar = x.u.Avatar,
+                ModifieddAt = x.c.ModifiedAt,
             }).FirstOrDefaultAsync();
         }
 
@@ -135,6 +137,7 @@ namespace Component.Application.Utilities.Comments
             if (comments == null) throw new EShopException($"Cannot find a comments with id: {request.Id}");
             comments.Content = request.Content;
             comments.Grade = request.Grade;
+            comments.ModifiedAt = DateTime.Now;
             return await _context.SaveChangesAsync();
         }
 

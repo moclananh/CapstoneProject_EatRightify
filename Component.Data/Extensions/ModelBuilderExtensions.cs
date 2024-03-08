@@ -204,7 +204,7 @@ namespace Component.Data.Extensions
                 FirstName = "Admin",
                 LastName = "minator",
                 Dob = new DateTime(2023, 01, 01),
-                IsVerify= true,
+                IsVerify = true,
                 Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png",
                 AcceptedTermOfUse = false,
                 CreatedDate = new DateTime(1997, 01, 01),
@@ -288,6 +288,48 @@ namespace Component.Data.Extensions
             {
                 RoleId = confirminatorRoleId,
                 UserId = verifierId
+            });
+
+            //supperadmin
+            var spadminid = new Guid("0f2eeb99-1f02-4651-b0e9-14882d41c60d");
+            modelBuilder.Entity<AppRole>().HasData(new AppRole
+            {
+                Id = spadminid,
+                Name = "spadmin",
+                NormalizedName = "spadmin",
+                Description = "supper admin role"
+            });
+
+            var hasherspadmin = new PasswordHasher<AppUser>();
+            modelBuilder.Entity<AppUser>().HasData(new AppUser
+            {
+                Id = spadminid,
+                UserName = "spadmin",
+                NormalizedUserName = "spadmin",
+                Email = "spadmin@spamdin.com",
+                NormalizedEmail = "spadmin@spadmin.com",
+                EmailConfirmed = true,
+                PasswordHash = hasherspadmin.HashPassword(null, "spadmin"),
+                SecurityStamp = string.Empty,
+                FirstName = "spadmin",
+                LastName = "role",
+                Dob = new DateTime(2023, 01, 01),
+                IsVerify = true,
+                Avatar = "https://erssystem.blob.core.windows.net/ersimages/4733e66c-e5a9-4621-b491-e2c25992194c.png",
+                AcceptedTermOfUse = false,
+                CreatedDate = new DateTime(1999, 01, 01),
+            });
+
+            modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>[]
+            {
+                // Assigning the "admin" role to the "spadmin" user
+                new IdentityUserRole<Guid> { RoleId = adminRoleId, UserId = spadminid },
+
+                // Assigning the "manager" role to the "spadmin" user
+                new IdentityUserRole<Guid> { RoleId = managerRoleId, UserId = spadminid },
+
+                // Assigning the "verifier" role to the "spadmin" user
+                new IdentityUserRole<Guid> { RoleId = confirminatorRoleId, UserId = spadminid }
             });
 
             // guest

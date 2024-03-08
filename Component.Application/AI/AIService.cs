@@ -84,8 +84,8 @@ namespace Component.Application.AI
                 Status = x.r.Status,
                 IsSend = x.r.IsSended
             }).Distinct().ToListAsync();
-            result.OrderByDescending(x => x.ResultDate).ToList();
-            return result;
+            var sortResult = result.OrderByDescending(x => x.ResultDate).ToList();
+            return sortResult;
         }
 
         public async Task<PagedResult<ResultVM>> GetAllPaging(ResultPagingRequest request)
@@ -186,7 +186,7 @@ namespace Component.Application.AI
             var result = new Result()
             {
                 UserId = request.UserId,
-                Title = "Result for: "+ user.ResultObj.UserName,
+                Title = "Result for: " + user.ResultObj.UserName,
                 ResultDate = DateTime.UtcNow,
                 Description = gptResult,
                 Status = Data.Enums.ResultStatus.InProgress,

@@ -98,6 +98,13 @@ namespace Component.Data.Migrations
                             Description = "verifier role",
                             Name = "verifier",
                             NormalizedName = "verifier"
+                        },
+                        new
+                        {
+                            Id = new Guid("0f2eeb99-1f02-4651-b0e9-14882d41c60d"),
+                            Description = "supper admin role",
+                            Name = "spadmin",
+                            NormalizedName = "spadmin"
                         });
                 });
 
@@ -126,7 +133,6 @@ namespace Component.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("Dob")
-                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -136,9 +142,7 @@ namespace Component.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsBanned")
                         .HasColumnType("bit");
@@ -147,9 +151,7 @@ namespace Component.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -210,7 +212,7 @@ namespace Component.Data.Migrations
                             AcceptedTermOfUse = false,
                             AccessFailedCount = 0,
                             Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png",
-                            ConcurrencyStamp = "3db53942-fea6-40a4-94e3-a78c85eb2fc9",
+                            ConcurrencyStamp = "c84f91b6-66f8-4865-b9b8-07f88d66a0b9",
                             CreatedDate = new DateTime(1997, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@admin.com",
@@ -222,7 +224,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@admin.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDejXY+s0Uc4x46SFsa8/AdwiZWv3sIPOEerr2EYozWSrf9jBg1ZQ9k5JXO3xaXpvA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGmp9NroZM27Pe8LbbKTfdNhJ5AUXUqlmndi5bH0vzJZPnuNseaknHBNizeEdqT2gQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -234,7 +236,7 @@ namespace Component.Data.Migrations
                             AcceptedTermOfUse = false,
                             AccessFailedCount = 0,
                             Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png",
-                            ConcurrencyStamp = "297bba4e-d62c-473e-a331-aa9e132e96f6",
+                            ConcurrencyStamp = "af2a18e6-30bf-41b8-8871-dba771731972",
                             CreatedDate = new DateTime(1998, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "manager@manager.com",
@@ -246,7 +248,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "manager@manager.com",
                             NormalizedUserName = "manager",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAgybeq+c/ycEGjjU/1QIaKyGIlPJUrrVGrqu+XjHtJmIibQuBrItAZ5He0n3q2HWQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOuURUOJKb87ZCIbMOypndxPgpgI7ZZe0GZ13nUA2M3bURSSqgrsXQLXDRnzh71QeQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -258,7 +260,7 @@ namespace Component.Data.Migrations
                             AcceptedTermOfUse = false,
                             AccessFailedCount = 0,
                             Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png",
-                            ConcurrencyStamp = "5d9cb6a4-3673-4e9e-b257-fb7c14fc3293",
+                            ConcurrencyStamp = "cd50734e-3b0a-475c-ab8f-42b686c767d6",
                             CreatedDate = new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "verifier@verifier.com",
@@ -270,7 +272,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "verifier@verifier.com",
                             NormalizedUserName = "verifier",
-                            PasswordHash = "AQAAAAIAAYagAAAAECPuU64rmGu2I9Mcl9sAZXL9Qvh/Ila5Q9xrSb4fVMVUILQQWFUX/u90PePX//58Bw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKpyovxFKvabLPiJSxTP8/fdPlpniA//QRyfVDnu3WZtCJAxtafPrzkbqR2cdhUAOg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -278,10 +280,34 @@ namespace Component.Data.Migrations
                         },
                         new
                         {
+                            Id = new Guid("0f2eeb99-1f02-4651-b0e9-14882d41c60d"),
+                            AcceptedTermOfUse = false,
+                            AccessFailedCount = 0,
+                            Avatar = "https://erssystem.blob.core.windows.net/ersimages/4733e66c-e5a9-4621-b491-e2c25992194c.png",
+                            ConcurrencyStamp = "5ffab47c-7605-4101-b7c4-b520dbec9210",
+                            CreatedDate = new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "spadmin@spamdin.com",
+                            EmailConfirmed = true,
+                            FirstName = "spadmin",
+                            IsBanned = false,
+                            IsVerify = true,
+                            LastName = "role",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "spadmin@spadmin.com",
+                            NormalizedUserName = "spadmin",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEkSAYtkWzXEcr1RsyEF5pccGd0LWoaSYYyLUVCJ8RZkTrgFdkara1JYksvSi2/Qcw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "spadmin"
+                        },
+                        new
+                        {
                             Id = new Guid("3f5b49c6-e455-48a2-be45-26423e92afbe"),
                             AcceptedTermOfUse = false,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "56bd432f-75aa-4e5d-9d70-34321591b243",
+                            ConcurrencyStamp = "2173240e-c434-4ea3-82d8-c4cc500cf1ca",
                             CreatedDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Dob = new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "guest@guest.com",
@@ -293,7 +319,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@guest.com",
                             NormalizedUserName = "guest",
-                            PasswordHash = "AQAAAAIAAYagAAAAENk4FmTWtZm7yApM1u+PlDE6YsWt0mdY82c3/eiYxEa3dbIt8fbZ20LF9sPuS3VIDQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHecHxwtHFQmjTv7W2ddromgXDAjj8fAVVCcpZhCII0PqIpqgo2NfmkKNzcC68KOaA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -600,6 +626,9 @@ namespace Component.Data.Migrations
                     b.Property<int>("Grade")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
@@ -849,7 +878,7 @@ namespace Component.Data.Migrations
                         {
                             Id = 1,
                             Cost = 0m,
-                            DateCreated = new DateTime(2024, 3, 6, 12, 2, 25, 763, DateTimeKind.Local).AddTicks(4391),
+                            DateCreated = new DateTime(2024, 3, 8, 11, 22, 20, 465, DateTimeKind.Local).AddTicks(4279),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             InputStock = 0,
                             OriginalPrice = 255m,
@@ -862,7 +891,7 @@ namespace Component.Data.Migrations
                         {
                             Id = 2,
                             Cost = 0m,
-                            DateCreated = new DateTime(2024, 3, 6, 12, 2, 25, 763, DateTimeKind.Local).AddTicks(4506),
+                            DateCreated = new DateTime(2024, 3, 8, 11, 22, 20, 465, DateTimeKind.Local).AddTicks(4351),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             InputStock = 0,
                             OriginalPrice = 355m,
@@ -875,7 +904,7 @@ namespace Component.Data.Migrations
                         {
                             Id = 3,
                             Cost = 0m,
-                            DateCreated = new DateTime(2024, 3, 6, 12, 2, 25, 763, DateTimeKind.Local).AddTicks(4563),
+                            DateCreated = new DateTime(2024, 3, 8, 11, 22, 20, 465, DateTimeKind.Local).AddTicks(4381),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             InputStock = 0,
                             OriginalPrice = 455m,
@@ -1403,6 +1432,21 @@ namespace Component.Data.Migrations
                         new
                         {
                             UserId = new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"),
+                            RoleId = new Guid("07ad9a53-bb09-4d2a-ae06-89131aa9751b")
+                        },
+                        new
+                        {
+                            UserId = new Guid("0f2eeb99-1f02-4651-b0e9-14882d41c60d"),
+                            RoleId = new Guid("46f889a9-662d-4969-84f3-6ff4e199ecf5")
+                        },
+                        new
+                        {
+                            UserId = new Guid("0f2eeb99-1f02-4651-b0e9-14882d41c60d"),
+                            RoleId = new Guid("05dc0e15-0df0-4b67-b76e-47ee37791bd4")
+                        },
+                        new
+                        {
+                            UserId = new Guid("0f2eeb99-1f02-4651-b0e9-14882d41c60d"),
                             RoleId = new Guid("07ad9a53-bb09-4d2a-ae06-89131aa9751b")
                         });
                 });

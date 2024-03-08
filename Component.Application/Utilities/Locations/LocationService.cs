@@ -59,7 +59,7 @@ namespace Component.Application.Utilities.Locations
                         join u in _context.AppUsers on l.CreatedBy equals u.Id into bu
                         from u in bu.DefaultIfEmpty()
                         select new { l, u };
-            return await query.Select(x => new LocationVm()
+            var result = await query.Select(x => new LocationVm()
             {
                 LocationId = x.l.LocationId,
                 LocationName = x.l.LocationName,
@@ -70,6 +70,8 @@ namespace Component.Application.Utilities.Locations
                 DateCreated = x.l.DateCreated,
                 CreatedBy = x.u.UserName
             }).ToListAsync();
+            result = result.OrderByDescending(x => x.DateCreated).ToList();
+            return result;
         }
 
         public async Task<PagedResult<LocationVm>> GetAllPaging(GetLocationPagingRequest request)

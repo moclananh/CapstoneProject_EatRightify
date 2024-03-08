@@ -76,7 +76,7 @@ namespace Component.UserAPIs.Controllers
             var userId = await _userDetailService.GetById(id);
             if (userId == null)
             {
-                return BadRequest();
+                return NoContent();
             }
             return Ok(userId);
         }

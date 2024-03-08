@@ -16,6 +16,7 @@ namespace Component.ViewModels.Utilities.Comments
         public int ProductId { get; set; }
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
+        public DateTime? ModifieddAt { get; set; }
         public Status Status { get; set; }
         public int Grade { get; set; }
         public string UserAvatar { get; set; }

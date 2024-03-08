@@ -90,6 +90,7 @@ namespace Component.Application.Utilities.Blogs
                         join u in _context.AppUsers on b.CreatedBy equals u.Id into bu
                         from u in bu.DefaultIfEmpty()
                         select new { b, u };
+            query = query.OrderByDescending(x => x.b.DateCreate);
             return await query.Select(x => new BlogVm()
             {
                 Id = x.b.Id,

@@ -70,7 +70,7 @@ namespace Component.Application.Utilities.Promotions
             if (!string.IsNullOrEmpty(keyword))
                 query = query.Where(x => x.p.Name.Contains(keyword));
 
-            return await query.Select(x => new PromotionVm()
+            var result = await query.Select(x => new PromotionVm()
             {
                 Id = x.p.Id,
                 DiscountCode= x.p.DiscountCode,
@@ -82,6 +82,8 @@ namespace Component.Application.Utilities.Promotions
                 Description= x.p.Description,
                 CreatedBy = x.u.UserName
             }).Distinct().ToListAsync();
+            result = result.OrderByDescending(x => x.FromDate).ToList();
+            return result;
         }
 
         public async Task<PagedResult<PromotionVm>> GetAllPaging(GetPromotionPagingRequest request)

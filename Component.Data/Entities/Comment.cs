@@ -10,6 +10,7 @@ namespace Component.Data.Entities
         public int ProductId { get; set; }
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
+        public DateTime? ModifiedAt { get; set; }
         public Status Status { get; set; }
         [Range(1,5)]
         public int Grade { get; set; }
