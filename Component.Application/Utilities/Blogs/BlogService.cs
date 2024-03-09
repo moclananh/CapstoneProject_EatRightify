@@ -102,6 +102,7 @@ namespace Component.Application.Utilities.Blogs
                 DateCreate= x.b.DateCreate,
                 Status = x.b.Status,
                 CreatedBy = x.u.UserName,
+                ViewCount = x.b.ViewCount,
             }).ToListAsync();
         }
 
@@ -164,7 +165,8 @@ namespace Component.Application.Utilities.Blogs
                 DateCreate = x.b.DateCreate,
                 Status = x.b.Status,
                 CreatedBy = x.u.UserName,
-                UserAvatar = x.u.Avatar
+                UserAvatar = x.u.Avatar,
+                ViewCount = x.b.ViewCount,
             }).FirstOrDefaultAsync();
         }
 

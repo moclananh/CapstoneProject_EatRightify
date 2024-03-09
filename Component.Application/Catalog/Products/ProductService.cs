@@ -309,6 +309,7 @@ namespace Component.Application.Catalog.Products
                 InputStock = product.InputStock,
                 Cost = product.Cost,
                 DateModified = product.DateModified,
+                
 
             };
             return productViewModel;
