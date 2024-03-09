@@ -60,12 +60,12 @@ namespace Component.Application.Sales
                             vip = user.VIP;
                             BuyerId = user.Id.ToString();
                             tmp = product.Price * orderDetailVm.Quantity;
-                            totalPrice = await PriceCalculator(product.Price, orderDetailVm.Quantity, vip);
+                            //totalPrice = await PriceCalculator(product.Price, orderDetailVm.Quantity, vip);
                             var orderDetail = new OrderDetail()
                             {
                                 ProductId = product.Id,
                                 Quantity = orderDetailVm.Quantity,
-                                Price = totalPrice
+                                Price = tmp
                             };
 
                             if (orderDetail.Quantity <= product.Stock)
@@ -73,7 +73,7 @@ namespace Component.Application.Sales
                                 order.OrderDetails.Add(orderDetail);
                                 await UpdateStockCheckout(product.Id, orderDetailVm.Quantity);
                                 orderPrice += orderDetail.Price; //gia tong tien tat ca sp da qua discount
-                                originalPrice += tmp;// gia tong tien tat ca sp ban dau
+                                //originalPrice += tmp;// gia tong tien tat ca sp ban dau
                             }
                             else
                             {
@@ -95,7 +95,7 @@ namespace Component.Application.Sales
                     await _context.SaveChangesAsync();
 
                     // Commit the transaction
-                    var test = await AccumulatedPoints(BuyerId, originalPrice);
+                    var test = await AccumulatedPoints(BuyerId, orderPrice);
                     transaction.Commit();
                     /*Console.WriteLine("Vip: " + vip);
                     Console.WriteLine("Gia goc: " + originalPrice.ToString());
@@ -397,9 +397,12 @@ namespace Component.Application.Sales
 
         public async Task<decimal> AccumulatedPoints(string uid, decimal price)
         {
-            var user = await _userManager.FindByIdAsync(uid);
-            var userPoint = user.AccumulatedPoints;
-            userPoint = price * 0.01m;
+            var user = await _userManager.FindByIdAsync(uid);    
+            if (user.AccumulatedPoints == null)
+            {
+                user.AccumulatedPoints = 0;
+            }
+            var userPoint = price * 0.01m;
             user.AccumulatedPoints += userPoint;
 
             if (user.AccumulatedPoints > 0)
