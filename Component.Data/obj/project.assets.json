@@ -3930,11 +3930,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\CodeBE\\FixVm\\capstone_eatrightify\\Component.Data\\Component.Data.csproj",
+      "projectUniqueName": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\CodeBE\\CheckViewcount\\capstone_eatrightify\\Component.Data\\Component.Data.csproj",
       "projectName": "Component.Data",
-      "projectPath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\CodeBE\\FixVm\\capstone_eatrightify\\Component.Data\\Component.Data.csproj",
+      "projectPath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\CodeBE\\CheckViewcount\\capstone_eatrightify\\Component.Data\\Component.Data.csproj",
       "packagesPath": "C:\\Users\\Kristino\\.nuget\\packages\\",
-      "outputPath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\CodeBE\\FixVm\\capstone_eatrightify\\Component.Data\\obj\\",
+      "outputPath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\CodeBE\\CheckViewcount\\capstone_eatrightify\\Component.Data\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
