@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Component.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class db7 : Migration
+    public partial class newDbTest : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -156,9 +156,7 @@ namespace Component.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SortOrder = table.Column<int>(type: "int", nullable: false),
-                    IsShowOnHome = table.Column<bool>(type: "bit", nullable: false),
-                    ParentId = table.Column<int>(type: "int", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false, defaultValue: 1)
                 },
                 constraints: table =>
@@ -434,36 +432,6 @@ namespace Component.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CategoryTranslations",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    SeoDescription = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    SeoTitle = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    LanguageId = table.Column<string>(type: "varchar(5)", unicode: false, maxLength: 5, nullable: false),
-                    SeoAlias = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CategoryTranslations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CategoryTranslations_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CategoryTranslations_Languages_LanguageId",
-                        column: x => x.LanguageId,
-                        principalTable: "Languages",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Carts",
                 columns: table => new
                 {
@@ -669,22 +637,22 @@ namespace Component.Data.Migrations
                 columns: new[] { "Id", "AcceptedTermOfUse", "AccessFailedCount", "AccumulatedPoints", "Avatar", "ConcurrencyStamp", "CreatedDate", "Dob", "Email", "EmailConfirmed", "FirstName", "IsBanned", "IsVerify", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefeshCode", "RefeshToken", "RefeshTokenExpire", "RefeshTokenTime", "SecurityStamp", "TwoFactorEnabled", "UserName", "VIP", "VerifyCode" },
                 values: new object[,]
                 {
-                    { new Guid("0f2eeb99-1f02-4651-b0e9-14882d41c60d"), false, 0, null, "https://erssystem.blob.core.windows.net/ersimages/4733e66c-e5a9-4621-b491-e2c25992194c.png", "e9e5dab5-df45-411c-9465-4546d02299f1", new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "spadmin@spamdin.com", true, "spadmin", false, true, "role", false, null, "spadmin@spadmin.com", "spadmin", "AQAAAAIAAYagAAAAEMwGKo6wdF9t+5UfO8n+YdDsB/8ztCHLwLwChE/GaD82BcZPKhQ5wBjP2O8r5PxK8A==", null, false, null, null, null, null, "", false, "spadmin", null, null },
-                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), false, 0, null, "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png", "1f106a74-d04c-49d5-8d8c-fa3a573bef24", new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "verifier@verifier.com", true, "verifier", false, true, "role", false, null, "verifier@verifier.com", "verifier", "AQAAAAIAAYagAAAAEDUqI5EEXKInXOnlbt0b6GyRnCA3TrVov42G8JcUdj3g+89AiF5TKUJFWaEsmho3wQ==", null, false, null, null, null, null, "", false, "verifier", null, null },
-                    { new Guid("3f5b49c6-e455-48a2-be45-26423e92afbe"), false, 0, null, null, "17ef2956-23f6-42d7-b536-75cc016d5d28", new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "guest@guest.com", true, "Guest", false, true, "Role", false, null, "guest@guest.com", "guest", "AQAAAAIAAYagAAAAEAeR6/QzBYMp2BBW71sJ7ZGJgA62EXIvpgj9tPo1M0bF67LTkidrVIdKSmqxiVq9cQ==", null, false, null, null, null, null, "", false, "guest", null, null },
-                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), false, 0, null, "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png", "52248fa3-6c1e-4c4e-bbdc-0e6f6fee2ed4", new DateTime(1998, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, true, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAECcHC9wiXfcnzv0f6hvRNLYz3Ff+h0F77qsPltqDJYltJYFG1HG2EtqtABNMRZkm6w==", null, false, null, null, null, null, "", false, "manager", null, null },
-                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), false, 0, null, "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png", "d009ea70-d70e-4024-9f54-83f61ca8e3be", new DateTime(1997, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, true, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAEMDdH4iFOE8iOLfa1pnzbpHgIMsX9ITqf+I1HETsV7MMGFQK3eJ1kifQG+B9bgYWrw==", null, false, null, null, null, null, "", false, "admin", null, null }
+                    { new Guid("0f2eeb99-1f02-4651-b0e9-14882d41c60d"), false, 0, null, "https://erssystem.blob.core.windows.net/ersimages/4733e66c-e5a9-4621-b491-e2c25992194c.png", "3e64ef07-3ad6-47b2-b752-01aa52485689", new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "spadmin@spamdin.com", true, "spadmin", false, true, "role", false, null, "spadmin@spadmin.com", "spadmin", "AQAAAAIAAYagAAAAENITyf3DNAHOnVEz4dnrZHmUm/eob1V6oJwMh1Vu7uT7QpmX/foaBZeQpLtt6BkGcQ==", null, false, null, null, null, null, "", false, "spadmin", null, null },
+                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), false, 0, null, "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png", "783ff636-97b0-48ee-b3f2-0c5bd06d1dc6", new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "verifier@verifier.com", true, "verifier", false, true, "role", false, null, "verifier@verifier.com", "verifier", "AQAAAAIAAYagAAAAEFOjSC4psRfdFjPdQWRy5UG/tHbi1cdF0H7fCvSnxro12vON62jVaOsG2JTBnAHG8A==", null, false, null, null, null, null, "", false, "verifier", null, null },
+                    { new Guid("3f5b49c6-e455-48a2-be45-26423e92afbe"), false, 0, null, null, "21698c85-3e8a-49f8-a91d-d1a77eca4619", new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "guest@guest.com", true, "Guest", false, true, "Role", false, null, "guest@guest.com", "guest", "AQAAAAIAAYagAAAAEEzsGzmAN2g6H1R9DNanMGeAuFDu2ZVfY6kl22T1PHtUiqTsRfz9/cw6mewuZmIYaw==", null, false, null, null, null, null, "", false, "guest", null, null },
+                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), false, 0, null, "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png", "0e6e4cde-2847-45c4-95d0-243b246bb7a6", new DateTime(1998, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, true, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAEN2u1yF/S2XWswbETTfJv6IWXtzQMmTOktXKE5mrZzBgGEbrNBjJ7qJTVhaP29gUZw==", null, false, null, null, null, null, "", false, "manager", null, null },
+                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), false, 0, null, "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png", "048514da-845d-4d79-ace0-38550472b43e", new DateTime(1997, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, true, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAEJYisqE3RUuZlRCMw5SUqjkm3YGL26OsrtqZBnVbdtmy9+xF4E/eOFu898q3iMJGaw==", null, false, null, null, null, null, "", false, "admin", null, null }
                 });
 
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "Id", "IsShowOnHome", "ParentId", "SortOrder", "Status" },
+                columns: new[] { "Id", "Name", "Status" },
                 values: new object[,]
                 {
-                    { 1, true, null, 1, 1 },
-                    { 2, true, null, 2, 1 },
-                    { 3, true, null, 3, 1 },
-                    { 4, true, null, 4, 1 }
+                    { 1, "Combo", 1 },
+                    { 2, "Gain Weight Product", 1 },
+                    { 3, "Weight Loss Diet", 1 },
+                    { 4, "Discount Product", 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -701,9 +669,9 @@ namespace Component.Data.Migrations
                 columns: new[] { "Id", "Cost", "DateCreated", "DateModified", "InputStock", "IsFeatured", "OriginalPrice", "Price", "Status", "Stock" },
                 values: new object[,]
                 {
-                    { 1, 0m, new DateTime(2024, 3, 8, 16, 54, 44, 941, DateTimeKind.Local).AddTicks(1127), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, null, 255m, 199m, 1, 100 },
-                    { 2, 0m, new DateTime(2024, 3, 8, 16, 54, 44, 941, DateTimeKind.Local).AddTicks(1242), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, null, 355m, 299m, 1, 100 },
-                    { 3, 0m, new DateTime(2024, 3, 8, 16, 54, 44, 941, DateTimeKind.Local).AddTicks(1302), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, null, 455m, 399m, 1, 100 }
+                    { 1, 0m, new DateTime(2024, 3, 9, 13, 57, 14, 250, DateTimeKind.Local).AddTicks(1221), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, null, 255m, 199m, 1, 100 },
+                    { 2, 0m, new DateTime(2024, 3, 9, 13, 57, 14, 250, DateTimeKind.Local).AddTicks(1303), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, null, 355m, 299m, 1, 100 },
+                    { 3, 0m, new DateTime(2024, 3, 9, 13, 57, 14, 250, DateTimeKind.Local).AddTicks(1336), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, null, 455m, 399m, 1, 100 }
                 });
 
             migrationBuilder.InsertData(
@@ -717,17 +685,6 @@ namespace Component.Data.Migrations
                     { 4, null, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", "/themes/images/carousel/4.png", "Second Thumbnail label", 4, 1, "#" },
                     { 5, null, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", "/themes/images/carousel/5.png", "Second Thumbnail label", 5, 1, "#" },
                     { 6, null, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", "/themes/images/carousel/6.png", "Second Thumbnail label", 6, 1, "#" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "CategoryTranslations",
-                columns: new[] { "Id", "CategoryId", "LanguageId", "Name", "SeoAlias", "SeoDescription", "SeoTitle" },
-                values: new object[,]
-                {
-                    { 1, 1, "en", "Combo", "Combo", "Combo weight loss meal package.", "Combo" },
-                    { 2, 2, "en", "Weight loss foods", "Weight-loss-foods", "Weight loss foods.", "Weight loss foods" },
-                    { 3, 3, "en", "Weight gain foods", "Weight-gain-foods", "Weight gain foods.", "Weight gain foods" },
-                    { 4, 4, "en", "Discount Products", "Discount-product", "Discount product ", "Discount product" }
                 });
 
             migrationBuilder.InsertData(
@@ -774,16 +731,6 @@ namespace Component.Data.Migrations
                 name: "IX_Carts_UserId",
                 table: "Carts",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CategoryTranslations_CategoryId",
-                table: "CategoryTranslations",
-                column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CategoryTranslations_LanguageId",
-                table: "CategoryTranslations",
-                column: "LanguageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_ProductId",
@@ -883,9 +830,6 @@ namespace Component.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Carts");
-
-            migrationBuilder.DropTable(
-                name: "CategoryTranslations");
 
             migrationBuilder.DropTable(
                 name: "Comments");

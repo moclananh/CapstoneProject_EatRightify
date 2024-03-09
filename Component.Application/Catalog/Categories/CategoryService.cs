@@ -21,40 +21,10 @@ namespace Component.Application.Catalog.Categories
 
         public async Task<Category> Create(CategoryCreateRequest request)
         {
-            var languages = _context.Languages;
-            var translations = new List<CategoryTranslation>();
-            foreach (var language in languages)
-            {
-                if (language.Id == request.LanguageId)
-                {
-                    translations.Add(new CategoryTranslation()
-                    {
-                        Name = request.Name,
-                        SeoDescription = request.SeoDescription,
-                        SeoTitle = request.SeoTitle,
-                        SeoAlias = request.SeoAlias,
-                        LanguageId = request.LanguageId
-                    });
-                }
-                /*  else
-                  {
-                      translations.Add(new CategoryTranslation()
-                      {
-                          Name = SystemConstants.ProductConstants.NA,
-                          SeoDescription = SystemConstants.ProductConstants.NA,
-                          SeoAlias = SystemConstants.ProductConstants.NA,
-                          SeoTitle= SystemConstants.ProductConstants.NA,
-                          LanguageId = language.Id
-                      });
-                  }*/
-            }
             var category = new Category()
             {
-                SortOrder = request.SortOrder,
-                IsShowOnHome = request.IsShowOnHome,
-                Status = request.Status,
-                CategoryTranslations = translations
-
+                Name = request.Name,
+                Status = Data.Enums.Status.Active,
             };
 
             _context.Categories.Add(category);
@@ -66,18 +36,10 @@ namespace Component.Application.Catalog.Categories
         {
             {
                 var category = await _context.Categories.FindAsync(request.Id);
-                var categoryTranslations = await _context.CategoryTranslations.FirstOrDefaultAsync(x => x.CategoryId == request.Id
-                && x.LanguageId == request.LanguageId);
-                if (category == null || categoryTranslations == null) throw new EShopException($"Cannot find a category with id: {request.Id}");
 
-                categoryTranslations.Name = request.Name;
-                categoryTranslations.SeoAlias = request.SeoAlias;
-                categoryTranslations.SeoDescription = request.SeoDescription;
-                categoryTranslations.SeoTitle = request.SeoTitle;
-                categoryTranslations.LanguageId = request.LanguageId;
-                category.SortOrder = request.SortOrder;
+                if (category == null) throw new EShopException($"Cannot find a category with id: {request.Id}");
+                category.Name = request.Name;
                 category.Status = request.Status;
-                category.IsShowOnHome = request.IsShowOnHome;
                 return await _context.SaveChangesAsync();
             }
         }
@@ -91,68 +53,52 @@ namespace Component.Application.Catalog.Categories
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<List<CategoryVm>> GetAll(string languageId)
+        public async Task<List<CategoryVm>> GetAll(string? keyword)
         {
             var query = from c in _context.Categories
-                        join ct in _context.CategoryTranslations on c.Id equals ct.CategoryId
-                        where ct.LanguageId == languageId
-                        select new { c, ct };
+                        select new { c };
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query.Where(x => x.c.Name.Contains(keyword));
+            }
+
             return await query.Select(x => new CategoryVm()
             {
                 Id = x.c.Id,
-                Name = x.ct.Name,
-                ParentId = x.c.ParentId,
-                LanguageId = x.ct.LanguageId,
+                Name = x.c.Name,
             }).ToListAsync();
         }
 
-        public async Task<CategoryVm> GetById(string languageId, int id)
+        public async Task<CategoryVm> GetById(int id)
         {
             var query = from c in _context.Categories
-                        join ct in _context.CategoryTranslations on c.Id equals ct.CategoryId
-                        where ct.LanguageId == languageId && c.Id == id
-                        select new { c, ct };
+                        where c.Id == id
+                        select new { c };
             return await query.Select(x => new CategoryVm()
             {
                 Id = x.c.Id,
-                Name = x.ct.Name,
-                ParentId = x.c.ParentId,
-                LanguageId = x.ct.LanguageId,
+                Name = x.c.Name,
+                Status = x.c.Status
             }).FirstOrDefaultAsync();
         }
 
         public async Task<PagedResult<CategoryVm>> GetAllPaging(GetCategoryPagingRequest request)
         {
-
             //1. Select join
             var query = from c in _context.Categories
-                        join ct in _context.CategoryTranslations on c.Id equals ct.CategoryId
-                        where ct.LanguageId == request.LanguageId
                         select new CategoryVm()
                         {
                             Id = c.Id,
-                            Name = ct.Name,
-                            ParentId = c.ParentId
+                            Name = c.Name,
+                            Status = c.Status
                         };
-
             //2. filter
             if (!string.IsNullOrEmpty(request.Keyword))
                 query = query.Where(x => x.Name.Contains(request.Keyword));
 
-            // Create a list to store distinct products
-            List<CategoryVm> distinctCategory = new List<CategoryVm>();
+            int totalRow = query.Count();
 
-            foreach (var categoryVm in query)
-            {
-                // Check if the product with the same ID is already in the distinctProducts list
-                if (!distinctCategory.Any(p => p.Id == categoryVm.Id) /*&& !(categoryVm.Name == "N/A")*/)
-                {
-                    distinctCategory.Add(categoryVm);
-                }
-            }
-            int totalRow = distinctCategory.Count();
-
-            var data = distinctCategory
+            var data = query
                 .Skip((request.PageIndex - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .ToList();

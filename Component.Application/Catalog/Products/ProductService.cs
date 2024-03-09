@@ -1,23 +1,14 @@
 ﻿using Component.Application.Common;
 using Component.Data.EF;
 using Component.Data.Entities;
-using Component.Utilities.Constants;
 using Component.Utilities.Exceptions;
 using Component.ViewModels.Catalog.ProductImages;
 using Component.ViewModels.Catalog.Products;
 using Component.ViewModels.Common;
-using Component.ViewModels.Utilities.Blogs;
 using Component.ViewModels.Utilities.Comments;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Component.Application.Catalog.Products
 {
@@ -230,7 +221,7 @@ namespace Component.Application.Catalog.Products
             foreach (var productVm in query)
             {
                 // Check if the product with the same ID is already in the distinctProducts list
-                if (!distinctProducts.Any(p => p.Id == productVm.Id) /*&& !(productVm.Name == "N/A")*/)
+                if (!distinctProducts.Any(p => p.Id == productVm.Id))
                 {
                     distinctProducts.Add(productVm);
                 }
@@ -260,10 +251,9 @@ namespace Component.Application.Catalog.Products
             && x.LanguageId == languageId);
 
             var categories = await (from c in _context.Categories
-                                    join ct in _context.CategoryTranslations on c.Id equals ct.CategoryId
                                     join pic in _context.ProductInCategories on c.Id equals pic.CategoryId
-                                    where pic.ProductId == productId && ct.LanguageId == languageId
-                                    select ct.Name).ToListAsync();
+                                    where pic.ProductId == productId
+                                    select c.Name).ToListAsync();
 
             var comments = await (from c in _context.Comments
                                   join p in _context.Products on c.ProductId equals p.Id into pcmt
@@ -309,8 +299,6 @@ namespace Component.Application.Catalog.Products
                 InputStock = product.InputStock,
                 Cost = product.Cost,
                 DateModified = product.DateModified,
-                
-
             };
             return productViewModel;
         }
@@ -550,10 +538,7 @@ namespace Component.Application.Catalog.Products
 
             foreach (var item in request.Categories)
             {
-                if (item.Name != "N/A")
-                {
-                    mang.Add(item);
-                }
+                mang.Add(item);
                 // Check if the product with the same ID is already in the distinctProducts list
             }
 
@@ -562,9 +547,6 @@ namespace Component.Application.Catalog.Products
                 var productInCategory = await _context.ProductInCategories
                     .FirstOrDefaultAsync(x => x.CategoryId == int.Parse(category.Id)
                     && x.ProductId == id);
-
-
-
                 if (productInCategory != null && category.Selected == false)
                 {
                     _context.ProductInCategories.Remove(productInCategory);
@@ -616,7 +598,7 @@ namespace Component.Application.Catalog.Products
                     IsFeatured = x.p.IsFeatured,
                     Status = x.p.Status,
                     ThumbnailImage = x.pi.ImagePath
-                }).Where(x => x.Name != "N/A").Distinct().ToListAsync();
+                }).Distinct().ToListAsync();
 
             return data;
         }
@@ -654,7 +636,7 @@ namespace Component.Application.Catalog.Products
                     IsFeatured = x.p.IsFeatured,
                     Status = x.p.Status,
                     ThumbnailImage = x.pi.ImagePath
-                }).Where(x => x.Name != "N/A").Distinct().ToListAsync();
+                }).Distinct().ToListAsync();
 
             return data;
         }
@@ -688,7 +670,7 @@ namespace Component.Application.Catalog.Products
                             IsFeatured = p.IsFeatured,
                             ThumbnailImage = pi.ImagePath,
                             Status = p.Status,
-                            CategoryId = pic.CategoryId, // Add CategoryId to ProductVm
+                            CategoryId = pic.CategoryId,
                             InputStock = p.InputStock,
                             Cost = p.Cost,
                             DateModified = p.DateModified,
@@ -711,14 +693,14 @@ namespace Component.Application.Catalog.Products
             foreach (var productVm in query)
             {
                 // Check if the product with the same ID is already in the distinctProducts list
-                if (!distinctProducts.Any(p => p.Id == productVm.Id) /*&& !(productVm.Name == "N/A")*/)
+                if (!distinctProducts.Any(p => p.Id == productVm.Id) )
                 {
                     distinctProducts.Add(productVm);
                 }
             }
 
             var queryFilter = distinctProducts
-             .OrderByDescending(item => item.DateCreated) // Sort by TotalQuantity in descending order
+             .OrderByDescending(item => item.DateCreated)
              .ToList();
 
             return queryFilter;
@@ -830,7 +812,5 @@ namespace Component.Application.Catalog.Products
 
             return queryFilter;
         }
-
-     
     }
 }

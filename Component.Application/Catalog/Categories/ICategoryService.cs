@@ -11,10 +11,10 @@ namespace Component.Application.Catalog.Categories
 {
     public interface ICategoryService
     {
-        Task<List<CategoryVm>> GetAll(string languageId);
+        Task<List<CategoryVm>> GetAll(string? keyword);
         Task<PagedResult<CategoryVm>> GetAllPaging(GetCategoryPagingRequest request);
 
-        Task<CategoryVm> GetById(string languageId, int id);
+        Task<CategoryVm> GetById(int id);
         Task<Category> Create(CategoryCreateRequest request);
 
         Task<int> Update(CategoryUpdateRequest request);

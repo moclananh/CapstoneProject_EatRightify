@@ -11,7 +11,5 @@ namespace Component.ViewModels.Catalog.Categories
     {
         public string? Keyword { get; set; }
 
-        public string LanguageId { get; set; }
-
     }
 }

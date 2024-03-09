@@ -193,7 +193,7 @@ namespace Component.Application.Utilities.Blogs
 
         public async Task AddViewcount(int blogId)
         {
-            var blog = await _context.Products.FindAsync(blogId);
+            var blog = await _context.Blogs.FindAsync(blogId);
             blog.ViewCount += 1;
             await _context.SaveChangesAsync();
         }

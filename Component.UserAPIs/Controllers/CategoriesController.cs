@@ -17,9 +17,9 @@ namespace Component.UserAPIs.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(string languageId)
+        public async Task<IActionResult> GetAll(string? keyword)
         {
-            var products = await _categoryService.GetAll(languageId);
+            var products = await _categoryService.GetAll(keyword);
             return Ok(products);
         }
 
@@ -30,10 +30,10 @@ namespace Component.UserAPIs.Controllers
             return Ok(categories);
         }
 
-        [HttpGet("{id}/{languageId}")]
-        public async Task<IActionResult> GetById(string languageId, int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
         {
-            var category = await _categoryService.GetById(languageId, id);
+            var category = await _categoryService.GetById(id);
             return Ok(category);
         }
 

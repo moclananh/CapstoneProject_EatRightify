@@ -212,7 +212,7 @@ namespace Component.Data.Migrations
                             AcceptedTermOfUse = false,
                             AccessFailedCount = 0,
                             Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png",
-                            ConcurrencyStamp = "d009ea70-d70e-4024-9f54-83f61ca8e3be",
+                            ConcurrencyStamp = "048514da-845d-4d79-ace0-38550472b43e",
                             CreatedDate = new DateTime(1997, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@admin.com",
@@ -224,7 +224,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@admin.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMDdH4iFOE8iOLfa1pnzbpHgIMsX9ITqf+I1HETsV7MMGFQK3eJ1kifQG+B9bgYWrw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJYisqE3RUuZlRCMw5SUqjkm3YGL26OsrtqZBnVbdtmy9+xF4E/eOFu898q3iMJGaw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -236,7 +236,7 @@ namespace Component.Data.Migrations
                             AcceptedTermOfUse = false,
                             AccessFailedCount = 0,
                             Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png",
-                            ConcurrencyStamp = "52248fa3-6c1e-4c4e-bbdc-0e6f6fee2ed4",
+                            ConcurrencyStamp = "0e6e4cde-2847-45c4-95d0-243b246bb7a6",
                             CreatedDate = new DateTime(1998, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "manager@manager.com",
@@ -248,7 +248,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "manager@manager.com",
                             NormalizedUserName = "manager",
-                            PasswordHash = "AQAAAAIAAYagAAAAECcHC9wiXfcnzv0f6hvRNLYz3Ff+h0F77qsPltqDJYltJYFG1HG2EtqtABNMRZkm6w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEN2u1yF/S2XWswbETTfJv6IWXtzQMmTOktXKE5mrZzBgGEbrNBjJ7qJTVhaP29gUZw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -260,7 +260,7 @@ namespace Component.Data.Migrations
                             AcceptedTermOfUse = false,
                             AccessFailedCount = 0,
                             Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png",
-                            ConcurrencyStamp = "1f106a74-d04c-49d5-8d8c-fa3a573bef24",
+                            ConcurrencyStamp = "783ff636-97b0-48ee-b3f2-0c5bd06d1dc6",
                             CreatedDate = new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "verifier@verifier.com",
@@ -272,7 +272,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "verifier@verifier.com",
                             NormalizedUserName = "verifier",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDUqI5EEXKInXOnlbt0b6GyRnCA3TrVov42G8JcUdj3g+89AiF5TKUJFWaEsmho3wQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFOjSC4psRfdFjPdQWRy5UG/tHbi1cdF0H7fCvSnxro12vON62jVaOsG2JTBnAHG8A==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -284,7 +284,7 @@ namespace Component.Data.Migrations
                             AcceptedTermOfUse = false,
                             AccessFailedCount = 0,
                             Avatar = "https://erssystem.blob.core.windows.net/ersimages/4733e66c-e5a9-4621-b491-e2c25992194c.png",
-                            ConcurrencyStamp = "e9e5dab5-df45-411c-9465-4546d02299f1",
+                            ConcurrencyStamp = "3e64ef07-3ad6-47b2-b752-01aa52485689",
                             CreatedDate = new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "spadmin@spamdin.com",
@@ -296,7 +296,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "spadmin@spadmin.com",
                             NormalizedUserName = "spadmin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMwGKo6wdF9t+5UfO8n+YdDsB/8ztCHLwLwChE/GaD82BcZPKhQ5wBjP2O8r5PxK8A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENITyf3DNAHOnVEz4dnrZHmUm/eob1V6oJwMh1Vu7uT7QpmX/foaBZeQpLtt6BkGcQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -307,7 +307,7 @@ namespace Component.Data.Migrations
                             Id = new Guid("3f5b49c6-e455-48a2-be45-26423e92afbe"),
                             AcceptedTermOfUse = false,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "17ef2956-23f6-42d7-b536-75cc016d5d28",
+                            ConcurrencyStamp = "21698c85-3e8a-49f8-a91d-d1a77eca4619",
                             CreatedDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Dob = new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "guest@guest.com",
@@ -319,7 +319,7 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@guest.com",
                             NormalizedUserName = "guest",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAeR6/QzBYMp2BBW71sJ7ZGJgA62EXIvpgj9tPo1M0bF67LTkidrVIdKSmqxiVq9cQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEzsGzmAN2g6H1R9DNanMGeAuFDu2ZVfY6kl22T1PHtUiqTsRfz9/cw6mewuZmIYaw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -474,14 +474,9 @@ namespace Component.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("IsShowOnHome")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SortOrder")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
@@ -496,118 +491,26 @@ namespace Component.Data.Migrations
                         new
                         {
                             Id = 1,
-                            IsShowOnHome = true,
-                            SortOrder = 1,
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IsShowOnHome = true,
-                            SortOrder = 2,
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IsShowOnHome = true,
-                            SortOrder = 3,
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            IsShowOnHome = true,
-                            SortOrder = 4,
-                            Status = 1
-                        });
-                });
-
-            modelBuilder.Entity("Component.Data.Entities.CategoryTranslation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LanguageId")
-                        .IsRequired()
-                        .HasMaxLength(5)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(5)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("SeoAlias")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("SeoDescription")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("SeoTitle")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("LanguageId");
-
-                    b.ToTable("CategoryTranslations", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 1,
-                            LanguageId = "en",
                             Name = "Combo",
-                            SeoAlias = "Combo",
-                            SeoDescription = "Combo weight loss meal package.",
-                            SeoTitle = "Combo"
+                            Status = 1
                         },
                         new
                         {
                             Id = 2,
-                            CategoryId = 2,
-                            LanguageId = "en",
-                            Name = "Weight loss foods",
-                            SeoAlias = "Weight-loss-foods",
-                            SeoDescription = "Weight loss foods.",
-                            SeoTitle = "Weight loss foods"
+                            Name = "Gain Weight Product",
+                            Status = 1
                         },
                         new
                         {
                             Id = 3,
-                            CategoryId = 3,
-                            LanguageId = "en",
-                            Name = "Weight gain foods",
-                            SeoAlias = "Weight-gain-foods",
-                            SeoDescription = "Weight gain foods.",
-                            SeoTitle = "Weight gain foods"
+                            Name = "Weight Loss Diet",
+                            Status = 1
                         },
                         new
                         {
                             Id = 4,
-                            CategoryId = 4,
-                            LanguageId = "en",
-                            Name = "Discount Products",
-                            SeoAlias = "Discount-product",
-                            SeoDescription = "Discount product ",
-                            SeoTitle = "Discount product"
+                            Name = "Discount Product",
+                            Status = 1
                         });
                 });
 
@@ -881,7 +784,7 @@ namespace Component.Data.Migrations
                         {
                             Id = 1,
                             Cost = 0m,
-                            DateCreated = new DateTime(2024, 3, 8, 16, 54, 44, 941, DateTimeKind.Local).AddTicks(1127),
+                            DateCreated = new DateTime(2024, 3, 9, 13, 57, 14, 250, DateTimeKind.Local).AddTicks(1221),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             InputStock = 0,
                             OriginalPrice = 255m,
@@ -894,7 +797,7 @@ namespace Component.Data.Migrations
                         {
                             Id = 2,
                             Cost = 0m,
-                            DateCreated = new DateTime(2024, 3, 8, 16, 54, 44, 941, DateTimeKind.Local).AddTicks(1242),
+                            DateCreated = new DateTime(2024, 3, 9, 13, 57, 14, 250, DateTimeKind.Local).AddTicks(1303),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             InputStock = 0,
                             OriginalPrice = 355m,
@@ -907,7 +810,7 @@ namespace Component.Data.Migrations
                         {
                             Id = 3,
                             Cost = 0m,
-                            DateCreated = new DateTime(2024, 3, 8, 16, 54, 44, 941, DateTimeKind.Local).AddTicks(1302),
+                            DateCreated = new DateTime(2024, 3, 9, 13, 57, 14, 250, DateTimeKind.Local).AddTicks(1336),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             InputStock = 0,
                             OriginalPrice = 455m,
@@ -1516,25 +1419,6 @@ namespace Component.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Component.Data.Entities.CategoryTranslation", b =>
-                {
-                    b.HasOne("Component.Data.Entities.Category", "Category")
-                        .WithMany("CategoryTranslations")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Component.Data.Entities.Language", "Language")
-                        .WithMany("CategoryTranslations")
-                        .HasForeignKey("LanguageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Language");
-                });
-
             modelBuilder.Entity("Component.Data.Entities.Comment", b =>
                 {
                     b.HasOne("Component.Data.Entities.Product", "Product")
@@ -1710,15 +1594,11 @@ namespace Component.Data.Migrations
 
             modelBuilder.Entity("Component.Data.Entities.Category", b =>
                 {
-                    b.Navigation("CategoryTranslations");
-
                     b.Navigation("ProductInCategories");
                 });
 
             modelBuilder.Entity("Component.Data.Entities.Language", b =>
                 {
-                    b.Navigation("CategoryTranslations");
-
                     b.Navigation("ProductTranslations");
                 });
 

@@ -30,7 +30,6 @@ namespace Component.Data.EF
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
 
             modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
-            modelBuilder.ApplyConfiguration(new CategoryTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new ContactConfiguration());
             modelBuilder.ApplyConfiguration(new LanguageConfiguration());
             modelBuilder.ApplyConfiguration(new ProductTranslationConfiguration());
@@ -67,7 +66,6 @@ namespace Component.Data.EF
 
         public DbSet<Cart> Carts { get; set; }
 
-        public DbSet<CategoryTranslation> CategoryTranslations { get; set; }
         public DbSet<ProductInCategory> ProductInCategories { get; set; }
 
         public DbSet<Contact> Contacts { get; set; }

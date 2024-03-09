@@ -22,43 +22,28 @@ namespace Component.Data.Extensions
                 new Category()
                 {
                     Id = 1,
-                    IsShowOnHome = true,
-                    ParentId = null,
-                    SortOrder = 1,
+                    Name = "Combo",
                     Status = Status.Active,
                 },
                  new Category()
                  {
                      Id = 2,
-                     IsShowOnHome = true,
-                     ParentId = null,
-                     SortOrder = 2,
+                    Name = "Gain Weight Product",
                      Status = Status.Active
                  },
                  new Category()
                  {
                      Id = 3,
-                     IsShowOnHome = true,
-                     ParentId = null,
-                     SortOrder = 3,
+                    Name = "Weight Loss Diet",
                      Status = Status.Active
                  }
                  , new Category()
                  {
                      Id = 4,
-                     IsShowOnHome = true,
-                     ParentId = null,
-                     SortOrder = 4,
+                    Name = "Discount Product",
                      Status = Status.Active
                  });
-
-            modelBuilder.Entity<CategoryTranslation>().HasData(
-                  new CategoryTranslation() { Id = 1, CategoryId = 1, Name = "Combo", LanguageId = "en", SeoAlias = "Combo", SeoDescription = "Combo weight loss meal package.", SeoTitle = "Combo" },
-                  new CategoryTranslation() { Id = 2, CategoryId = 2, Name = "Weight loss foods", LanguageId = "en", SeoAlias = "Weight-loss-foods", SeoDescription = "Weight loss foods.", SeoTitle = "Weight loss foods" },
-                  new CategoryTranslation() { Id = 3, CategoryId = 3, Name = "Weight gain foods", LanguageId = "en", SeoAlias = "Weight-gain-foods", SeoDescription = "Weight gain foods.", SeoTitle = "Weight gain foods" },
-                  new CategoryTranslation() { Id = 4, CategoryId = 4, Name = "Discount Products", LanguageId = "en", SeoAlias = "Discount-product", SeoDescription = "Discount product ", SeoTitle = "Discount product" }
-                    );
-
+         
             modelBuilder.Entity<Product>().HasData(
            new Product()
            {
