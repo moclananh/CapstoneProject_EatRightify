@@ -406,9 +406,11 @@ namespace Component.Application.Sales
         public async Task<decimal> AccumulatedPoints(string uid, decimal price)
         {
             var user = await _userManager.FindByIdAsync(uid);
-            if (user.AccumulatedPoints == null)
+            if (user.UserName.Equals("guest"))
             {
-                user.AccumulatedPoints = 0;
+                user.AccumulatedPoints = 0; //trick for guest order
+                user.VIP = 0;  
+                return 0;
             }
             var userPoint = price * 0.01m;
             user.AccumulatedPoints += userPoint;
@@ -418,7 +420,7 @@ namespace Component.Application.Sales
                 await Vip(uid, (int)user.AccumulatedPoints);
             }
             await _context.SaveChangesAsync();
-            return (decimal)userPoint;
+            return userPoint;
         }
 
         public async Task<int> Vip(string uid, int point)
