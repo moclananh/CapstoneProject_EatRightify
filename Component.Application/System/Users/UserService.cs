@@ -68,7 +68,6 @@ namespace Component.Application.System.Users
             var claims = new[]
             {
         new Claim(ClaimTypes.Email, user.Email),
-        new Claim(ClaimTypes.GivenName, user.FirstName),
         new Claim(ClaimTypes.Role, string.Join(";", roles)),
         new Claim(ClaimTypes.Name, request.UserName),
         new Claim(ClaimTypes.Dsa, user.Id.ToString()),
