@@ -17,7 +17,7 @@ namespace Component.ViewModels.Sales.Bills
         public string Address { get; set; }
         public DateTime OrderDate { get; set; }
         public OrderStatus Status { get; set; }
-        public Guid OrderCode { get; set; }
+        public string OrderCode { get; set; }
 
     }
 }

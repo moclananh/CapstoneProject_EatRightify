@@ -26,22 +26,27 @@ namespace Component.Application.Utilities.Promotions
         }
         public async Task<Promotion> Create(PromotionCreateRequest request)
         {
+            Random generator = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            string randomCode = new string(Enumerable.Repeat(chars, 11)
+              .Select(s => s[generator.Next(s.Length)]).ToArray());
+
             var promotion = new Promotion()
             {
-                DiscountCode = Guid.NewGuid(),
+                DiscountCode = randomCode,
                 FromDate = request.FromDate,
                 ToDate = request.ToDate,
                 DiscountPercent = request.DiscountPercent,
                 Status = Data.Enums.Status.Active,
                 Name = request.Name,
                 Description = request.Description,
-                CreatedBy= request.CreatedBy,
+                CreatedBy = request.CreatedBy,
             };
 
             _context.Promotions.Add(promotion);
             await _context.SaveChangesAsync();
             return promotion;
-        } 
+        }
 
         public async Task<int> Delete(int promotionId)
         {
@@ -146,14 +151,29 @@ namespace Component.Application.Utilities.Promotions
             }).FirstOrDefaultAsync();
         }
 
-        public async Task<PromotionVm> GetByPromotionCode(Guid code)
+        public async Task<ApiResult<PromotionVm>> GetByPromotionCode(string code)
         {
             var query = from p in _context.Promotions
                         join u in _context.AppUsers on p.CreatedBy equals u.Id into pu
                         from u in pu.DefaultIfEmpty()
                         where p.DiscountCode.Equals(code)
-                        select new { p, u};
-            return await query.Select(x => new PromotionVm()
+                        select new { p, u };
+
+            var promotion = await query.FirstOrDefaultAsync(); // Lấy thông tin khuyến mãi
+
+            if (promotion == null)
+            {
+                return new ApiErrorResult<PromotionVm>("The voucher code does not exist!");
+            }
+
+            var timeNow = DateTime.Now;
+
+            if (timeNow < promotion.p.FromDate || timeNow > promotion.p.ToDate)
+            {
+                return new ApiErrorResult<PromotionVm>("The gift code is out of time.");
+            }
+
+            var result = await query.Select(x => new PromotionVm()
             {
                 Id = x.p.Id,
                 DiscountCode = x.p.DiscountCode,
@@ -165,7 +185,9 @@ namespace Component.Application.Utilities.Promotions
                 Description = x.p.Description,
                 CreatedBy = x.u.UserName
             }).FirstOrDefaultAsync();
+            return new ApiSuccessResult<PromotionVm>(result);
         }
+
 
         public async Task<int> Update(PromotionUpdateRequest request)
         {

@@ -16,7 +16,7 @@ namespace Component.Application.Sales
         Task<Order> Create(CheckoutRequest request); 
 
         Task<Order> GetById(int id);
-        Task<CheckOrderResult<CheckOrderByCodeVm>> GetByCode(Guid code);
+        Task<CheckOrderResult<CheckOrderByCodeVm>> GetByCode(string code);
         Task<Order> GetLastestOrderId();
         Task<List<OrderVm>> GetAll(string keyword);
         Task<List<OrderVm>> GetAllOrderByOrderStatus(GetOrderByOrderStatusRequest request);

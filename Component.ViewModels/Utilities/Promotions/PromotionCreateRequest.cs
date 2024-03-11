@@ -15,7 +15,7 @@ namespace Component.ViewModels.Utilities.Promotions
         [Required]
         public DateTime ToDate { set; get; }
         [Range(0, 100, ErrorMessage = "Range must be between 0 and 100")]
-        public int? DiscountPercent { set; get; }
+        public int DiscountPercent { set; get; }
         [Required(ErrorMessage = "Please enter name")]
         public string Name { set; get; }
         public string? Description { set; get; }

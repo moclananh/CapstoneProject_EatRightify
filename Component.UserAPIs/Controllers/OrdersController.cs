@@ -93,7 +93,7 @@ namespace Component.UserAPIs.Controllers
 
 
         [HttpGet("GetByOrderCode/{orderCode}")]
-        public async Task<IActionResult> GetOrderbyCode(Guid orderCode)
+        public async Task<IActionResult> GetOrderbyCode(string orderCode)
         {
             var order = await _orderService.GetByCode(orderCode);
 

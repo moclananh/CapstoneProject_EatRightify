@@ -10,7 +10,7 @@ namespace Component.ViewModels.Utilities.Promotions
     public class PromotionVm
     {
         public int Id { set; get; }
-        public Guid DiscountCode { set; get; }
+        public string DiscountCode { set; get; }
         public DateTime FromDate { set; get; }
         public DateTime ToDate { set; get; }
         public int? DiscountPercent { set; get; }

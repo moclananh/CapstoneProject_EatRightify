@@ -32,6 +32,11 @@ namespace Component.Application.Sales
             string vip = "";
             decimal originalPrice = 0;
             decimal tmp = 0;
+            Random generator = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            string randomCode = new string(Enumerable.Repeat(chars, 14)
+              .Select(s => s[generator.Next(s.Length)]).ToArray());
+
             using (var transaction = await _context.Database.BeginTransactionAsync())
             {
                 try
@@ -46,7 +51,7 @@ namespace Component.Application.Sales
                         ShipPhoneNumber = request.PhoneNumber,
                         TotalPriceOfOrder = request.TotalPriceOfOrder,
                         Status = OrderStatus.InProgress,
-                        OrderCode = Guid.NewGuid(),
+                        OrderCode = randomCode,
                         OrderDetails = new List<OrderDetail>() { }
                     };
 
@@ -311,7 +316,7 @@ namespace Component.Application.Sales
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<CheckOrderResult<CheckOrderByCodeVm>> GetByCode(Guid code)
+        public async Task<CheckOrderResult<CheckOrderByCodeVm>> GetByCode(string code)
         {
             var query = from o in _context.Orders
                         join od in _context.OrderDetails on o.Id equals od.OrderId
@@ -451,7 +456,7 @@ namespace Component.Application.Sales
 
             //2. filter
             if (!string.IsNullOrEmpty(keyword))
-                query = query.Where(x => x.o.ShipPhoneNumber.Contains(keyword));
+                query = query.Where(x => x.o.OrderCode.Contains(keyword));
 
             var result =  await query.Select(x => new OrderVm()
             {
@@ -501,7 +506,7 @@ namespace Component.Application.Sales
 
             //2. filter
             if (!string.IsNullOrEmpty(request.Keyword))
-                query = query.Where(x => x.o.OrderCode.ToString().Contains(request.Keyword));
+                query = query.Where(x => x.o.OrderCode.Contains(request.Keyword));
 
             //3. filter by order status
             if (request.Status != null)
@@ -538,7 +543,7 @@ namespace Component.Application.Sales
 
             //2. filter
             if (!string.IsNullOrEmpty(request.Keyword))
-                query = query.Where(x => x.o.OrderCode.ToString().Contains(request.Keyword));
+                query = query.Where(x => x.o.OrderCode.Contains(request.Keyword));
 
             //3. filter by order status
             if (request.Status != null)
