@@ -408,8 +408,6 @@ namespace Component.Application.Sales
             var user = await _userManager.FindByIdAsync(uid);
             if (user.UserName.Equals("guest"))
             {
-                user.AccumulatedPoints = 0; //trick for guest order
-                user.VIP = 0;  
                 return 0;
             }
             var userPoint = price * 0.01m;
