@@ -61,9 +61,9 @@ namespace Component.Application.Sales
 
                         if (product != null)
                         {
-                            var user = await _userManager.FindByIdAsync(request.UserId.ToString());
-                            vip = user.VIP;
-                            BuyerId = user.Id.ToString();
+                            //var user = await _userManager.FindByIdAsync(request.UserId.ToString);
+                            // vip = user.VIP;
+                            // BuyerId = user.Id.ToString();
                             tmp = product.Price * orderDetailVm.Quantity;
                             //totalPrice = await PriceCalculator(product.Price, orderDetailVm.Quantity, vip);
                             var orderDetail = new OrderDetail()
@@ -325,9 +325,13 @@ namespace Component.Application.Sales
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join l in _context.Languages on pt.LanguageId equals l.Id
                         where o.OrderCode == code
-                        select new 
-                        { 
-                            o, od, p , pi, pt
+                        select new
+                        {
+                            o,
+                            od,
+                            p,
+                            pi,
+                            pt
                         };
             var orderDetails = await query.Select(x => new CheckOrderByCodeVm()
             {
@@ -345,7 +349,7 @@ namespace Component.Application.Sales
             foreach (var productVm in orderDetails)
             {
                 // Check if the product with the same ID is already in the distinctProducts list
-                if (!distinctProducts.Any(p => p.ProductId== productVm.ProductId))
+                if (!distinctProducts.Any(p => p.ProductId == productVm.ProductId))
                 {
                     distinctProducts.Add(productVm);
                 }
@@ -356,7 +360,7 @@ namespace Component.Application.Sales
             // Assuming you have an enum defined for OrderStatus
             var result = new CheckOrderResult<CheckOrderByCodeVm>
             {
-                Status = status, 
+                Status = status,
                 Items = distinctProducts,
                 OrderDate = orderDate
             };
@@ -364,45 +368,45 @@ namespace Component.Application.Sales
             return result;
         }
 
-        public async Task<decimal> PriceCalculator(decimal price, int quantity, string vip)
-        {
-            decimal totalPrice = 0;
-            decimal discount = 0;
-            if (vip == null)
-            {
-                totalPrice = price * quantity;
-            }
-            if (vip == "Vip 1")
-            {
-                discount = price * 0.015m;
-                totalPrice = (price - discount) * quantity;
-            }
-            if (vip == "Vip 2")
-            {
-                discount = price * 0.03m;
-                totalPrice = (price - discount) * quantity;
-            }
-            if (vip == "Vip 3")
-            {
-                discount = price * 0.06m;
-                totalPrice = (price - discount) * quantity;
-            }
-            if (vip == "Vip 4")
-            {
-                discount = price * 0.09m;
-                totalPrice = (price - discount) * quantity;
-            }
-            if (vip == "Vip 5")
-            {
-                discount = price * 0.12m;
-                totalPrice = (price - discount) * quantity;
-            }
-            return totalPrice; // gia tien da giam gia cua 1 san pham
-        }
-
+        /*   public async Task<decimal> PriceCalculator(decimal price, int quantity, string vip)
+           {
+               decimal totalPrice = 0;
+               decimal discount = 0;
+               if (vip == null)
+               {
+                   totalPrice = price * quantity;
+               }
+               if (vip == "Vip 1")
+               {
+                   discount = price * 0.015m;
+                   totalPrice = (price - discount) * quantity;
+               }
+               if (vip == "Vip 2")
+               {
+                   discount = price * 0.03m;
+                   totalPrice = (price - discount) * quantity;
+               }
+               if (vip == "Vip 3")
+               {
+                   discount = price * 0.06m;
+                   totalPrice = (price - discount) * quantity;
+               }
+               if (vip == "Vip 4")
+               {
+                   discount = price * 0.09m;
+                   totalPrice = (price - discount) * quantity;
+               }
+               if (vip == "Vip 5")
+               {
+                   discount = price * 0.12m;
+                   totalPrice = (price - discount) * quantity;
+               }
+               return totalPrice; // gia tien da giam gia cua 1 san pham
+           }
+   */
         public async Task<decimal> AccumulatedPoints(string uid, decimal price)
         {
-            var user = await _userManager.FindByIdAsync(uid);    
+            var user = await _userManager.FindByIdAsync(uid);
             if (user.AccumulatedPoints == null)
             {
                 user.AccumulatedPoints = 0;
@@ -424,23 +428,23 @@ namespace Component.Application.Sales
             var userPoint = point;
             if (userPoint >= 100 && userPoint < 300) // tu 100 den 299
             {
-                user.VIP = "Vip 1";
+                user.VIP = 1;
             }
             if (userPoint >= 300 && userPoint < 600) // tu 300 den 599
             {
-                user.VIP = "Vip 2";
+                user.VIP = 2;
             }
             if (userPoint >= 600 && userPoint < 1200) // tu 600 den 1199
             {
-                user.VIP = "Vip 3";
+                user.VIP = 3;
             }
             if (userPoint >= 1200 && userPoint < 2400) // tu 1200 den 2399
             {
-                user.VIP = "Vip 4";
+                user.VIP = 4;
             }
             if (userPoint >= 2400) // tu 2400 tro len
             {
-                user.VIP = "Vip 5";
+                user.VIP = 5;
             }
             return await _context.SaveChangesAsync();
         }
@@ -452,23 +456,23 @@ namespace Component.Application.Sales
                         join od in _context.OrderDetails on o.Id equals od.OrderId
                         join p in _context.Products on od.ProductId equals p.Id
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
-                        select new {o, od, p, pt };
+                        select new { o, od, p, pt };
 
             //2. filter
             if (!string.IsNullOrEmpty(keyword))
                 query = query.Where(x => x.o.OrderCode.Contains(keyword));
 
-            var result =  await query.Select(x => new OrderVm()
+            var result = await query.Select(x => new OrderVm()
             {
-               Id = x.o.Id,
-               OrderDate  = x.o.OrderDate,
-               UserId= x.o.UserId,
-               ShipName = x.o.ShipName,
-               ShipAddress= x.o.ShipAddress,
-               ShipEmail= x.o.ShipAddress,
-               ShipPhoneNumber= x.o.ShipAddress,
-               OrderCode= x.o.OrderCode,
-               Status= x.o.Status,
+                Id = x.o.Id,
+                OrderDate = x.o.OrderDate,
+                UserId = x.o.UserId,
+                ShipName = x.o.ShipName,
+                ShipAddress = x.o.ShipAddress,
+                ShipEmail = x.o.ShipAddress,
+                ShipPhoneNumber = x.o.ShipAddress,
+                OrderCode = x.o.OrderCode,
+                Status = x.o.Status,
             }).Distinct().ToListAsync();
             result = result.OrderByDescending(x => x.OrderDate).ToList();
             return result;
@@ -484,7 +488,7 @@ namespace Component.Application.Sales
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join l in _context.Languages on pt.LanguageId equals l.Id
                         where o.Id == id
-                        select new {pt, od, pi };
+                        select new { pt, od, pi };
 
             return await query.Select(x => new OrderDetailView()
             {
@@ -514,7 +518,7 @@ namespace Component.Application.Sales
                 query = query.Where(x => x.o.Status == request.Status);
             }
 
-           var orders =  await query.Select(x => new OrderVm()
+            var orders = await query.Select(x => new OrderVm()
             {
                 Id = x.o.Id,
                 OrderDate = x.o.OrderDate,

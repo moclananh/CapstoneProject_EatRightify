@@ -13,8 +13,8 @@ namespace Component.Data.Entities
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public DateTime? Dob { get; set; }
-        public string? VIP { get; set; }
-        public decimal? AccumulatedPoints { get; set; }
+        public int VIP { get; set; }
+        public decimal AccumulatedPoints { get; set; }
         public bool IsBanned { get; set; }
         public string? RefeshToken { get; set; }
         public string? RefeshCode { get; set; }
