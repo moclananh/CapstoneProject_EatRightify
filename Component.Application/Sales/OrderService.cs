@@ -28,8 +28,7 @@ namespace Component.Application.Sales
         {
             decimal orderPrice = 0;
             decimal totalPrice = 0;
-            string BuyerId = "";
-            string vip = "";
+            int vip = 0;
             decimal originalPrice = 0;
             decimal tmp = 0;
             Random generator = new Random();
@@ -100,7 +99,7 @@ namespace Component.Application.Sales
                     await _context.SaveChangesAsync();
 
                     // Commit the transaction
-                    var test = await AccumulatedPoints(BuyerId, orderPrice);
+                    var test = await AccumulatedPoints(request.UserId.ToString(), orderPrice);
                     transaction.Commit();
                     /*Console.WriteLine("Vip: " + vip);
                     Console.WriteLine("Gia goc: " + originalPrice.ToString());

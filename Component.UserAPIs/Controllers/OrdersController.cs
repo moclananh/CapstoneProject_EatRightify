@@ -20,8 +20,8 @@ namespace Component.UserAPIs.Controllers
         public class CustomErrorDetails : ProblemDetails
         {
         }
-        [HttpPost]
 
+        [HttpPost]
         public async Task<IActionResult> Create([FromBody] CheckoutRequest request)
         {
             if (!ModelState.IsValid)
