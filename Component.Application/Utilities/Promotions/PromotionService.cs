@@ -161,18 +161,6 @@ namespace Component.Application.Utilities.Promotions
 
             var promotion = await query.FirstOrDefaultAsync(); // Lấy thông tin khuyến mãi
 
-            if (promotion == null)
-            {
-                return new ApiErrorResult<PromotionVm>("The voucher code does not exist!");
-            }
-
-            var timeNow = DateTime.Now;
-
-            if (timeNow < promotion.p.FromDate || timeNow > promotion.p.ToDate)
-            {
-                return new ApiErrorResult<PromotionVm>("The gift code is out of time.");
-            }
-
             var result = await query.Select(x => new PromotionVm()
             {
                 Id = x.p.Id,

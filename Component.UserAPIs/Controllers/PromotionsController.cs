@@ -1,5 +1,6 @@
 ﻿using Component.Application.Utilities.Promotions;
 using Component.Data.Entities;
+using Component.ViewModels.Common;
 using Component.ViewModels.Utilities.Promotions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -22,8 +23,20 @@ namespace Component.UserAPIs.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GetByPromotionCode(string code)
         {
-            var promotions = await _promotionService.GetByPromotionCode(code);
-            return Ok(promotions);
+            var promotion = await _promotionService.GetByPromotionCode(code);
+
+            if (promotion == null)
+            {
+                return BadRequest(promotion);
+            }
+
+            var timeNow = DateTime.Now;
+
+            if (timeNow < promotion.ResultObj.FromDate || timeNow > promotion.ResultObj.ToDate)
+            {
+                return BadRequest(promotion);
+            }
+            return Ok(promotion);
         }
     }
 }
