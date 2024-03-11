@@ -86,7 +86,7 @@ namespace Component.Application.System.Users
             var token = new JwtSecurityToken(_config["Tokens:Issuer"],
                 _config["Tokens:Issuer"],
                 claims,
-                expires: DateTime.Now.AddHours(1),
+                expires: DateTime.Now.AddDays(1),
                 signingCredentials: creds);
 
             return new LoginRespone<string>(new JwtSecurityTokenHandler().WriteToken(token), id);
@@ -529,7 +529,7 @@ namespace Component.Application.System.Users
                 _config["Tokens:Issuer"],
                 _config["Tokens:Issuer"],
                 newClaims,
-                expires: DateTime.Now.AddHours(1), // You can adjust the expiration time here
+                expires: DateTime.Now.AddDays(1), // You can adjust the expiration time here
                 signingCredentials: new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
             );
 
