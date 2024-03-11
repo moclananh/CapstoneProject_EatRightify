@@ -25,7 +25,7 @@ namespace Component.UserAPIs.Controllers
         {
             var promotion = await _promotionService.GetByPromotionCode(code);
 
-            if (promotion == null)
+            if (promotion.ResultObj == null)
             {
                 return BadRequest(promotion);
             }
