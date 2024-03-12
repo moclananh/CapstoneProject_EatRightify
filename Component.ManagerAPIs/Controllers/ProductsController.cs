@@ -194,5 +194,13 @@ namespace Component.ManagerAPIs.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet("Viewcount")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Viewcount()
+        {
+            var view = await _productService.TotalView();
+            return Ok(view);
+        }
     }
 }

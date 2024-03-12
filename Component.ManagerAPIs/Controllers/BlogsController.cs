@@ -95,5 +95,13 @@ namespace Component.ManagerAPIs.Controllers
                 return BadRequest();
             return Ok();
         }
+
+        [HttpGet("Viewcount")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Viewcount()
+        {
+            var blogs = await _blogService.TotalView();
+            return Ok(blogs);
+        }
     }
 }

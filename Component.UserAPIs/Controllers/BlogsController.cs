@@ -58,12 +58,5 @@ namespace Component.UserAPIs.Controllers
             }
         }
 
-
-        [HttpGet("Viewcount")]
-        public async Task<IActionResult> Viewcount()
-        {
-            var blogs = await _blogService.TotalView();
-            return Ok(blogs);
-        }
     }
 }
