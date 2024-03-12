@@ -811,5 +811,12 @@ namespace Component.Application.Catalog.Products
 
             return queryFilter;
         }
+
+        public async Task<int> TotalView()
+        {
+            var totalViewCount = await (from p in _context.Products
+                                        select p.ViewCount).SumAsync();
+            return totalViewCount;
+        }
     }
 }

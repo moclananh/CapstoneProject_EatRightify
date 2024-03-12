@@ -51,5 +51,6 @@ namespace Component.Application.Catalog.Products
         Task<List<ProductVm>> GetProductForAI();
         Task<string> CreateBase64Image(IFormFile image);
         Task<decimal> SumOfCost (DateTime? startDate, DateTime? endDate);
+        Task<int> TotalView();
     }
 }

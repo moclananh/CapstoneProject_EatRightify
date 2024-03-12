@@ -82,5 +82,13 @@ namespace Component.UserAPIs.Controllers
                return BadRequest(e.Message);
             }
         }
+
+        [HttpGet("Viewcount")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Viewcount()
+        {
+            var view = await _productService.TotalView();
+            return Ok(view);
+        }
     }
 }
