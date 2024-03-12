@@ -564,7 +564,7 @@ namespace Component.Application.Catalog.Products
             return new ApiSuccessResult<bool>();
         }
 
-        public async Task<List<ProductVm>> GetFeaturedProducts(string languageId, int take)
+        public async Task<List<ProductVm>> GetFeaturedProducts(int take)
         {
             //1. Select join
             var query = from p in _context.Products
@@ -575,11 +575,10 @@ namespace Component.Application.Catalog.Products
                         from pi in ppi.DefaultIfEmpty()
                         join c in _context.Categories on pic.CategoryId equals c.Id into picc
                         from c in picc.DefaultIfEmpty()
-                        where pt.LanguageId == languageId && (pi == null || pi.IsDefault == true)
-                        && p.IsFeatured == true
+                        where p.IsFeatured == true
                         select new { p, pt, pic, pi };
 
-            var data = await query.OrderByDescending(x => x.p.DateCreated).Take(take) // stupid take() nen phai dung trick trong Utilities
+            var data = await query.OrderByDescending(x => x.p.DateCreated).Take(take)
                 .Select(x => new ProductVm()
                 {
                     Id = x.p.Id,

@@ -198,5 +198,14 @@ namespace Component.Application.Utilities.Blogs
             await _context.SaveChangesAsync();
         }
 
+        public async Task<int> TotalView()
+        {
+            var totalViewCount = await (from b in _context.Blogs
+                                        join u in _context.AppUsers on b.CreatedBy equals u.Id into bu
+                                        from u in bu.DefaultIfEmpty()
+                                        select b.ViewCount).SumAsync();
+
+            return totalViewCount;
+        }
     }
 }
