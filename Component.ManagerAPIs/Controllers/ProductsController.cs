@@ -52,9 +52,9 @@ namespace Component.ManagerAPIs.Controllers
 
         [HttpGet("featured/{languageId}/{take}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetFeaturedProducts(int take, string languageId)
+        public async Task<IActionResult> GetFeaturedProducts(int take)
         {
-            var products = await _productService.GetFeaturedProducts(languageId, take);
+            var products = await _productService.GetFeaturedProducts(take);
             return Ok(products);
         }
 
