@@ -472,6 +472,7 @@ namespace Component.Application.Sales
                 ShipPhoneNumber = x.o.ShipAddress,
                 OrderCode = x.o.OrderCode,
                 Status = x.o.Status,
+                TotalPriceOfOrder = x.o.TotalPriceOfOrder,
             }).Distinct().ToListAsync();
             result = result.OrderByDescending(x => x.OrderDate).ToList();
             return result;
@@ -528,6 +529,7 @@ namespace Component.Application.Sales
                 ShipPhoneNumber = x.o.ShipAddress,
                 OrderCode = x.o.OrderCode,
                 Status = x.o.Status,
+                TotalPriceOfOrder = x.o.TotalPriceOfOrder,
             }).Distinct().ToListAsync();
             // Sort the users by CreatedDate after projection
             orders = orders.OrderByDescending(x => x.OrderDate).ToList();
@@ -565,6 +567,7 @@ namespace Component.Application.Sales
                 ShipPhoneNumber = x.o.ShipPhoneNumber,
                 OrderCode = x.o.OrderCode,
                 Status = x.o.Status,
+                TotalPriceOfOrder = x.o.TotalPriceOfOrder,
             }).Distinct().ToListAsync();
             // Sort the users by CreatedDate after projection
             orders = orders.OrderByDescending(x => x.OrderDate).ToList();
