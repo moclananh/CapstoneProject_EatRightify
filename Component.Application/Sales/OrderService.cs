@@ -561,8 +561,8 @@ namespace Component.Application.Sales
                 UserId = x.o.UserId,
                 ShipName = x.o.ShipName,
                 ShipAddress = x.o.ShipAddress,
-                ShipEmail = x.o.ShipAddress,
-                ShipPhoneNumber = x.o.ShipAddress,
+                ShipEmail = x.o.ShipEmail,
+                ShipPhoneNumber = x.o.ShipPhoneNumber,
                 OrderCode = x.o.OrderCode,
                 Status = x.o.Status,
             }).Distinct().ToListAsync();
