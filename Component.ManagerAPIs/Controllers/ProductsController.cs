@@ -34,7 +34,7 @@ namespace Component.ManagerAPIs.Controllers
             return Ok(item);
         }
 
-        [HttpGet("{productId}/{languageId}")]
+        [HttpGet("{productId}")]
         public async Task<IActionResult> GetById(int productId)
         {
             var product = await _productService.GetById(productId);
