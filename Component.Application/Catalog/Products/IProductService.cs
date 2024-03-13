@@ -20,7 +20,7 @@ namespace Component.Application.Catalog.Products
 
         Task<int> Delete(int productId);
 
-        Task<ProductVm> GetById(int productId, string languageId);
+        Task<ProductVm> GetById(int productId);
 
         Task<bool> UpdatePrice(int productId, decimal newPrice);
 

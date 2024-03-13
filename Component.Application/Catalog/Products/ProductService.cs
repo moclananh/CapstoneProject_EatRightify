@@ -244,11 +244,10 @@ namespace Component.Application.Catalog.Products
             return pagedResult;
         }
 
-        public async Task<ProductVm> GetById(int productId, string languageId)
+        public async Task<ProductVm> GetById(int productId)
         {
             var product = await _context.Products.FindAsync(productId);
-            var productTranslation = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.ProductId == productId
-            && x.LanguageId == languageId);
+            var productTranslation = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.ProductId == productId);
 
             var categories = await (from c in _context.Categories
                                     join pic in _context.ProductInCategories on c.Id equals pic.CategoryId
