@@ -817,5 +817,70 @@ namespace Component.Application.Catalog.Products
                                         select p.ViewCount).SumAsync();
             return totalViewCount;
         }
+
+        public async Task<List<ProductVm>> GetAllProductActive(GetAllProductRequest request)
+        {
+            var query = from p in _context.Products
+                        join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic
+                        from pic in ppic.DefaultIfEmpty()
+                        join c in _context.Categories on pic.CategoryId equals c.Id into picc
+                        from c in picc.DefaultIfEmpty()
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
+                        where pt.LanguageId == request.LanguageId && p.Status == Data.Enums.Status.Active
+                        select new ProductVm()
+                        {
+                            Id = p.Id,
+                            Name = pt.Name,
+                            DateCreated = p.DateCreated,
+                            Description = pt.Description,
+                            Details = pt.Details,
+                            LanguageId = pt.LanguageId,
+                            OriginalPrice = p.OriginalPrice,
+                            Price = p.Price,
+                            SeoAlias = pt.SeoAlias,
+                            SeoDescription = pt.SeoDescription,
+                            SeoTitle = pt.SeoTitle,
+                            Stock = p.Stock,
+                            ViewCount = p.ViewCount,
+                            IsFeatured = p.IsFeatured,
+                            ThumbnailImage = pi.ImagePath,
+                            Status = p.Status,
+                            CategoryId = pic.CategoryId,
+                            InputStock = p.InputStock,
+                            Cost = p.Cost,
+                            DateModified = p.DateModified,
+                        };
+
+            if (!string.IsNullOrEmpty(request.Keyword))
+            {
+                query = query.Where(x => x.Name.Contains(request.Keyword));
+            }
+
+            // Filter by CategoryId
+            if (request.CategoryId != null && request.CategoryId != 0)
+            {
+                query = query.Where(x => x.CategoryId == request.CategoryId);
+            }
+
+            // Create a list to store distinct products
+            List<ProductVm> distinctProducts = new List<ProductVm>();
+
+            foreach (var productVm in query)
+            {
+                // Check if the product with the same ID is already in the distinctProducts list
+                if (!distinctProducts.Any(p => p.Id == productVm.Id))
+                {
+                    distinctProducts.Add(productVm);
+                }
+            }
+
+            var queryFilter = distinctProducts
+             .OrderByDescending(item => item.DateCreated)
+             .ToList();
+
+            return queryFilter;
+        }
     }
 }
