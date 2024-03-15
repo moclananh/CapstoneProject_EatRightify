@@ -36,7 +36,39 @@ namespace Component.UserAPIs.Controllers
             {
                 return BadRequest(promotion);
             }
+
+            if (promotion.ResultObj.Status == Data.Enums.Status.InActive)
+            {
+                return BadRequest(promotion);
+            }
+            else if (promotion.ResultObj.Stock <= 0)
+            {
+                return BadRequest(promotion);
+            }
+
             return Ok(promotion);
         }
+
+        [HttpPut("UpdateStockPromotion/{voucherId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateStockPromotion(int voucherId)
+        {
+            try
+            {
+                await _promotionService.UpdateStockOfVoucher(voucherId);
+                var check = await _promotionService.GetById(voucherId);
+                if (check.Stock <= 0)
+                {
+                    await _promotionService.UpdateStatus(voucherId);
+                }
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
     }
 }

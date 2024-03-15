@@ -17,9 +17,9 @@ namespace Component.ViewModels.Utilities.Promotions
         public DateTime ToDate { set; get; }
         [Range(0, 100, ErrorMessage = "Range must be between 0 and 100")]
         public int DiscountPercent { set; get; }
-        public Status Status { set; get; }
         [Required]
         public string Name { set; get; }
         public string? Description { set; get; }
+        public int Stock { set; get; }
     }
 }

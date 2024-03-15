@@ -18,5 +18,6 @@ namespace Component.ViewModels.Utilities.Promotions
         public string Name { set; get; }
         public string? Description { set; get; }
         public string? CreatedBy { get; set; }
+        public int Stock { set; get; }
     }
 }
