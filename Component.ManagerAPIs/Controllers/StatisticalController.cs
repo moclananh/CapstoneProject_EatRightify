@@ -35,9 +35,10 @@ namespace Component.ManagerAPIs.Controllers
         }
 
         [HttpGet("getAll")]
-        public async Task<IActionResult> GetAll([FromQuery] StatisticalRequest request)
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAll(DateTime? startDate, DateTime? endDate)
         {
-            var item = await _statisticalService.GetAll(request);
+            var item = await _statisticalService.GetAll(startDate, endDate);
             return Ok(item);
         }
 

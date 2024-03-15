@@ -24,14 +24,15 @@ namespace Component.Application.Statistical
             _context = context;
         }
 
-        public async Task<List<StatisticalVm>> GetAll(StatisticalRequest request)
+        public async Task<List<StatisticalVm>> GetAll(DateTime? startDate, DateTime? endDate)
         {
             var query = from od in _context.OrderDetails
                         join o in _context.Orders on od.OrderId equals o.Id
                         join p in _context.Products on od.ProductId equals p.Id
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join pimg in _context.ProductImages on p.Id equals pimg.ProductId
-                        where (o.OrderDate >= request.StartDate && o.OrderDate <= request.EndDate)
+                        where (!startDate.HasValue || o.OrderDate >= startDate) &&
+                      (!endDate.HasValue || o.OrderDate <= endDate)
                         group new { od, pt, pimg } by new
                         {
                             od.ProductId,
@@ -60,13 +61,9 @@ namespace Component.Application.Statistical
                 }
             }
 
-
             var queryFilter = distinctProducts
-              .Where(item => item.Name != "N/A")
               .OrderByDescending(item => item.TotalQuantity) // Sort by TotalQuantity in descending order
               .ToList();
-
-
             return queryFilter;
         }
 
@@ -240,7 +237,6 @@ namespace Component.Application.Statistical
 
 
             var queryFilter = distinctProducts
-              .Where(item => item.Name != "N/A")
               .OrderByDescending(item => item.TotalQuantity) // Sort by TotalQuantity in descending order
               .ToList();
 
