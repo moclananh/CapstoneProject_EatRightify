@@ -74,6 +74,28 @@ namespace Component.Application.Utilities.Locations
             return result;
         }
 
+        public async Task<List<LocationVm>> GetAllLocationActive()
+        {
+            var query = from l in _context.Locations
+                        join u in _context.AppUsers on l.CreatedBy equals u.Id into bu
+                        from u in bu.DefaultIfEmpty()
+                        where l.Status == Data.Enums.Status.Active
+                        select new { l, u };
+            var result = await query.Select(x => new LocationVm()
+            {
+                LocationId = x.l.LocationId,
+                LocationName = x.l.LocationName,
+                Longitude = x.l.Longitude,
+                Latitude = x.l.Latitude,
+                Description = x.l.Description,
+                Status = x.l.Status,
+                DateCreated = x.l.DateCreated,
+                CreatedBy = x.u.UserName
+            }).ToListAsync();
+            result = result.OrderByDescending(x => x.DateCreated).ToList();
+            return result;
+        }
+
         public async Task<PagedResult<LocationVm>> GetAllPaging(GetLocationPagingRequest request)
         {
             //1. Select join

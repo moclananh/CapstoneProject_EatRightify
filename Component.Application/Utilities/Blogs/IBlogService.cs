@@ -13,6 +13,7 @@ namespace Component.Application.Utilities.Blogs
     public interface IBlogService
     {
         Task<List<BlogVm>> GetAll();
+        Task<List<BlogVm>> GetAllBlogActive();
         Task<PagedResult<BlogVm>> GetAllPaging(GetBlogPagingRequest request);
 
         Task<BlogVm> GetById(int id);

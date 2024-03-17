@@ -18,12 +18,13 @@ namespace Component.UserAPIs.Controllers
             _blogService = blogService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("GetAllBlogActive")]
+        public async Task<IActionResult> GetAllBlogActive()
         {
-            var blogs = await _blogService.GetAll();
+            var blogs = await _blogService.GetAllBlogActive();
             return Ok(blogs);
         }
+
 
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetBlogPagingRequest request)
