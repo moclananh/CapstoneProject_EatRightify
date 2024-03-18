@@ -276,6 +276,7 @@ namespace Component.Application.AI
             }
             var resultEntity = await _context.Results.FindAsync(result.Id);
             var subject = "ERS health care result";
+            var descriptionFormat = ExtractDescriptionFromCKEditorFormat(result.Description);
             var body = $@"
             <p style='color: black;'>This is your health care result in ERS system.</p>
             <table border='1' style='border-collapse: collapse;'>          
@@ -289,7 +290,7 @@ namespace Component.Application.AI
             </tr>
             <tr>
             <td style='color: black;'><strong>Description</strong></td>
-            <td style='color: black;'>{result.Description}</td>
+            <td style='color: black;'>{descriptionFormat}</td>
             </tr>
             <tr>
             <td style='color: black;'><strong>Result Date</strong></td>
@@ -297,8 +298,7 @@ namespace Component.Application.AI
             </tr>            
             </table>";
 
-            // Adding line breaks for better formatting
-            body = string.Join(Environment.NewLine, body.Split('\n').Select(line => line.Trim()));
+            
             try
             {
                 await _emailService.SendPasswordResetEmailAsync(email, subject, body);
@@ -311,6 +311,34 @@ namespace Component.Application.AI
                 // Handle the exception as needed
                 return new ApiErrorResult<string>("Error sending result email");
             }
+        }
+
+        // Phương thức để trích xuất nội dung từ định dạng CKEditor
+        private string ExtractDescriptionFromCKEditorFormat(string ckEditorContent)
+        {
+            // Xử lý các thẻ HTML cần thiết để trích xuất nội dung
+            var doc = new HtmlAgilityPack.HtmlDocument();
+            doc.LoadHtml(ckEditorContent);
+
+            // Trích xuất nội dung từ các thẻ HTML trong định dạng CKEditor
+            var extractedContent = new StringBuilder();
+            foreach (var node in doc.DocumentNode.ChildNodes)
+            {
+                if (node.Name == "h2" || node.Name == "p" || node.Name == "ol" || node.Name == "ul")
+                {
+                    extractedContent.Append(node.OuterHtml);
+                }
+                else if (node.Name == "strong" || node.Name == "i" || node.Name == "br")
+                {
+                    extractedContent.Append(node.OuterHtml);
+                }
+                else if (node.Name == "#text")
+                {
+                    extractedContent.Append(node.InnerText);
+                }
+            }
+
+            return extractedContent.ToString();
         }
 
         public async Task<int> UpdateIsSend(int id, UpdateIsSendRequest request)
