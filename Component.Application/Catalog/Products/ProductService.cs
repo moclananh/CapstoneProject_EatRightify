@@ -882,5 +882,12 @@ namespace Component.Application.Catalog.Products
 
             return queryFilter;
         }
+
+        public async Task<int> ReStock(int productId, int stock)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            product.Stock += stock;
+            return await _context.SaveChangesAsync();
+        }
     }
 }

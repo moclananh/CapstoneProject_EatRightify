@@ -33,6 +33,7 @@ namespace Component.Application.Sales
         Task<decimal> AccumulatedPoints(string uid, decimal price); // cong diem tich luy
         Task<int> Vip(string uid, int point); // set trang thai vip
         Task<decimal> TotalProfit (DateTime? startDate, DateTime? endDate);
+        Task<int> CancelOrderRequest(CancelOrderRequest request);
 
     }
 }

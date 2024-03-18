@@ -19,6 +19,7 @@ namespace Component.Data.Entities
         public OrderStatus Status { set; get; }
         public decimal TotalPriceOfOrder { set; get; }
         public string OrderCode { set; get; }
+        public string? CancelDescription {  set; get; }
         public List<OrderDetail> OrderDetails { get; set; }
         public AppUser AppUser { get; set; }
 

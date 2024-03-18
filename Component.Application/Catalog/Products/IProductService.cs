@@ -53,5 +53,6 @@ namespace Component.Application.Catalog.Products
         Task<string> CreateBase64Image(IFormFile image);
         Task<decimal> SumOfCost (DateTime? startDate, DateTime? endDate);
         Task<int> TotalView();
+        Task<int> ReStock(int productId, int stock);
     }
 }

@@ -121,24 +121,12 @@ namespace Component.Application.Sales
         public async Task<Order> GetById(int orderId)
         {
             var order = await _context.Orders.FindAsync(orderId);
-
-            if (order == null)
-            {
-                throw new Exception($"Order with ID {orderId} not found.");
-            }
-
             return order;
         }
 
         public async Task<Order> GetLastestOrderId()
         {
             var latestOrder = await _context.Orders.OrderByDescending(order => order.Id).FirstOrDefaultAsync();
-
-            if (latestOrder == null)
-            {
-                throw new Exception("No orders found in the database.");
-            }
-
             return latestOrder;
         }
 
@@ -492,6 +480,7 @@ namespace Component.Application.Sales
 
             return await query.Select(x => new OrderDetailView()
             {
+                ProductId = x.pt.ProductId,
                 ProductName = x.pt.Name,
                 ImagePath = x.pi.ImagePath,
                 Quantity = x.od.Quantity,
@@ -596,6 +585,21 @@ namespace Component.Application.Sales
             //4. Calculate profit
             decimal totalProfit = totalPrice - totalCost;
             return totalProfit;
+        }
+
+        public async Task<int> CancelOrderRequest(CancelOrderRequest request)
+        {
+            var order = await _context.Orders.FindAsync(request.OrderId);
+            if (order == null) throw new EShopException($"Cannot find an Order with id: {request.OrderId}");
+
+            order.Status = OrderStatus.Canceled;
+            order.CancelDescription = request.CancelDescription;
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> RestockOrder(int orderId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
