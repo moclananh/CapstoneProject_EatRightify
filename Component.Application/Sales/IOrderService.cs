@@ -24,7 +24,7 @@ namespace Component.Application.Sales
 
         Task<PagedResult<OrderVm>> GetAllPaging(OrderPagingRequest request);
         Task<PagedResult<OrderDetailView>> GetOrderDetailPagingRequest(OrderDetailPagingRequest request);
-        Task<List<OrderDetailView>> GetOrderDetail(int id);
+        Task<CheckOrderResult<OrderDetailView>> GetOrderDetail(int id);
         Task<BillHistoryDetailVM> GetBillById(int id);
         Task<List<BillHistoryVM>> BillHistory(Guid id);
 

@@ -126,7 +126,7 @@ namespace Component.UserAPIs.Controllers
                 await _orderService.CancelOrderRequest(request);
                 var orderDetail = await _orderService.GetOrderDetail(request.OrderId);
                 // xu ly re-stock
-                foreach (var item in orderDetail)
+                foreach (var item in orderDetail.Items)
                 {
                     // Gọi hàm ReStock để cập nhật lại tồn kho cho từng sản phẩm
                     await _productService.ReStock(item.ProductId, item.Quantity);

@@ -466,7 +466,7 @@ namespace Component.Application.Sales
             return result;
         }
 
-        public async Task<List<OrderDetailView>> GetOrderDetail(int id)
+        public async Task<CheckOrderResult<OrderDetailView>> GetOrderDetail(int id)
         {
             //1. Select join
             var query = from o in _context.Orders
@@ -476,9 +476,9 @@ namespace Component.Application.Sales
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join l in _context.Languages on pt.LanguageId equals l.Id
                         where o.Id == id
-                        select new { pt, od, pi };
+                        select new {o, pt, od, pi };
 
-            return await query.Select(x => new OrderDetailView()
+            var item = await query.Select(x => new OrderDetailView()
             {
                 ProductId = x.pt.ProductId,
                 ProductName = x.pt.Name,
@@ -486,6 +486,17 @@ namespace Component.Application.Sales
                 Quantity = x.od.Quantity,
                 Price = x.od.Price
             }).Distinct().ToListAsync();
+
+            var status = query.Select(x => x.o.Status).FirstOrDefault();
+            var orderDate = query.Select(x => x.o.OrderDate).FirstOrDefault();
+            var result = new CheckOrderResult<OrderDetailView>
+            {
+                Status = status,
+                Items = item,
+                OrderDate = orderDate
+            };
+
+            return result;
         }
 
         public async Task<List<OrderVm>> GetAllOrderByOrderStatus(GetOrderByOrderStatusRequest request)
