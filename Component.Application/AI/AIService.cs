@@ -245,7 +245,7 @@ namespace Component.Application.AI
                         " .Choose a list contain multiple of suitable product for this person," +
                         " remember to exclude all the product that have allergies keyword in it's description, " +
                         " then choose the product description, product stock and the product name must be in this list: " + ProductResultContent +
-                        " . Then for every product you recommend, also provide a link to that product that have a type like this: " + LinkProduct + "{#productid#}" + "/{#languageid#}" +
+                        " . Then for every product you recommend, also provide a link to that product that have a type like this: " + LinkProduct + "{#productid#}" +
                         " and give me the reason why you choose those products for this person. " +
                         ". Finally, generate a list of work out exercise that suitable for this person and then give me a best advice for this person base on their stats.";
                     return result;
