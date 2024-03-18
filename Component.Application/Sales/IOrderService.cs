@@ -2,9 +2,11 @@
 using Component.ViewModels.Common;
 using Component.ViewModels.Sales.Bills;
 using Component.ViewModels.Sales.Orders;
+using Component.ViewModels.System.Users;
 using Component.ViewModels.Utilities.Blogs;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +36,7 @@ namespace Component.Application.Sales
         Task<int> Vip(string uid, int point); // set trang thai vip
         Task<decimal> TotalProfit (DateTime? startDate, DateTime? endDate);
         Task<int> CancelOrderRequest(CancelOrderRequest request);
+        Task<ApiResult<string>> InvoiceOrder(InvoiceOrderRequest request);
 
     }
 }

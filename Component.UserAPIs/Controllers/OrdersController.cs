@@ -135,5 +135,22 @@ namespace Component.UserAPIs.Controllers
             }
             return BadRequest("Cannot Cancel Order");
         }
+
+
+        [HttpPost("InvoiceOrder")]
+        [AllowAnonymous]
+        public async Task<IActionResult> InvoiceOrder([FromBody]InvoiceOrderRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _orderService.InvoiceOrder(request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
     }
 } 

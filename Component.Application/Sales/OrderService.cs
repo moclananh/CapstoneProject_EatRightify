@@ -1,4 +1,5 @@
-﻿using Component.Data.EF;
+﻿using Component.Application.Utilities.Mail;
+using Component.Data.EF;
 using Component.Data.Entities;
 using Component.Data.Enums;
 using Component.Utilities.Exceptions;
@@ -16,11 +17,13 @@ namespace Component.Application.Sales
         private readonly UserManager<AppUser> _userManager;
         private readonly ApplicationDbContext _context;
         private const string USER_CONTENT_FOLDER_NAME = "user-content";
+        private readonly IEmailService _emailService;
 
-        public OrderService(ApplicationDbContext context, UserManager<AppUser> userManager)
+        public OrderService(ApplicationDbContext context, UserManager<AppUser> userManager, IEmailService emailService)
         {
             _context = context;
             _userManager = userManager;
+            _emailService = emailService;
         }
 
 
@@ -476,7 +479,7 @@ namespace Component.Application.Sales
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join l in _context.Languages on pt.LanguageId equals l.Id
                         where o.Id == id
-                        select new {o, pt, od, pi };
+                        select new { o, pt, od, pi };
 
             var item = await query.Select(x => new OrderDetailView()
             {
@@ -606,6 +609,27 @@ namespace Component.Application.Sales
             order.Status = OrderStatus.Canceled;
             order.CancelDescription = request.CancelDescription;
             return await _context.SaveChangesAsync();
+        }
+
+        public async Task<ApiResult<string>> InvoiceOrder(InvoiceOrderRequest request)
+        {
+            var latestOrder = await _context.Orders
+              .Where(o => o.Id == request.OrderId) 
+              .OrderByDescending(o => o.OrderDate) 
+              .FirstOrDefaultAsync();
+
+            var subject = "Thank you for shopping";
+            var body = $"Your order has been confirmed. Thank you for purchasing on our system, " +
+                $"this is your Order Code: {latestOrder.OrderCode} (You can use it to check order status here: http://localhost:3000/customerPage/check-order)";
+            try
+            {
+                await _emailService.SendPasswordResetEmailAsync(request.Email, subject, body);
+                return new ApiSuccessMessage<string>("Email was sended");
+            }
+            catch
+            {
+                return new ApiErrorResult<string>("Error sending verify email");
+            }
         }
     }
 }
