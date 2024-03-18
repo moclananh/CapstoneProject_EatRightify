@@ -607,10 +607,5 @@ namespace Component.Application.Sales
             order.CancelDescription = request.CancelDescription;
             return await _context.SaveChangesAsync();
         }
-
-        public async Task<int> RestockOrder(int orderId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
