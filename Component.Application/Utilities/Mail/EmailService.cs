@@ -17,6 +17,45 @@ namespace Component.Application.Utilities.Mail
             _configuration = configuration;
             _userManager = userManager;
         }
+
+        public async Task SendEmailAsync(string email, string subject, string body)
+        {
+            try
+            {
+                using (var client = new SmtpClient())
+                {
+                    var smtpServer = "smtp.gmail.com";
+                    var smtpPort = 587;
+                    var smtpUsername = "kietntce160323@fpt.edu.vn";
+                    var smtpPassword = "sgap ryoq pbvs ivdz";
+
+                    client.Host = smtpServer;
+                    client.Port = smtpPort;
+                    client.EnableSsl = true;
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = new NetworkCredential(smtpUsername, smtpPassword);
+
+                    var mailMessage = new MailMessage
+                    {
+                        From = new MailAddress(smtpUsername),
+                        Subject = subject,
+                        Body = body,
+                        IsBodyHtml = true
+                    };
+
+                    mailMessage.To.Add(email);
+
+                    client.Send(mailMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error sending email: {ex.Message}");
+                // Handle the exception as needed
+                throw;
+            }
+        }
+
         public async Task SendPasswordResetEmailAsync(string email, string subject, string body)
         {
             var user = await _userManager.FindByEmailAsync(email);

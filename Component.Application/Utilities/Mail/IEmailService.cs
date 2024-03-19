@@ -9,5 +9,6 @@ namespace Component.Application.Utilities.Mail
     public interface IEmailService
     {
         Task SendPasswordResetEmailAsync(string email, string subject, string body);
+        Task SendEmailAsync(string email, string subject, string body);
     }
 }

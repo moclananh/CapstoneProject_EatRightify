@@ -619,11 +619,12 @@ namespace Component.Application.Sales
               .FirstOrDefaultAsync();
 
             var subject = "Thank you for shopping";
-            var body = $"Your order has been confirmed. Thank you for purchasing on our system, " +
-                $"this is your Order Code: {latestOrder.OrderCode} (You can use it to check order status here: http://localhost:3000/customerPage/check-order)";
+            var body = $"Your order has been confirmed. Thank you for purchasing on our system. \n" +
+                $"This is your Order Code: {latestOrder.OrderCode}." +
+                $"\n You can use it to check order status here: http://localhost:3000/customerPage/check-order)";
             try
             {
-                await _emailService.SendPasswordResetEmailAsync(request.Email, subject, body);
+                await _emailService.SendEmailAsync(request.Email, subject, body);
                 return new ApiSuccessMessage<string>("Email was sended");
             }
             catch
