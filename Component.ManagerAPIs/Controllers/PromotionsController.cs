@@ -79,11 +79,11 @@ namespace Component.ManagerAPIs.Controllers
             try
             {
                 var affectedResult = await _promotionService.Update(request);
-                var check = await _promotionService.GetById(promotionId);
+             /*   var check = await _promotionService.GetById(promotionId);
                 if (check.Stock > 0)
                 {
                     await _promotionService.UpdateStatus(promotionId);
-                }
+                }*/
                 return Ok();
             }
             catch (Exception e)

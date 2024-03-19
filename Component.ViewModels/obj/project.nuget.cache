@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "unATpuilcZxb5NYSG2nPCjGTVIkM9FB3kvwhL0rObOBe4StsichgtN9F0bu8UI/x8NF2vu/feb0lf1djNmk2Ng==",
+  "dgSpecHash": "yjd4kDOv0Emf7jEJq6v+fyENRheWh/oH2FLabnvNjPpUfU2S3AG9TKv8i1aVcSJYDU+f20vPZYo9EJ0l87vSjQ==",
   "success": true,
-  "projectFilePath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\CodeBE\\UpdateCodeFormat14char\\capstone_eatrightify\\Component.ViewModels\\Component.ViewModels.csproj",
+  "projectFilePath": "D:\\FU_Hub\\SP24_CapstoneProject\\SEP490\\Project\\CodeBE\\FixPromotion190324\\capstone_eatrightify\\Component.ViewModels\\Component.ViewModels.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Kristino\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\Kristino\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
