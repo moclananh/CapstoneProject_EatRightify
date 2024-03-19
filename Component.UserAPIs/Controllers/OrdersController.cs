@@ -1,27 +1,31 @@
-﻿using Component.Application.Sales;
+﻿using Component.Application.Catalog.Products;
+using Component.Application.Sales;
 using Component.ViewModels.Sales.Orders;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Component.UserAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
-
+        private readonly IProductService _productService;
         public OrdersController(
-            IOrderService productService)
+            IOrderService orderService, IProductService productService)
         {
-            _orderService = productService;
+            _orderService = orderService;
+            _productService = productService;
         }
 
         public class CustomErrorDetails : ProblemDetails
         {
         }
-        [HttpPost]
 
+        [HttpPost]
         public async Task<IActionResult> Create([FromBody] CheckoutRequest request)
         {
             if (!ModelState.IsValid)
@@ -53,7 +57,7 @@ namespace Component.UserAPIs.Controllers
 
             if (order == null)
             {
-                return NotFound(); // Return 404 Not Found if the order with the given ID is not found.
+                return NoContent(); // Return 404 Not Found if the order with the given ID is not found.
             }
 
             return Ok(order); // Return the order with a 200 OK status code.
@@ -67,7 +71,7 @@ namespace Component.UserAPIs.Controllers
 
             if (od == null)
             {
-                return NotFound(); // Return 404 Not Found if the order with the given ID is not found.
+                return NoContent(); // Return 404 Not Found if the order with the given ID is not found.
             }
 
             return Ok(od); // Return the order with a 200 OK status code.
@@ -99,7 +103,7 @@ namespace Component.UserAPIs.Controllers
 
             if (order == null)
             {
-                return NotFound(); 
+                return NotFound();
             }
 
             return Ok(order);
@@ -111,5 +115,42 @@ namespace Component.UserAPIs.Controllers
             var item = await _orderService.GetUserOrderHistoryByOrderCode(request);
             return Ok(item);
         }
+
+        [HttpPut("CancelOrder")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CancelOrder(CancelOrderRequest request)
+        {
+            var order = await _orderService.GetById(request.OrderId);
+            if (order.Status == Data.Enums.OrderStatus.InProgress || order.Status == Data.Enums.OrderStatus.Shipping)
+            {
+                await _orderService.CancelOrderRequest(request);
+                var orderDetail = await _orderService.GetOrderDetail(request.OrderId);
+                // xu ly re-stock
+                foreach (var item in orderDetail.Items)
+                {
+                    // Gọi hàm ReStock để cập nhật lại tồn kho cho từng sản phẩm
+                    await _productService.ReStock(item.ProductId, item.Quantity);
+                }
+                return Ok();
+            }
+            return BadRequest("Cannot Cancel Order");
+        }
+
+
+        [HttpPost("InvoiceOrder")]
+        [AllowAnonymous]
+        public async Task<IActionResult> InvoiceOrder([FromBody]InvoiceOrderRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _orderService.InvoiceOrder(request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
     }
-}
+} 

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Component.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateDb : Migration
+    public partial class newDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -104,8 +104,8 @@ namespace Component.Data.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Dob = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    VIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AccumulatedPoints = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    VIP = table.Column<int>(type: "int", nullable: false),
+                    AccumulatedPoints = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     IsBanned = table.Column<bool>(type: "bit", nullable: false),
                     RefeshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RefeshCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -316,7 +316,8 @@ namespace Component.Data.Migrations
                     ShipPhoneNumber = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     TotalPriceOfOrder = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    OrderCode = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    OrderCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CancelDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -342,6 +343,7 @@ namespace Component.Data.Migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Stock = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -637,11 +639,11 @@ namespace Component.Data.Migrations
                 columns: new[] { "Id", "AcceptedTermOfUse", "AccessFailedCount", "AccumulatedPoints", "Avatar", "ConcurrencyStamp", "CreatedDate", "Dob", "Email", "EmailConfirmed", "FirstName", "IsBanned", "IsVerify", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefeshCode", "RefeshToken", "RefeshTokenExpire", "RefeshTokenTime", "SecurityStamp", "TwoFactorEnabled", "UserName", "VIP", "VerifyCode" },
                 values: new object[,]
                 {
-                    { new Guid("0f2eeb99-1f02-4651-b0e9-14882d41c60d"), false, 0, null, "https://erssystem.blob.core.windows.net/ersimages/4733e66c-e5a9-4621-b491-e2c25992194c.png", "b6824777-f1cc-4320-beeb-32ba27dd7124", new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "spadmin@spamdin.com", true, "spadmin", false, true, "role", false, null, "spadmin@spadmin.com", "spadmin", "AQAAAAIAAYagAAAAELIAW6HimirIWS9TpxkEvQjl/+0RAvDpD6mIX4mrSPYnimqeSHflD2DnZ5P917ibGA==", null, false, null, null, null, null, "", false, "spadmin", null, null },
-                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), false, 0, null, "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png", "e881eacc-b4e5-4463-9550-4e030477d8be", new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "verifier@verifier.com", true, "verifier", false, true, "role", false, null, "verifier@verifier.com", "verifier", "AQAAAAIAAYagAAAAEFB5NAL52WNt1bPbFtHgCG9YlmCTjkE1P2SToJ5VzlaI65tOxlb3qAqPx2GU4RYcSQ==", null, false, null, null, null, null, "", false, "verifier", null, null },
-                    { new Guid("3f5b49c6-e455-48a2-be45-26423e92afbe"), false, 0, null, null, "ebc26039-9d47-4d86-9452-7c7c39b0b3e3", new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "guest@guest.com", true, "Guest", false, true, "Role", false, null, "guest@guest.com", "guest", "AQAAAAIAAYagAAAAEJ+eBnH7nZ1QTqEYh2n8LEHSS7IfU98OGlSFttWTHrURlveI5aqn7Cp49hjW4wuRRg==", null, false, null, null, null, null, "", false, "guest", null, null },
-                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), false, 0, null, "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png", "2edb0b28-16f2-4d2a-bfbf-bbdd05159c5c", new DateTime(1998, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, true, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAEJcdYj2Zh199ynHSQ6kOgQQNpOzfrwD5bX1DEsRFKVVlMCfcozBdQDLjAASEWWO0HQ==", null, false, null, null, null, null, "", false, "manager", null, null },
-                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), false, 0, null, "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png", "11b50d9e-f240-4f81-baf4-10f5052a57bc", new DateTime(1997, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, true, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAEF9GEHClRS2IRX+KMQ2FrnG7cA0RA1ST2r+urqHaHbktzLiWjFWi23RSQhnkhRI0Kg==", null, false, null, null, null, null, "", false, "admin", null, null }
+                    { new Guid("0f2eeb99-1f02-4651-b0e9-14882d41c60d"), false, 0, 0m, "https://erssystem.blob.core.windows.net/ersimages/4733e66c-e5a9-4621-b491-e2c25992194c.png", "17c4d37a-1c3d-493a-a693-02531e1e2153", new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "spadmin@spamdin.com", true, "spadmin", false, true, "role", false, null, "spadmin@spadmin.com", "spadmin", "AQAAAAIAAYagAAAAEIsPL6xXYhBi9pxXNybAvuRGwy/B2Xb4EeKagntgA3mnpLpq0RowEqwNMjw91Ehngw==", null, false, null, null, null, null, "", false, "spadmin", 0, null },
+                    { new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"), false, 0, 0m, "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png", "fe877a72-bfae-436f-9c57-34bb5862abdf", new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "verifier@verifier.com", true, "verifier", false, true, "role", false, null, "verifier@verifier.com", "verifier", "AQAAAAIAAYagAAAAEOtMesIrzSAkf/y09WAeqbB8pZCfvi9Yn957yvjkrQ65HTPdq1L0jFNAX8rQYHVWWA==", null, false, null, null, null, null, "", false, "verifier", 0, null },
+                    { new Guid("3f5b49c6-e455-48a2-be45-26423e92afbe"), false, 0, 0m, "https://erssystem.blob.core.windows.net/ersimages/de8d2577-6b43-47c0-a600-a38194ad7851.png", "1b2975a3-a28a-4419-a5e9-e9664715d7ad", new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "guest@guest.com", true, "Guest", false, true, "Role", false, null, "guest@guest.com", "guest", "AQAAAAIAAYagAAAAEKwCAs4WoqoUKs4SSdEI7KSQZoc7CbAVRx0G81mdt/mEHQ2nXbGUmD5gEteLl+fWgg==", null, false, null, null, null, null, "", false, "guest", 0, null },
+                    { new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"), false, 0, 0m, "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png", "b1aa8fd2-d586-473d-9d4a-13d639c841a9", new DateTime(1998, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@manager.com", true, "Manager", false, true, "minator", false, null, "manager@manager.com", "manager", "AQAAAAIAAYagAAAAEBPBTWeGfA80j2XhkfYr+q3CjGn/5b1ZNjAWnkJYfMpUWCjziXXLLTiJEkwNOLnYAg==", null, false, null, null, null, null, "", false, "manager", 0, null },
+                    { new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"), false, 0, 0m, "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png", "03b5dbc3-98ee-4dc5-a647-734ea63c75f0", new DateTime(1997, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", true, "Admin", false, true, "minator", false, null, "admin@admin.com", "admin", "AQAAAAIAAYagAAAAEArFQVeTd0RVVHZlW0BbqqSWX7ulW3bxxqPzOrP+f+kBifq8rYsXdYltFyqCGYRSvA==", null, false, null, null, null, null, "", false, "admin", 0, null }
                 });
 
             migrationBuilder.InsertData(
@@ -669,9 +671,9 @@ namespace Component.Data.Migrations
                 columns: new[] { "Id", "Cost", "DateCreated", "DateModified", "InputStock", "IsFeatured", "OriginalPrice", "Price", "Status", "Stock" },
                 values: new object[,]
                 {
-                    { 1, 0m, new DateTime(2024, 3, 19, 11, 2, 45, 521, DateTimeKind.Local).AddTicks(2298), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, null, 255m, 199m, 1, 100 },
-                    { 2, 0m, new DateTime(2024, 3, 19, 11, 2, 45, 521, DateTimeKind.Local).AddTicks(2404), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, null, 355m, 299m, 1, 100 },
-                    { 3, 0m, new DateTime(2024, 3, 19, 11, 2, 45, 521, DateTimeKind.Local).AddTicks(2446), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, null, 455m, 399m, 1, 100 }
+                    { 1, 0m, new DateTime(2024, 3, 19, 12, 18, 15, 615, DateTimeKind.Local).AddTicks(6800), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, null, 255m, 199m, 1, 100 },
+                    { 2, 0m, new DateTime(2024, 3, 19, 12, 18, 15, 615, DateTimeKind.Local).AddTicks(6914), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, null, 355m, 299m, 1, 100 },
+                    { 3, 0m, new DateTime(2024, 3, 19, 12, 18, 15, 615, DateTimeKind.Local).AddTicks(6957), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, null, 455m, 399m, 1, 100 }
                 });
 
             migrationBuilder.InsertData(

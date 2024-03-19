@@ -28,7 +28,7 @@ namespace Component.UserAPIs.Controllers
         [HttpGet("getAllLocation")]
         public async Task<IActionResult> GetAllLocation()
         {
-            var location = await _locationService.GetAll();
+            var location = await _locationService.GetAllLocationActive();
             return Ok(location);
         }
 

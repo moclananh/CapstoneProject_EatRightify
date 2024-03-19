@@ -1,4 +1,5 @@
-﻿using Component.Data.EF;
+﻿using Component.Application.Utilities.Mail;
+using Component.Data.EF;
 using Component.Data.Entities;
 using Component.Data.Enums;
 using Component.Utilities.Exceptions;
@@ -16,11 +17,13 @@ namespace Component.Application.Sales
         private readonly UserManager<AppUser> _userManager;
         private readonly ApplicationDbContext _context;
         private const string USER_CONTENT_FOLDER_NAME = "user-content";
+        private readonly IEmailService _emailService;
 
-        public OrderService(ApplicationDbContext context, UserManager<AppUser> userManager)
+        public OrderService(ApplicationDbContext context, UserManager<AppUser> userManager, IEmailService emailService)
         {
             _context = context;
             _userManager = userManager;
+            _emailService = emailService;
         }
 
 
@@ -28,8 +31,7 @@ namespace Component.Application.Sales
         {
             decimal orderPrice = 0;
             decimal totalPrice = 0;
-            string BuyerId = "";
-            string vip = "";
+            int vip = 0;
             decimal originalPrice = 0;
             decimal tmp = 0;
             Random generator = new Random();
@@ -61,9 +63,9 @@ namespace Component.Application.Sales
 
                         if (product != null)
                         {
-                            var user = await _userManager.FindByIdAsync(request.UserId.ToString());
-                            vip = user.VIP;
-                            BuyerId = user.Id.ToString();
+                            //var user = await _userManager.FindByIdAsync(request.UserId.ToString);
+                            // vip = user.VIP;
+                            // BuyerId = user.Id.ToString();
                             tmp = product.Price * orderDetailVm.Quantity;
                             //totalPrice = await PriceCalculator(product.Price, orderDetailVm.Quantity, vip);
                             var orderDetail = new OrderDetail()
@@ -100,7 +102,7 @@ namespace Component.Application.Sales
                     await _context.SaveChangesAsync();
 
                     // Commit the transaction
-                    var test = await AccumulatedPoints(BuyerId, orderPrice);
+                    var test = await AccumulatedPoints(request.UserId.ToString(), orderPrice);
                     transaction.Commit();
                     /*Console.WriteLine("Vip: " + vip);
                     Console.WriteLine("Gia goc: " + originalPrice.ToString());
@@ -122,24 +124,12 @@ namespace Component.Application.Sales
         public async Task<Order> GetById(int orderId)
         {
             var order = await _context.Orders.FindAsync(orderId);
-
-            if (order == null)
-            {
-                throw new Exception($"Order with ID {orderId} not found.");
-            }
-
             return order;
         }
 
         public async Task<Order> GetLastestOrderId()
         {
             var latestOrder = await _context.Orders.OrderByDescending(order => order.Id).FirstOrDefaultAsync();
-
-            if (latestOrder == null)
-            {
-                throw new Exception("No orders found in the database.");
-            }
-
             return latestOrder;
         }
 
@@ -325,9 +315,13 @@ namespace Component.Application.Sales
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join l in _context.Languages on pt.LanguageId equals l.Id
                         where o.OrderCode == code
-                        select new 
-                        { 
-                            o, od, p , pi, pt
+                        select new
+                        {
+                            o,
+                            od,
+                            p,
+                            pi,
+                            pt
                         };
             var orderDetails = await query.Select(x => new CheckOrderByCodeVm()
             {
@@ -345,7 +339,7 @@ namespace Component.Application.Sales
             foreach (var productVm in orderDetails)
             {
                 // Check if the product with the same ID is already in the distinctProducts list
-                if (!distinctProducts.Any(p => p.ProductId== productVm.ProductId))
+                if (!distinctProducts.Any(p => p.ProductId == productVm.ProductId))
                 {
                     distinctProducts.Add(productVm);
                 }
@@ -356,7 +350,7 @@ namespace Component.Application.Sales
             // Assuming you have an enum defined for OrderStatus
             var result = new CheckOrderResult<CheckOrderByCodeVm>
             {
-                Status = status, 
+                Status = status,
                 Items = distinctProducts,
                 OrderDate = orderDate
             };
@@ -364,48 +358,48 @@ namespace Component.Application.Sales
             return result;
         }
 
-        public async Task<decimal> PriceCalculator(decimal price, int quantity, string vip)
-        {
-            decimal totalPrice = 0;
-            decimal discount = 0;
-            if (vip == null)
-            {
-                totalPrice = price * quantity;
-            }
-            if (vip == "Vip 1")
-            {
-                discount = price * 0.015m;
-                totalPrice = (price - discount) * quantity;
-            }
-            if (vip == "Vip 2")
-            {
-                discount = price * 0.03m;
-                totalPrice = (price - discount) * quantity;
-            }
-            if (vip == "Vip 3")
-            {
-                discount = price * 0.06m;
-                totalPrice = (price - discount) * quantity;
-            }
-            if (vip == "Vip 4")
-            {
-                discount = price * 0.09m;
-                totalPrice = (price - discount) * quantity;
-            }
-            if (vip == "Vip 5")
-            {
-                discount = price * 0.12m;
-                totalPrice = (price - discount) * quantity;
-            }
-            return totalPrice; // gia tien da giam gia cua 1 san pham
-        }
-
+        /*   public async Task<decimal> PriceCalculator(decimal price, int quantity, string vip)
+           {
+               decimal totalPrice = 0;
+               decimal discount = 0;
+               if (vip == null)
+               {
+                   totalPrice = price * quantity;
+               }
+               if (vip == "Vip 1")
+               {
+                   discount = price * 0.015m;
+                   totalPrice = (price - discount) * quantity;
+               }
+               if (vip == "Vip 2")
+               {
+                   discount = price * 0.03m;
+                   totalPrice = (price - discount) * quantity;
+               }
+               if (vip == "Vip 3")
+               {
+                   discount = price * 0.06m;
+                   totalPrice = (price - discount) * quantity;
+               }
+               if (vip == "Vip 4")
+               {
+                   discount = price * 0.09m;
+                   totalPrice = (price - discount) * quantity;
+               }
+               if (vip == "Vip 5")
+               {
+                   discount = price * 0.12m;
+                   totalPrice = (price - discount) * quantity;
+               }
+               return totalPrice; // gia tien da giam gia cua 1 san pham
+           }
+   */
         public async Task<decimal> AccumulatedPoints(string uid, decimal price)
         {
-            var user = await _userManager.FindByIdAsync(uid);    
-            if (user.AccumulatedPoints == null)
+            var user = await _userManager.FindByIdAsync(uid);
+            if (user.UserName.Equals("guest"))
             {
-                user.AccumulatedPoints = 0;
+                return 0;
             }
             var userPoint = price * 0.01m;
             user.AccumulatedPoints += userPoint;
@@ -415,7 +409,7 @@ namespace Component.Application.Sales
                 await Vip(uid, (int)user.AccumulatedPoints);
             }
             await _context.SaveChangesAsync();
-            return (decimal)userPoint;
+            return userPoint;
         }
 
         public async Task<int> Vip(string uid, int point)
@@ -424,23 +418,23 @@ namespace Component.Application.Sales
             var userPoint = point;
             if (userPoint >= 100 && userPoint < 300) // tu 100 den 299
             {
-                user.VIP = "Vip 1";
+                user.VIP = 1;
             }
             if (userPoint >= 300 && userPoint < 600) // tu 300 den 599
             {
-                user.VIP = "Vip 2";
+                user.VIP = 2;
             }
             if (userPoint >= 600 && userPoint < 1200) // tu 600 den 1199
             {
-                user.VIP = "Vip 3";
+                user.VIP = 3;
             }
             if (userPoint >= 1200 && userPoint < 2400) // tu 1200 den 2399
             {
-                user.VIP = "Vip 4";
+                user.VIP = 4;
             }
             if (userPoint >= 2400) // tu 2400 tro len
             {
-                user.VIP = "Vip 5";
+                user.VIP = 5;
             }
             return await _context.SaveChangesAsync();
         }
@@ -452,29 +446,30 @@ namespace Component.Application.Sales
                         join od in _context.OrderDetails on o.Id equals od.OrderId
                         join p in _context.Products on od.ProductId equals p.Id
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
-                        select new {o, od, p, pt };
+                        select new { o, od, p, pt };
 
             //2. filter
             if (!string.IsNullOrEmpty(keyword))
                 query = query.Where(x => x.o.OrderCode.Contains(keyword));
 
-            var result =  await query.Select(x => new OrderVm()
+            var result = await query.Select(x => new OrderVm()
             {
-               Id = x.o.Id,
-               OrderDate  = x.o.OrderDate,
-               UserId= x.o.UserId,
-               ShipName = x.o.ShipName,
-               ShipAddress= x.o.ShipAddress,
-               ShipEmail= x.o.ShipAddress,
-               ShipPhoneNumber= x.o.ShipAddress,
-               OrderCode= x.o.OrderCode,
-               Status= x.o.Status,
+                Id = x.o.Id,
+                OrderDate = x.o.OrderDate,
+                UserId = x.o.UserId,
+                ShipName = x.o.ShipName,
+                ShipAddress = x.o.ShipAddress,
+                ShipEmail = x.o.ShipAddress,
+                ShipPhoneNumber = x.o.ShipAddress,
+                OrderCode = x.o.OrderCode,
+                Status = x.o.Status,
+                TotalPriceOfOrder = x.o.TotalPriceOfOrder,
             }).Distinct().ToListAsync();
             result = result.OrderByDescending(x => x.OrderDate).ToList();
             return result;
         }
 
-        public async Task<List<OrderDetailView>> GetOrderDetail(int id)
+        public async Task<CheckOrderResult<OrderDetailView>> GetOrderDetail(int id)
         {
             //1. Select join
             var query = from o in _context.Orders
@@ -484,15 +479,27 @@ namespace Component.Application.Sales
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join l in _context.Languages on pt.LanguageId equals l.Id
                         where o.Id == id
-                        select new {pt, od, pi };
+                        select new { o, pt, od, pi };
 
-            return await query.Select(x => new OrderDetailView()
+            var item = await query.Select(x => new OrderDetailView()
             {
+                ProductId = x.pt.ProductId,
                 ProductName = x.pt.Name,
                 ImagePath = x.pi.ImagePath,
                 Quantity = x.od.Quantity,
                 Price = x.od.Price
             }).Distinct().ToListAsync();
+
+            var status = query.Select(x => x.o.Status).FirstOrDefault();
+            var orderDate = query.Select(x => x.o.OrderDate).FirstOrDefault();
+            var result = new CheckOrderResult<OrderDetailView>
+            {
+                Status = status,
+                Items = item,
+                OrderDate = orderDate
+            };
+
+            return result;
         }
 
         public async Task<List<OrderVm>> GetAllOrderByOrderStatus(GetOrderByOrderStatusRequest request)
@@ -514,7 +521,7 @@ namespace Component.Application.Sales
                 query = query.Where(x => x.o.Status == request.Status);
             }
 
-           var orders =  await query.Select(x => new OrderVm()
+            var orders = await query.Select(x => new OrderVm()
             {
                 Id = x.o.Id,
                 OrderDate = x.o.OrderDate,
@@ -525,6 +532,7 @@ namespace Component.Application.Sales
                 ShipPhoneNumber = x.o.ShipAddress,
                 OrderCode = x.o.OrderCode,
                 Status = x.o.Status,
+                TotalPriceOfOrder = x.o.TotalPriceOfOrder,
             }).Distinct().ToListAsync();
             // Sort the users by CreatedDate after projection
             orders = orders.OrderByDescending(x => x.OrderDate).ToList();
@@ -558,10 +566,11 @@ namespace Component.Application.Sales
                 UserId = x.o.UserId,
                 ShipName = x.o.ShipName,
                 ShipAddress = x.o.ShipAddress,
-                ShipEmail = x.o.ShipAddress,
-                ShipPhoneNumber = x.o.ShipAddress,
+                ShipEmail = x.o.ShipEmail,
+                ShipPhoneNumber = x.o.ShipPhoneNumber,
                 OrderCode = x.o.OrderCode,
                 Status = x.o.Status,
+                TotalPriceOfOrder = x.o.TotalPriceOfOrder,
             }).Distinct().ToListAsync();
             // Sort the users by CreatedDate after projection
             orders = orders.OrderByDescending(x => x.OrderDate).ToList();
@@ -590,6 +599,37 @@ namespace Component.Application.Sales
             //4. Calculate profit
             decimal totalProfit = totalPrice - totalCost;
             return totalProfit;
+        }
+
+        public async Task<int> CancelOrderRequest(CancelOrderRequest request)
+        {
+            var order = await _context.Orders.FindAsync(request.OrderId);
+            if (order == null) throw new EShopException($"Cannot find an Order with id: {request.OrderId}");
+
+            order.Status = OrderStatus.Canceled;
+            order.CancelDescription = request.CancelDescription;
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<ApiResult<string>> InvoiceOrder(InvoiceOrderRequest request)
+        {
+            var latestOrder = await _context.Orders
+              .Where(o => o.Id == request.OrderId) 
+              .OrderByDescending(o => o.OrderDate) 
+              .FirstOrDefaultAsync();
+
+            var subject = "Thank you for shopping";
+            var body = $"Your order has been confirmed. Thank you for purchasing on our system, " +
+                $"this is your Order Code: {latestOrder.OrderCode} (You can use it to check order status here: http://localhost:3000/customerPage/check-order)";
+            try
+            {
+                await _emailService.SendPasswordResetEmailAsync(request.Email, subject, body);
+                return new ApiSuccessMessage<string>("Email was sended");
+            }
+            catch
+            {
+                return new ApiErrorResult<string>("Error sending verify email");
+            }
         }
     }
 }

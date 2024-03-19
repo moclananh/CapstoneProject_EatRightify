@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Component.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240319040246_UpdateDb")]
-    partial class UpdateDb
+    [Migration("20240319051816_newDb")]
+    partial class newDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -123,7 +123,7 @@ namespace Component.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("AccumulatedPoints")
+                    b.Property<decimal>("AccumulatedPoints")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Avatar")
@@ -198,8 +198,8 @@ namespace Component.Data.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("VIP")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("VIP")
+                        .HasColumnType("int");
 
                     b.Property<string>("VerifyCode")
                         .HasColumnType("nvarchar(max)");
@@ -214,8 +214,9 @@ namespace Component.Data.Migrations
                             Id = new Guid("93510e19-8812-482f-8f1b-e116cf8c9e38"),
                             AcceptedTermOfUse = false,
                             AccessFailedCount = 0,
+                            AccumulatedPoints = 0m,
                             Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png",
-                            ConcurrencyStamp = "11b50d9e-f240-4f81-baf4-10f5052a57bc",
+                            ConcurrencyStamp = "03b5dbc3-98ee-4dc5-a647-734ea63c75f0",
                             CreatedDate = new DateTime(1997, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@admin.com",
@@ -227,19 +228,21 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@admin.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEF9GEHClRS2IRX+KMQ2FrnG7cA0RA1ST2r+urqHaHbktzLiWjFWi23RSQhnkhRI0Kg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEArFQVeTd0RVVHZlW0BbqqSWX7ulW3bxxqPzOrP+f+kBifq8rYsXdYltFyqCGYRSvA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UserName = "admin"
+                            UserName = "admin",
+                            VIP = 0
                         },
                         new
                         {
                             Id = new Guid("648d9797-a78f-4e71-bf5d-90196c3f4806"),
                             AcceptedTermOfUse = false,
                             AccessFailedCount = 0,
+                            AccumulatedPoints = 0m,
                             Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png",
-                            ConcurrencyStamp = "2edb0b28-16f2-4d2a-bfbf-bbdd05159c5c",
+                            ConcurrencyStamp = "b1aa8fd2-d586-473d-9d4a-13d639c841a9",
                             CreatedDate = new DateTime(1998, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "manager@manager.com",
@@ -251,19 +254,21 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "manager@manager.com",
                             NormalizedUserName = "manager",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJcdYj2Zh199ynHSQ6kOgQQNpOzfrwD5bX1DEsRFKVVlMCfcozBdQDLjAASEWWO0HQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBPBTWeGfA80j2XhkfYr+q3CjGn/5b1ZNjAWnkJYfMpUWCjziXXLLTiJEkwNOLnYAg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UserName = "manager"
+                            UserName = "manager",
+                            VIP = 0
                         },
                         new
                         {
                             Id = new Guid("1ec8cb63-dc7e-492c-83b2-d02dc476061c"),
                             AcceptedTermOfUse = false,
                             AccessFailedCount = 0,
+                            AccumulatedPoints = 0m,
                             Avatar = "https://erssystem.blob.core.windows.net/ersimages/95d45c3e-9645-431e-a1eb-ae54baf111ff.png",
-                            ConcurrencyStamp = "e881eacc-b4e5-4463-9550-4e030477d8be",
+                            ConcurrencyStamp = "fe877a72-bfae-436f-9c57-34bb5862abdf",
                             CreatedDate = new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "verifier@verifier.com",
@@ -275,19 +280,21 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "verifier@verifier.com",
                             NormalizedUserName = "verifier",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFB5NAL52WNt1bPbFtHgCG9YlmCTjkE1P2SToJ5VzlaI65tOxlb3qAqPx2GU4RYcSQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOtMesIrzSAkf/y09WAeqbB8pZCfvi9Yn957yvjkrQ65HTPdq1L0jFNAX8rQYHVWWA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UserName = "verifier"
+                            UserName = "verifier",
+                            VIP = 0
                         },
                         new
                         {
                             Id = new Guid("0f2eeb99-1f02-4651-b0e9-14882d41c60d"),
                             AcceptedTermOfUse = false,
                             AccessFailedCount = 0,
+                            AccumulatedPoints = 0m,
                             Avatar = "https://erssystem.blob.core.windows.net/ersimages/4733e66c-e5a9-4621-b491-e2c25992194c.png",
-                            ConcurrencyStamp = "b6824777-f1cc-4320-beeb-32ba27dd7124",
+                            ConcurrencyStamp = "17c4d37a-1c3d-493a-a693-02531e1e2153",
                             CreatedDate = new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Dob = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "spadmin@spamdin.com",
@@ -299,18 +306,21 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "spadmin@spadmin.com",
                             NormalizedUserName = "spadmin",
-                            PasswordHash = "AQAAAAIAAYagAAAAELIAW6HimirIWS9TpxkEvQjl/+0RAvDpD6mIX4mrSPYnimqeSHflD2DnZ5P917ibGA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIsPL6xXYhBi9pxXNybAvuRGwy/B2Xb4EeKagntgA3mnpLpq0RowEqwNMjw91Ehngw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UserName = "spadmin"
+                            UserName = "spadmin",
+                            VIP = 0
                         },
                         new
                         {
                             Id = new Guid("3f5b49c6-e455-48a2-be45-26423e92afbe"),
                             AcceptedTermOfUse = false,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ebc26039-9d47-4d86-9452-7c7c39b0b3e3",
+                            AccumulatedPoints = 0m,
+                            Avatar = "https://erssystem.blob.core.windows.net/ersimages/de8d2577-6b43-47c0-a600-a38194ad7851.png",
+                            ConcurrencyStamp = "1b2975a3-a28a-4419-a5e9-e9664715d7ad",
                             CreatedDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Dob = new DateTime(1999, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "guest@guest.com",
@@ -322,11 +332,12 @@ namespace Component.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@guest.com",
                             NormalizedUserName = "guest",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJ+eBnH7nZ1QTqEYh2n8LEHSS7IfU98OGlSFttWTHrURlveI5aqn7Cp49hjW4wuRRg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKwCAs4WoqoUKs4SSdEI7KSQZoc7CbAVRx0G81mdt/mEHQ2nXbGUmD5gEteLl+fWgg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UserName = "guest"
+                            UserName = "guest",
+                            VIP = 0
                         });
                 });
 
@@ -672,6 +683,9 @@ namespace Component.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CancelDescription")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("OrderCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -788,7 +802,7 @@ namespace Component.Data.Migrations
                         {
                             Id = 1,
                             Cost = 0m,
-                            DateCreated = new DateTime(2024, 3, 19, 11, 2, 45, 521, DateTimeKind.Local).AddTicks(2298),
+                            DateCreated = new DateTime(2024, 3, 19, 12, 18, 15, 615, DateTimeKind.Local).AddTicks(6800),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             InputStock = 0,
                             OriginalPrice = 255m,
@@ -801,7 +815,7 @@ namespace Component.Data.Migrations
                         {
                             Id = 2,
                             Cost = 0m,
-                            DateCreated = new DateTime(2024, 3, 19, 11, 2, 45, 521, DateTimeKind.Local).AddTicks(2404),
+                            DateCreated = new DateTime(2024, 3, 19, 12, 18, 15, 615, DateTimeKind.Local).AddTicks(6914),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             InputStock = 0,
                             OriginalPrice = 355m,
@@ -814,7 +828,7 @@ namespace Component.Data.Migrations
                         {
                             Id = 3,
                             Cost = 0m,
-                            DateCreated = new DateTime(2024, 3, 19, 11, 2, 45, 521, DateTimeKind.Local).AddTicks(2446),
+                            DateCreated = new DateTime(2024, 3, 19, 12, 18, 15, 615, DateTimeKind.Local).AddTicks(6957),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             InputStock = 0,
                             OriginalPrice = 455m,
@@ -1052,6 +1066,9 @@ namespace Component.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Stock")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ToDate")

@@ -17,6 +17,7 @@ namespace Component.Data.Entities
         public Status Status { set; get; }
         public string Name { set; get; }
         public string? Description { set; get; }
+        public int Stock {  set; get; }
         public Guid? CreatedBy { get; set; }
         public AppUser User { get; set; }
 

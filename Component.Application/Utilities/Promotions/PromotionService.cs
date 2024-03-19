@@ -41,6 +41,7 @@ namespace Component.Application.Utilities.Promotions
                 Name = request.Name,
                 Description = request.Description,
                 CreatedBy = request.CreatedBy,
+                Stock = request.Stock,
             };
 
             _context.Promotions.Add(promotion);
@@ -78,14 +79,15 @@ namespace Component.Application.Utilities.Promotions
             var result = await query.Select(x => new PromotionVm()
             {
                 Id = x.p.Id,
-                DiscountCode= x.p.DiscountCode,
+                DiscountCode = x.p.DiscountCode,
                 FromDate = x.p.FromDate,
-                ToDate= x.p.ToDate,
-                DiscountPercent= x.p.DiscountPercent,
-                Status= x.p.Status,
-                Name= x.p.Name,
-                Description= x.p.Description,
-                CreatedBy = x.u.UserName
+                ToDate = x.p.ToDate,
+                DiscountPercent = x.p.DiscountPercent,
+                Status = x.p.Status,
+                Name = x.p.Name,
+                Description = x.p.Description,
+                CreatedBy = x.u.UserName,
+                Stock = x.p.Stock,
             }).Distinct().ToListAsync();
             result = result.OrderByDescending(x => x.FromDate).ToList();
             return result;
@@ -98,15 +100,15 @@ namespace Component.Application.Utilities.Promotions
                         from u in pu.DefaultIfEmpty()
                         select new PromotionVm()
                         {
-                           Id = p.Id,
-                           DiscountCode = p.DiscountCode,
-                           FromDate = p.FromDate,
-                           ToDate = p.ToDate,
-                           DiscountPercent = p.DiscountPercent,
-                           Status = p.Status,
-                           Name = p.Name,
-                           Description = p.Description,
-                           CreatedBy= u.UserName,
+                            Id = p.Id,
+                            DiscountCode = p.DiscountCode,
+                            FromDate = p.FromDate,
+                            ToDate = p.ToDate,
+                            DiscountPercent = p.DiscountPercent,
+                            Status = p.Status,
+                            Name = p.Name,
+                            Description = p.Description,
+                            CreatedBy = u.UserName,
                         };
             //2. filter
             if (!string.IsNullOrEmpty(request.Keyword))
@@ -148,6 +150,7 @@ namespace Component.Application.Utilities.Promotions
                 Name = x.p.Name,
                 Description = x.p.Description,
                 CreatedBy = x.u.UserName,
+                Stock = x.p.Stock,
             }).FirstOrDefaultAsync();
         }
 
@@ -160,17 +163,25 @@ namespace Component.Application.Utilities.Promotions
                         select new { p, u };
 
             var promotion = await query.FirstOrDefaultAsync(); // Lấy thông tin khuyến mãi
-
             if (promotion == null)
             {
-                return new ApiErrorResult<PromotionVm>("The voucher code does not exist!");
+                return new ApiErrorResult<PromotionVm>("Voucher does not exist!");
             }
 
             var timeNow = DateTime.Now;
 
             if (timeNow < promotion.p.FromDate || timeNow > promotion.p.ToDate)
             {
-                return new ApiErrorResult<PromotionVm>("The gift code is out of time.");
+                return new ApiErrorResult<PromotionVm>("Voucher expire!");
+            }
+
+            if (promotion.p.Status == Data.Enums.Status.InActive)
+            {
+                return new ApiErrorResult<PromotionVm>("Voucher is not available!");
+            }
+            else if (promotion.p.Stock <= 0)
+            {
+                return new ApiErrorResult<PromotionVm>("Voucher is out of stock!");
             }
 
             var result = await query.Select(x => new PromotionVm()
@@ -183,7 +194,8 @@ namespace Component.Application.Utilities.Promotions
                 Status = x.p.Status,
                 Name = x.p.Name,
                 Description = x.p.Description,
-                CreatedBy = x.u.UserName
+                CreatedBy = x.u.UserName,
+                Stock = x.p.Stock,
             }).FirstOrDefaultAsync();
             return new ApiSuccessResult<PromotionVm>(result);
         }
@@ -197,11 +209,45 @@ namespace Component.Application.Utilities.Promotions
             promotions.FromDate = request.FromDate;
             promotions.ToDate = request.ToDate;
             promotions.DiscountPercent = request.DiscountPercent;
-            promotions.Status = request.Status;
             promotions.Name = request.Name;
             promotions.Description = request.Description;
-           
+            promotions.Stock = request.Stock;
+
             return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> UpdateStatus(int voucherId)
+        {
+            var promotions = await _context.Promotions.FindAsync(voucherId);
+            if (promotions == null) throw new EShopException($"Cannot find a promotion with id: {voucherId}");
+            if (promotions.Status == Data.Enums.Status.Active)
+            {
+                promotions.Status = Data.Enums.Status.InActive;
+            }
+            else
+            {
+                promotions.Status = Data.Enums.Status.Active;
+            }
+
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> UpdateStatusOnly(UpdateStatusOnlyRequest request)
+        {
+            var promotion = await _context.Promotions.FindAsync(request.PromotionId);
+            if (promotion == null) throw new EShopException($"Cannot find a promotion with id: {request.PromotionId}");
+            promotion.Status = request.Status;
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateStockOfVoucher(int voucherId)
+        {
+            var promotion = await _context.Promotions.FindAsync(voucherId);
+            if (promotion != null)
+            {
+                promotion.Stock -= 1;
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

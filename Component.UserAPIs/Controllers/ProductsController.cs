@@ -20,11 +20,11 @@ namespace Component.UserAPIs.Controllers
             _productService = productService;
         }
 
-        [HttpGet("getAll")]
+        [HttpGet("GetAllProductActive")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAll([FromQuery]GetAllProductRequest request)
+        public async Task<IActionResult> GetAllProductActive([FromQuery]GetAllProductRequest request)
         {
-            var products = await _productService.GetAll(request);
+            var products = await _productService.GetAllProductActive(request);
             return Ok(products);
         }
 
@@ -43,20 +43,20 @@ namespace Component.UserAPIs.Controllers
             return Ok(products);
         }
 
-        [HttpGet("{productId}/{languageId}")]
-        public async Task<IActionResult> GetById(int productId, string languageId)
+        [HttpGet("{productId}")]
+        public async Task<IActionResult> GetById(int productId)
         {
-            var product = await _productService.GetById(productId, languageId);
+            var product = await _productService.GetById(productId);
             if (product == null)
                 return BadRequest("Cannot find product");
             return Ok(product);
         }
 
-        [HttpGet("featured/{languageId}/{take}")]
+        [HttpGet("featured/{take}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetFeaturedProducts(int take, string languageId)
+        public async Task<IActionResult> GetFeaturedProducts(int take)
         {
-            var products = await _productService.GetFeaturedProducts(languageId, take);
+            var products = await _productService.GetFeaturedProducts(take);
             return Ok(products);
         }
 

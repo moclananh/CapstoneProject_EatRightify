@@ -13,5 +13,8 @@ namespace Component.Application.Utilities.Promotions
         Task<Promotion> Create(PromotionCreateRequest request);
         Task<int> Update(PromotionUpdateRequest request);
         Task<int> Delete(int promotionId);
+        Task UpdateStockOfVoucher(int voucherId);
+        Task<int> UpdateStatus(int voucherId);
+        Task<int> UpdateStatusOnly(UpdateStatusOnlyRequest request);
     }
 }

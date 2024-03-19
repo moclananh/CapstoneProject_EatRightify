@@ -34,10 +34,10 @@ namespace Component.ManagerAPIs.Controllers
             return Ok(item);
         }
 
-        [HttpGet("{productId}/{languageId}")]
-        public async Task<IActionResult> GetById(int productId, string languageId)
+        [HttpGet("{productId}")]
+        public async Task<IActionResult> GetById(int productId)
         {
-            var product = await _productService.GetById(productId, languageId);
+            var product = await _productService.GetById(productId);
             if (product == null)
                 return BadRequest("Cannot find product");
             return Ok(product);
@@ -52,9 +52,9 @@ namespace Component.ManagerAPIs.Controllers
 
         [HttpGet("featured/{languageId}/{take}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetFeaturedProducts(int take, string languageId)
+        public async Task<IActionResult> GetFeaturedProducts(int take)
         {
-            var products = await _productService.GetFeaturedProducts(languageId, take);
+            var products = await _productService.GetFeaturedProducts(take);
             return Ok(products);
         }
 
@@ -193,6 +193,14 @@ namespace Component.ManagerAPIs.Controllers
                 return BadRequest(result);
             }
             return Ok(result);
+        }
+
+        [HttpGet("Viewcount")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Viewcount()
+        {
+            var view = await _productService.TotalView();
+            return Ok(view);
         }
     }
 }

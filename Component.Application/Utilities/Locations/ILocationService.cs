@@ -12,6 +12,7 @@ namespace Component.Application.Utilities.Locations
     public interface ILocationService
     {
         Task<List<LocationVm>> GetAll();
+        Task<List<LocationVm>> GetAllLocationActive();
         Task<PagedResult<LocationVm>> GetAllPaging(GetLocationPagingRequest request);
 
         Task<LocationVm> GetById(int id);

@@ -1,5 +1,6 @@
 ﻿using Component.Application.Utilities.Blogs;
 using Component.Application.Utilities.Promotions;
+using Component.Data.Entities;
 using Component.ViewModels.Utilities.Blogs;
 using Component.ViewModels.Utilities.Promotions;
 using Microsoft.AspNetCore.Authorization;
@@ -78,12 +79,28 @@ namespace Component.ManagerAPIs.Controllers
             try
             {
                 var affectedResult = await _promotionService.Update(request);
+                var check = await _promotionService.GetById(promotionId);
+                if (check.Stock > 0)
+                {
+                    await _promotionService.UpdateStatus(promotionId);
+                }
                 return Ok();
             }
             catch (Exception e)
             {
-                    return BadRequest();
+                return BadRequest();
             }
+        }
+
+        [HttpPut("UpdateStatusOnly")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateStatusOnly([FromBody] UpdateStatusOnlyRequest request)
+        {
+            var check = await _promotionService.GetById(request.PromotionId);
+            if (check == null) return BadRequest();
+            await _promotionService.UpdateStatusOnly(request);
+            return Ok();
+
         }
 
         [HttpDelete("{promotionId}")]

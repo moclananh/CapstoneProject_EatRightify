@@ -18,6 +18,7 @@ namespace Component.ViewModels.Sales.Orders
         public string ShipEmail { set; get; }
         public string ShipPhoneNumber { set; get; }
         public string OrderCode { set; get; }
+        public decimal TotalPriceOfOrder { set; get; }
         public OrderStatus Status { set; get; }
         public List<OrderDetail>? OrderDetails { get; set; }
     }

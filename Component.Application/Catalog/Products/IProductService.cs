@@ -20,7 +20,7 @@ namespace Component.Application.Catalog.Products
 
         Task<int> Delete(int productId);
 
-        Task<ProductVm> GetById(int productId, string languageId);
+        Task<ProductVm> GetById(int productId);
 
         Task<bool> UpdatePrice(int productId, decimal newPrice);
 
@@ -44,12 +44,15 @@ namespace Component.Application.Catalog.Products
 
         Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request);
 
-        Task<List<ProductVm>> GetFeaturedProducts(string languageId, int take);
+        Task<List<ProductVm>> GetFeaturedProducts(int take);
 
         Task<List<ProductVm>> GetLatestProducts(string languageId, int take);
         Task<List<ProductVm>> GetAll(GetAllProductRequest request);
+        Task<List<ProductVm>> GetAllProductActive(GetAllProductRequest request);
         Task<List<ProductVm>> GetProductForAI();
         Task<string> CreateBase64Image(IFormFile image);
         Task<decimal> SumOfCost (DateTime? startDate, DateTime? endDate);
+        Task<int> TotalView();
+        Task<int> ReStock(int productId, int stock);
     }
 }

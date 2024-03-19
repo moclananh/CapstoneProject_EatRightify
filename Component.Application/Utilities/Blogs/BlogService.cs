@@ -198,5 +198,37 @@ namespace Component.Application.Utilities.Blogs
             await _context.SaveChangesAsync();
         }
 
+        public async Task<int> TotalView()
+        {
+            var totalViewCount = await (from b in _context.Blogs
+                                        join u in _context.AppUsers on b.CreatedBy equals u.Id into bu
+                                        from u in bu.DefaultIfEmpty()
+                                        select b.ViewCount).SumAsync();
+
+            return totalViewCount;
+        }
+
+        public async Task<List<BlogVm>> GetAllBlogActive()
+        {
+            var query = from b in _context.Blogs
+                        join u in _context.AppUsers on b.CreatedBy equals u.Id into bu
+                        from u in bu.DefaultIfEmpty()
+                        where b.Status == Data.Enums.Status.Active
+                        select new { b, u };
+            query = query.OrderByDescending(x => x.b.DateCreate);
+            return await query.Select(x => new BlogVm()
+            {
+                Id = x.b.Id,
+                Title = x.b.Title,
+                Description = x.b.Description,
+                Url = x.b.Url,
+                Image = x.b.Image,
+                SortOrder = x.b.SortOrder,
+                DateCreate = x.b.DateCreate,
+                Status = x.b.Status,
+                CreatedBy = x.u.UserName,
+                ViewCount = x.b.ViewCount,
+            }).ToListAsync();
+        }
     }
 }

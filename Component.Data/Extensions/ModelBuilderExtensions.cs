@@ -336,6 +336,7 @@ namespace Component.Data.Extensions
                 IsVerify = true,
                 AcceptedTermOfUse = false,
                 CreatedDate = new DateTime(2000, 01, 01),
+                Avatar = "https://erssystem.blob.core.windows.net/ersimages/de8d2577-6b43-47c0-a600-a38194ad7851.png",
             });
 
 
