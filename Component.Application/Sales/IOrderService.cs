@@ -39,7 +39,7 @@ namespace Component.Application.Sales
         Task<int> RefundOrderRequest(CancelOrderRequest request);
         Task<int> OrderSuccess(int orderId);
         Task<int> OrderShipping(int orderId);
-        Task<int> ConfirmOrder(int orderId);
+        Task<ApiResult<string>> ConfirmOrder(int orderId);
         Task<ApiResult<string>> InvoiceOrder(InvoiceOrderRequest request);
     }
 }

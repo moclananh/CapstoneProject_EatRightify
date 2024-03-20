@@ -630,37 +630,36 @@ namespace Component.Application.Sales
         public async Task<int> RefundOrderRequest(CancelOrderRequest request)
         {
             var order = await _context.Orders.FindAsync(request.OrderId);
-            if (order == null) throw new EShopException($"Cannot find an Order with id: {request.OrderId}");
-
             order.Status = OrderStatus.Refunded;
             order.RefundDescription = request.CancelDescription; // refund description
             order.RefundDate = DateTime.Now;
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<int> ConfirmOrder(int orderId)
+        public async Task<ApiResult<string>> ConfirmOrder(int orderId)
         {
             var order = await _context.Orders.FindAsync(orderId);
-            if (order == null) throw new EShopException($"Cannot find an Order with id: {orderId}");
             order.Status = OrderStatus.Confirmed;
             var orderDetail = await GetOrderDetail(orderId);
             foreach (var item in orderDetail.Items)
             {
                 var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == item.ProductId);
-                if (product.Stock <= 0)
+                if (product.Stock <= item.Quantity)
                 {
-                    throw new EShopException($"Order failed because product was out of stock");
+                    return new ApiErrorResult<string>("Order confirm failed!");
                 }
-                await UpdateStockCheckout(product.Id, item.Quantity); 
+                else
+                {
+                    await UpdateStockCheckout(product.Id, item.Quantity);
+                }    
             }
-
-            return await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+            return new ApiSuccessMessage<string>("Order confimed!");
         }
 
         public async Task<int> OrderSuccess(int orderId)
         {
             var order = await _context.Orders.FindAsync(orderId);
-            if (order == null) throw new EShopException($"Cannot find an Order with id: {orderId}");
             order.Status = OrderStatus.Success;         
             order.ReceivedDate = DateTime.Now;
             return await _context.SaveChangesAsync();
@@ -668,7 +667,6 @@ namespace Component.Application.Sales
         public async Task<int> OrderShipping(int orderId)
         {
             var order = await _context.Orders.FindAsync(orderId);
-            if (order == null) throw new EShopException($"Cannot find an Order with id: {orderId}");
             order.Status = OrderStatus.Shipping;
             return await _context.SaveChangesAsync();
         }

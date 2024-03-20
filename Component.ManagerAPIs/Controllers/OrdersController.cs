@@ -1,4 +1,5 @@
 ﻿using Component.Application.Sales;
+using Component.Data.Entities;
 using Component.ViewModels.Sales.Orders;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -102,10 +103,14 @@ namespace Component.ManagerAPIs.Controllers
             var order = await _orderService.GetById(orderId);
             if (order != null)
             {
-                await _orderService.ConfirmOrder(orderId);
-                return Ok();
+                var result = await _orderService.ConfirmOrder(orderId);
+                if (!result.IsSuccessed)
+                {
+                    return BadRequest(result);
+                }
+                return Ok(order);
             }
-            return BadRequest("Cannot Find Order");
+            return NoContent();
         }
 
         [HttpPut("OrderShippping/{orderId}")]
