@@ -647,6 +647,10 @@ namespace Component.Application.Sales
             foreach (var item in orderDetail.Items)
             {
                 var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == item.ProductId);
+                if (product.Stock <= 0)
+                {
+                    throw new EShopException($"Order failed because product was out of stock");
+                }
                 await UpdateStockCheckout(product.Id, item.Quantity); 
             }
 
