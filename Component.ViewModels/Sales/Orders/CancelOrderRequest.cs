@@ -9,6 +9,6 @@ namespace Component.ViewModels.Sales.Orders
     public class CancelOrderRequest
     {
         public int OrderId { get; set; }
-        public string CancelDescription { get; set; }
+        public string? CancelDescription { get; set; }
     }
 }

@@ -20,6 +20,9 @@ namespace Component.Data.Entities
         public decimal TotalPriceOfOrder { set; get; }
         public string OrderCode { set; get; }
         public string? CancelDescription {  set; get; }
+        public string? RefundDescription { set; get; }
+        public DateTime? RefundDate { set; get; }
+        public DateTime? ReceivedDate { set; get; }
         public List<OrderDetail> OrderDetails { get; set; }
         public AppUser AppUser { get; set; }
 

@@ -78,7 +78,7 @@ namespace Component.Application.Sales
                             if (orderDetail.Quantity <= product.Stock)
                             {
                                 order.OrderDetails.Add(orderDetail);
-                                await UpdateStockCheckout(product.Id, orderDetailVm.Quantity);
+                                // await UpdateStockCheckout(product.Id, orderDetailVm.Quantity);  //create tam thoi k tru stock nua
                                 orderPrice += orderDetail.Price; //gia tong tien tat ca sp da qua discount
                                 //originalPrice += tmp;// gia tong tien tat ca sp ban dau
                             }
@@ -285,19 +285,13 @@ namespace Component.Application.Sales
             return result;
         }
 
-        public async Task<int> UpdateStatus(UpdateStatusRequest request)
+       /* public async Task<int> UpdateStatus(UpdateStatusRequest request)
         {
             var orderStatus = await _context.Orders.FindAsync(request.OrderId);
-
-
-
             if (orderStatus == null) throw new EShopException($"Cannot find an Order with id: {request.OrderId}");
-
             orderStatus.Status = request.Status;
-
-
             return await _context.SaveChangesAsync();
-        }
+        }*/
         public async Task<bool> UpdateStockCheckout(int productId, int quantity)
         {
             var product = await _context.Products.FindAsync(productId);
@@ -614,8 +608,8 @@ namespace Component.Application.Sales
         public async Task<ApiResult<string>> InvoiceOrder(InvoiceOrderRequest request)
         {
             var latestOrder = await _context.Orders
-              .Where(o => o.Id == request.OrderId) 
-              .OrderByDescending(o => o.OrderDate) 
+              .Where(o => o.Id == request.OrderId)
+              .OrderByDescending(o => o.OrderDate)
               .FirstOrDefaultAsync();
 
             var subject = "Thank you for shopping";
@@ -631,6 +625,48 @@ namespace Component.Application.Sales
             {
                 return new ApiErrorResult<string>("Error sending verify email");
             }
+        }
+
+        public async Task<int> RefundOrderRequest(CancelOrderRequest request)
+        {
+            var order = await _context.Orders.FindAsync(request.OrderId);
+            if (order == null) throw new EShopException($"Cannot find an Order with id: {request.OrderId}");
+
+            order.Status = OrderStatus.Refunded;
+            order.RefundDescription = request.CancelDescription; // refund description
+            order.RefundDate = DateTime.Now;
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> ConfirmOrder(int orderId)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+            if (order == null) throw new EShopException($"Cannot find an Order with id: {orderId}");
+            order.Status = OrderStatus.Confirmed;
+            var orderDetail = await GetOrderDetail(orderId);
+            foreach (var item in orderDetail.Items)
+            {
+                var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == item.ProductId);
+                await UpdateStockCheckout(product.Id, item.Quantity); 
+            }
+
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> OrderSuccess(int orderId)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+            if (order == null) throw new EShopException($"Cannot find an Order with id: {orderId}");
+            order.Status = OrderStatus.Success;         
+            order.ReceivedDate = DateTime.Now;
+            return await _context.SaveChangesAsync();
+        }
+        public async Task<int> OrderShipping(int orderId)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+            if (order == null) throw new EShopException($"Cannot find an Order with id: {orderId}");
+            order.Status = OrderStatus.Shipping;
+            return await _context.SaveChangesAsync();
         }
     }
 }

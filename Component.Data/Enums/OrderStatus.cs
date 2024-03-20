@@ -12,6 +12,7 @@ namespace Component.Data.Enums
         Confirmed,
         Shipping,
         Success,
-        Canceled
+        Canceled,
+        Refunded
     }
 }

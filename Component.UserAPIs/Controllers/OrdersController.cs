@@ -1,9 +1,11 @@
 ﻿using Component.Application.Catalog.Products;
 using Component.Application.Sales;
+using Component.ViewModels.Common;
 using Component.ViewModels.Sales.Orders;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Common;
 
 namespace Component.UserAPIs.Controllers
 {
@@ -116,14 +118,24 @@ namespace Component.UserAPIs.Controllers
             return Ok(item);
         }
 
-        [HttpPut("CancelOrder")]
+        [HttpPut("RefundOrder")]
         [AllowAnonymous]
-        public async Task<IActionResult> CancelOrder(CancelOrderRequest request)
+        public async Task<IActionResult> RefundOrder(CancelOrderRequest request)
         {
             var order = await _orderService.GetById(request.OrderId);
-            if (order.Status == Data.Enums.OrderStatus.InProgress || order.Status == Data.Enums.OrderStatus.Shipping)
+            if (order.ReceivedDate == null)
             {
-                await _orderService.CancelOrderRequest(request);
+                return BadRequest("The order has not been delivered to the user");
+            }
+            DateTime tmp = DateTime.Now;// time want refund
+            TimeSpan timeDifference = (TimeSpan)(tmp - order.ReceivedDate);
+            if (timeDifference.TotalDays > 7)
+            {
+                return BadRequest("Cannot refund after 7 day from the recieved date");
+            }
+            if (order.Status == Data.Enums.OrderStatus.Success)
+            {
+                await _orderService.RefundOrderRequest(request);
                 var orderDetail = await _orderService.GetOrderDetail(request.OrderId);
                 // xu ly re-stock
                 foreach (var item in orderDetail.Items)
@@ -131,6 +143,20 @@ namespace Component.UserAPIs.Controllers
                     // Gọi hàm ReStock để cập nhật lại tồn kho cho từng sản phẩm
                     await _productService.ReStock(item.ProductId, item.Quantity);
                 }
+                return Ok();
+            }
+            return BadRequest("Only refund order when user recieved order!");
+        }
+
+
+        [HttpPut("CancelOrderRequest")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CancelOrderRequest(CancelOrderRequest request)
+        {
+            var order = await _orderService.GetById(request.OrderId);
+            if (order.Status == Data.Enums.OrderStatus.InProgress)
+            {
+                await _orderService.CancelOrderRequest(request);
                 return Ok();
             }
             return BadRequest("Cannot Cancel Order");

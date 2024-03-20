@@ -30,13 +30,16 @@ namespace Component.Application.Sales
         Task<BillHistoryDetailVM> GetBillById(int id);
         Task<List<BillHistoryVM>> BillHistory(Guid id);
 
-        Task<int> UpdateStatus(UpdateStatusRequest request);
+        //Task<int> UpdateStatus(UpdateStatusRequest request);
         //Task<decimal> PriceCalculator(decimal price, int quantity, string vip); // tinh gia san pham co discount
         Task<decimal> AccumulatedPoints(string uid, decimal price); // cong diem tich luy
         Task<int> Vip(string uid, int point); // set trang thai vip
         Task<decimal> TotalProfit (DateTime? startDate, DateTime? endDate);
         Task<int> CancelOrderRequest(CancelOrderRequest request);
+        Task<int> RefundOrderRequest(CancelOrderRequest request);
+        Task<int> OrderSuccess(int orderId);
+        Task<int> OrderShipping(int orderId);
+        Task<int> ConfirmOrder(int orderId);
         Task<ApiResult<string>> InvoiceOrder(InvoiceOrderRequest request);
-
     }
 }

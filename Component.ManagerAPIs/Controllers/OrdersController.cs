@@ -65,25 +65,73 @@ namespace Component.ManagerAPIs.Controllers
             return Ok(product);
         }
 
-        [HttpPut("{orderId}")]
-        public async Task<IActionResult> UpdateStatus([FromRoute] int orderId, [FromBody] UpdateStatusRequest request)
+        /*    [HttpPut("{orderId}")]
+            public async Task<IActionResult> UpdateStatus([FromRoute] int orderId, [FromBody] UpdateStatusRequest request)
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                request.OrderId = orderId;
+                try
+                {
+                    var affectedResult = await _orderService.UpdateStatus(request);
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest();
+                }
+
+            }*/
+        [HttpPut("CancelOrderRequest")]
+        public async Task<IActionResult> CancelOrderRequest(CancelOrderRequest request)
         {
-            if (!ModelState.IsValid)
+            var order = await _orderService.GetById(request.OrderId);
+            if (order.Status == Data.Enums.OrderStatus.InProgress)
             {
-                return BadRequest(ModelState);
-            }
-            request.OrderId = orderId;
-            try
-            {
-                var affectedResult = await _orderService.UpdateStatus(request);
+                await _orderService.CancelOrderRequest(request);
                 return Ok();
             }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-
+            return BadRequest("Cannot Cancel Order");
         }
+
+        [HttpPut("ConfirmOrder/{orderId}")]
+        public async Task<IActionResult> ConfirmOrder(int orderId)
+        {
+            var order = await _orderService.GetById(orderId);
+            if (order != null)
+            {
+                await _orderService.ConfirmOrder(orderId);
+                return Ok();
+            }
+            return BadRequest("Cannot Find Order");
+        }
+
+        [HttpPut("OrderShippping/{orderId}")]
+        public async Task<IActionResult> OrderShippping(int orderId)
+        {
+            var order = await _orderService.GetById(orderId);
+            if (order != null)
+            {
+                await _orderService.OrderShipping(orderId);
+                return Ok();
+            }
+            return BadRequest("Cannot Find Order");
+        }
+
+        [HttpPut("OrderSuccess/{orderId}")]
+        public async Task<IActionResult> OrderSuccess(int orderId)
+        {
+            var order = await _orderService.GetById(orderId);
+            if (order != null)
+            {
+                await _orderService.OrderSuccess(orderId);
+                return Ok();
+            }
+            return BadRequest("Cannot Find Order");
+        }
+
 
         [HttpGet("GetOrderDetail/{orderId}")]
         public async Task<IActionResult> GetODById(int orderId)
