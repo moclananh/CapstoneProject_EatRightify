@@ -41,5 +41,6 @@ namespace Component.Application.Sales
         Task<int> OrderShipping(int orderId);
         Task<ApiResult<string>> ConfirmOrder(int orderId);
         Task<ApiResult<string>> InvoiceOrder(InvoiceOrderRequest request);
+        Task<string> CreateVNPayPaymentUrlAsync(VNPayRequest request);
     }
 }

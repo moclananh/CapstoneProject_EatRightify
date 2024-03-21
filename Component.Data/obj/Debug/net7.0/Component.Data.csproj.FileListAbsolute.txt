@@ -458,3 +458,17 @@ D:\study\C_Project\do_an\new27\capstone_eatrightify\Component.Data\obj\Debug\net
 D:\study\C_Project\do_an\new27\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.pdb
 D:\study\C_Project\do_an\new27\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.genruntimeconfig.cache
 D:\study\C_Project\do_an\new27\capstone_eatrightify\Component.Data\obj\Debug\net7.0\ref\Component.Data.dll
+D:\study\C_Project\do_an\new30\capstone_eatrightify\Component.Data\bin\Debug\net7.0\Component.Data.deps.json
+D:\study\C_Project\do_an\new30\capstone_eatrightify\Component.Data\bin\Debug\net7.0\Component.Data.runtimeconfig.json
+D:\study\C_Project\do_an\new30\capstone_eatrightify\Component.Data\bin\Debug\net7.0\Component.Data.dll
+D:\study\C_Project\do_an\new30\capstone_eatrightify\Component.Data\bin\Debug\net7.0\Component.Data.pdb
+D:\study\C_Project\do_an\new30\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.csproj.AssemblyReference.cache
+D:\study\C_Project\do_an\new30\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.GeneratedMSBuildEditorConfig.editorconfig
+D:\study\C_Project\do_an\new30\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.AssemblyInfoInputs.cache
+D:\study\C_Project\do_an\new30\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.AssemblyInfo.cs
+D:\study\C_Project\do_an\new30\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.csproj.CoreCompileInputs.cache
+D:\study\C_Project\do_an\new30\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.dll
+D:\study\C_Project\do_an\new30\capstone_eatrightify\Component.Data\obj\Debug\net7.0\refint\Component.Data.dll
+D:\study\C_Project\do_an\new30\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.pdb
+D:\study\C_Project\do_an\new30\capstone_eatrightify\Component.Data\obj\Debug\net7.0\Component.Data.genruntimeconfig.cache
+D:\study\C_Project\do_an\new30\capstone_eatrightify\Component.Data\obj\Debug\net7.0\ref\Component.Data.dll

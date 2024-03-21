@@ -1,4 +1,5 @@
-﻿using Component.Application.Utilities.Mail;
+﻿using Component.Application.Sales.VNPAY_Library;
+using Component.Application.Utilities.Mail;
 using Component.Data.EF;
 using Component.Data.Entities;
 using Component.Data.Enums;
@@ -6,9 +7,10 @@ using Component.Utilities.Exceptions;
 using Component.ViewModels.Common;
 using Component.ViewModels.Sales.Bills;
 using Component.ViewModels.Sales.Orders;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.Configuration;
 
 namespace Component.Application.Sales
 {
@@ -18,12 +20,16 @@ namespace Component.Application.Sales
         private readonly ApplicationDbContext _context;
         private const string USER_CONTENT_FOLDER_NAME = "user-content";
         private readonly IEmailService _emailService;
+        private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public OrderService(ApplicationDbContext context, UserManager<AppUser> userManager, IEmailService emailService)
+        public OrderService(ApplicationDbContext context, UserManager<AppUser> userManager, IEmailService emailService,IConfiguration configuration, IHttpContextAccessor httpContextAccessor )
         {
             _context = context;
             _userManager = userManager;
             _emailService = emailService;
+            _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
         }
 
 
@@ -669,6 +675,32 @@ namespace Component.Application.Sales
             var order = await _context.Orders.FindAsync(orderId);
             order.Status = OrderStatus.Shipping;
             return await _context.SaveChangesAsync();
+        }
+
+        public async Task<string> CreateVNPayPaymentUrlAsync(VNPayRequest request)
+        {
+            string vnpaymentUrl = _configuration["Vnpay:PaymentUrl"];
+            string vnp_TmnCode = _configuration["Vnpay:TmnCode"];
+            string vnp_HashSecret = _configuration["Vnpay:HashSecret"];
+            string vnp_ReturnURL = _configuration["Vnpay:ReturnUrl"];
+            DateTime date = DateTime.Now;
+            long orderId = DateTime.Now.Ticks;
+            string ipAddress = Utils.GetIpAddress(_httpContextAccessor.HttpContext);
+            VnPayLibrary vnpay = new VnPayLibrary();
+            vnpay.AddRequestData("vnp_Version", VnPayLibrary.VERSION);
+            vnpay.AddRequestData("vnp_Command", "pay");
+            vnpay.AddRequestData("vnp_TmnCode", vnp_TmnCode);
+            vnpay.AddRequestData("vnp_Amount", (request.Amount * 100).ToString());
+            vnpay.AddRequestData("vnp_CreateDate", date.ToString("yyyyMMddHHmmss"));
+            vnpay.AddRequestData("vnp_CurrCode", "VND");
+            vnpay.AddRequestData("vnp_IpAddr", ipAddress);
+            vnpay.AddRequestData("vnp_Locale", "vn");
+            vnpay.AddRequestData("vnp_OrderInfo", "Thanh toan don hang:" + orderId);
+            vnpay.AddRequestData("vnp_OrderType", "other"); //default value: other            
+            vnpay.AddRequestData("vnp_ReturnUrl", vnp_ReturnURL);
+            vnpay.AddRequestData("vnp_TxnRef", orderId.ToString());
+            string paymentUrl = vnpay.CreateRequestUrl(vnpaymentUrl, vnp_HashSecret);
+            return paymentUrl;
         }
     }
 }

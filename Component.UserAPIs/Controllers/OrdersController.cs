@@ -178,5 +178,18 @@ namespace Component.UserAPIs.Controllers
             return Ok(result);
         }
 
+        [HttpPost("create-vnpay-payment-url")]
+        public async Task<IActionResult> CreateVNPayPaymentUrl([FromBody] VNPayRequest request)
+        {
+            try
+            {
+                var paymentUrl = await _orderService.CreateVNPayPaymentUrlAsync(request);
+                return Ok(paymentUrl);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to create VNPay payment URL: {ex.Message}");
+            }
+        }
     }
 } 
