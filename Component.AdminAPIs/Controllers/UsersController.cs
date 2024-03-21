@@ -37,10 +37,26 @@ namespace Component.AdminAPIs.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
+            
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var result = await _userService.Register(request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpPost("CreateUser")]
+        public async Task<IActionResult> CreateUser([FromBody] UserCreateRequest request)
+        {
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _userService.Create(request);
             if (!result.IsSuccessed)
             {
                 return BadRequest(result);

@@ -21,7 +21,7 @@ namespace Component.ViewModels.Sales.Orders
 
         public string PhoneNumber { get; set; }
         public decimal TotalPriceOfOrder { set; get; }
-
+        public int OrderMethod { get; set; }
 
         public List<OrderDetailVm> OrderDetails { set; get; } = new List<OrderDetailVm>();
     }

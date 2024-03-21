@@ -23,6 +23,8 @@ namespace Component.Data.Entities
         public string? RefundDescription { set; get; }
         public DateTime? RefundDate { set; get; }
         public DateTime? ReceivedDate { set; get; }
+        public int OrderMethod {  set; get; }
+        public string? InvoiceLink { set; get; }
         public List<OrderDetail> OrderDetails { get; set; }
         public AppUser AppUser { get; set; }
 

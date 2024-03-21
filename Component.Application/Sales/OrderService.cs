@@ -60,6 +60,7 @@ namespace Component.Application.Sales
                         TotalPriceOfOrder = request.TotalPriceOfOrder,
                         Status = OrderStatus.InProgress,
                         OrderCode = randomCode,
+                        OrderMethod = request.OrderMethod,
                         OrderDetails = new List<OrderDetail>() { }
                     };
 
@@ -158,6 +159,7 @@ namespace Component.Application.Sales
                             ShipPhoneNumber = o.ShipPhoneNumber,
                             Status = o.Status,
                             OrderCode = o.OrderCode,
+                            OrderMethod = o.OrderMethod,
                             OrderDetails = new List<OrderDetail>()
 
                         };
@@ -464,6 +466,7 @@ namespace Component.Application.Sales
                 OrderCode = x.o.OrderCode,
                 Status = x.o.Status,
                 TotalPriceOfOrder = x.o.TotalPriceOfOrder,
+                OrderMethod = x.o.OrderMethod,
             }).Distinct().ToListAsync();
             result = result.OrderByDescending(x => x.OrderDate).ToList();
             return result;
@@ -533,6 +536,7 @@ namespace Component.Application.Sales
                 OrderCode = x.o.OrderCode,
                 Status = x.o.Status,
                 TotalPriceOfOrder = x.o.TotalPriceOfOrder,
+                OrderMethod = x.o.OrderMethod,
             }).Distinct().ToListAsync();
             // Sort the users by CreatedDate after projection
             orders = orders.OrderByDescending(x => x.OrderDate).ToList();
@@ -571,6 +575,7 @@ namespace Component.Application.Sales
                 OrderCode = x.o.OrderCode,
                 Status = x.o.Status,
                 TotalPriceOfOrder = x.o.TotalPriceOfOrder,
+                OrderMethod = x.o.OrderMethod,
             }).Distinct().ToListAsync();
             // Sort the users by CreatedDate after projection
             orders = orders.OrderByDescending(x => x.OrderDate).ToList();
@@ -618,7 +623,7 @@ namespace Component.Application.Sales
               .OrderByDescending(o => o.OrderDate)
               .FirstOrDefaultAsync();
 
-            var subject = "Thank you for shopping";
+            var subject = "[ERS] - Thank you for shopping";
             var body = $@"
                         <html>
                         <head>
@@ -653,11 +658,11 @@ namespace Component.Application.Sales
                                     <h2>{subject}</h2>
                                 </div>
                                 <div class='content'>
-                                    <p> Thank you for ordering through our system.
+                                    <p> Thank you for choosing our system.
                                         Your order is pending, we will contact you via the phone number you provided to confirm the order in the next 6 hours, 
                                         please check your phone regularly. </p>
                                     <p>This is your Order Code: <strong>{latestOrder.OrderCode}</strong></p>
-                                    <p>You can use it to check the order status <a href='http://localhost:3000/customerPage/check-order'>here</a>.</p>
+                                    <p>You can use it to check the order status <a href='http://localhost:3000/customerPage/check-order'>in here</a>.</p>
                                 </div>
                             </div>
                         </body>

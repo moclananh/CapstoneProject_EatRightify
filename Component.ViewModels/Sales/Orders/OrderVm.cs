@@ -20,6 +20,7 @@ namespace Component.ViewModels.Sales.Orders
         public string OrderCode { set; get; }
         public decimal TotalPriceOfOrder { set; get; }
         public OrderStatus Status { set; get; }
+        public int OrderMethod { set; get; }
         public List<OrderDetail>? OrderDetails { get; set; }
     }
 }

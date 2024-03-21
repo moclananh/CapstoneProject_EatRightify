@@ -551,5 +551,40 @@ namespace Component.Application.System.Users
 
             return totalUsers;
         }
+
+        public async Task<ApiResult<bool>> Create(UserCreateRequest request)
+        {
+            var user = await _userManager.FindByNameAsync(request.UserName);
+            if (user != null)
+            {
+                return new ApiErrorResult<bool>("Account is exist");
+            }
+            if (await _userManager.FindByEmailAsync(request.Email) != null)
+            {
+                return new ApiErrorResult<bool>("Email is exist");
+            }
+
+            user = new AppUser()
+            {
+                FirstName = request.UserName,
+                LastName = request.Email,
+                Dob = request.Dob,
+                PhoneNumber = request.PhoneNumber,
+                Avatar = request.Avatar,
+                Email = request.Email,
+                UserName = request.UserName,
+                IsVerify = true,
+                IsBanned = false,
+                CreatedDate = DateTime.UtcNow,
+                AcceptedTermOfUse = false
+
+            };
+            var result = await _userManager.CreateAsync(user, request.Password);
+            if (result.Succeeded)
+            {
+                return new ApiSuccessResult<bool>();
+            }
+            return new ApiErrorResult<bool>("Register fail");
+        }
     }
 }

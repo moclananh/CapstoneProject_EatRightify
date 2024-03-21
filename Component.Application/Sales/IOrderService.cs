@@ -2,14 +2,6 @@
 using Component.ViewModels.Common;
 using Component.ViewModels.Sales.Bills;
 using Component.ViewModels.Sales.Orders;
-using Component.ViewModels.System.Users;
-using Component.ViewModels.Utilities.Blogs;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Component.Application.Sales
 {
