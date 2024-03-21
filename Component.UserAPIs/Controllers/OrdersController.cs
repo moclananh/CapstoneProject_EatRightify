@@ -178,8 +178,8 @@ namespace Component.UserAPIs.Controllers
             return Ok(result);
         }
 
-        [HttpPost("create-vnpay-payment-url")]
-        public async Task<IActionResult> CreateVNPayPaymentUrl([FromBody] VNPayRequest request)
+        [HttpPost("VNPay")]
+        public async Task<IActionResult> VNPay([FromBody] VNPayRequest request)
         {
             try
             {
