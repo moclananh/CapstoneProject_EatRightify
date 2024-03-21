@@ -23,7 +23,7 @@ namespace Component.Application.Sales
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public OrderService(ApplicationDbContext context, UserManager<AppUser> userManager, IEmailService emailService,IConfiguration configuration, IHttpContextAccessor httpContextAccessor )
+        public OrderService(ApplicationDbContext context, UserManager<AppUser> userManager, IEmailService emailService, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _userManager = userManager;
@@ -291,13 +291,13 @@ namespace Component.Application.Sales
             return result;
         }
 
-       /* public async Task<int> UpdateStatus(UpdateStatusRequest request)
-        {
-            var orderStatus = await _context.Orders.FindAsync(request.OrderId);
-            if (orderStatus == null) throw new EShopException($"Cannot find an Order with id: {request.OrderId}");
-            orderStatus.Status = request.Status;
-            return await _context.SaveChangesAsync();
-        }*/
+        /* public async Task<int> UpdateStatus(UpdateStatusRequest request)
+         {
+             var orderStatus = await _context.Orders.FindAsync(request.OrderId);
+             if (orderStatus == null) throw new EShopException($"Cannot find an Order with id: {request.OrderId}");
+             orderStatus.Status = request.Status;
+             return await _context.SaveChangesAsync();
+         }*/
         public async Task<bool> UpdateStockCheckout(int productId, int quantity)
         {
             var product = await _context.Products.FindAsync(productId);
@@ -619,9 +619,51 @@ namespace Component.Application.Sales
               .FirstOrDefaultAsync();
 
             var subject = "Thank you for shopping";
-            var body = $"Your order has been confirmed. Thank you for purchasing on our system. \n" +
-                $"This is your Order Code: {latestOrder.OrderCode}." +
-                $"\n You can use it to check order status here: http://localhost:3000/customerPage/check-order)";
+            var body = $@"
+                        <html>
+                        <head>
+                            <style>
+                                /* CSS styles for better email presentation */
+                                body {{
+                                    font-family: Arial, sans-serif;
+                                    font-size: 14px;
+                                    line-height: 1.6;
+                                }}
+                                .container {{
+                                    max-width: 600px;
+                                    margin: auto;
+                                    padding: 20px;
+                                    border: 1px solid #ddd;
+                                    border-radius: 5px;
+                                }}
+                                .header {{
+                                    background-color: #f4f4f4;
+                                    padding: 10px;
+                                    text-align: center;
+                                    border-radius: 5px 5px 0 0;
+                                }}
+                                .content {{
+                                    padding: 20px 0;
+                                }}
+                            </style>
+                        </head>
+                        <body>
+                            <div class='container'>
+                                <div class='header'>
+                                    <h2>{subject}</h2>
+                                </div>
+                                <div class='content'>
+                                    <p> Thank you for ordering through our system.
+                                        Your order is pending, we will contact you via the phone number you provided to confirm the order in the next 6 hours, 
+                                        please check your phone regularly. </p>
+                                    <p>This is your Order Code: <strong>{latestOrder.OrderCode}</strong></p>
+                                    <p>You can use it to check the order status <a href='http://localhost:3000/customerPage/check-order'>here</a>.</p>
+                                </div>
+                            </div>
+                        </body>
+                        </html>
+                    ";
+
             try
             {
                 await _emailService.SendEmailAsync(request.Email, subject, body);
@@ -629,7 +671,7 @@ namespace Component.Application.Sales
             }
             catch
             {
-                return new ApiErrorResult<string>("Error sending verify email");
+                return new ApiErrorResult<string>("Error sending email");
             }
         }
 
@@ -657,7 +699,7 @@ namespace Component.Application.Sales
                 else
                 {
                     await UpdateStockCheckout(product.Id, item.Quantity);
-                }    
+                }
             }
             await _context.SaveChangesAsync();
             return new ApiSuccessMessage<string>("Order confimed!");
@@ -666,7 +708,7 @@ namespace Component.Application.Sales
         public async Task<int> OrderSuccess(int orderId)
         {
             var order = await _context.Orders.FindAsync(orderId);
-            order.Status = OrderStatus.Success;         
+            order.Status = OrderStatus.Success;
             order.ReceivedDate = DateTime.Now;
             return await _context.SaveChangesAsync();
         }
