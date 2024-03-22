@@ -403,7 +403,7 @@ namespace Component.Application.Sales
             {
                 return 0;
             }
-            var userPoint = price * 0.01m;
+            var userPoint = price * 0.0001m;
             user.AccumulatedPoints += userPoint;
 
             if (user.AccumulatedPoints > 0)
@@ -418,23 +418,23 @@ namespace Component.Application.Sales
         {
             var user = await _userManager.FindByIdAsync(uid);
             var userPoint = point;
-            if (userPoint >= 100 && userPoint < 300) // tu 100 den 299
+            if (userPoint >= 100 && userPoint < 200) // tu 100 den 299
             {
                 user.VIP = 1;
             }
-            if (userPoint >= 300 && userPoint < 600) // tu 300 den 599
+            if (userPoint >= 200 && userPoint < 400) // tu 300 den 599
             {
                 user.VIP = 2;
             }
-            if (userPoint >= 600 && userPoint < 1200) // tu 600 den 1199
+            if (userPoint >= 400 && userPoint < 600) // tu 600 den 1199
             {
                 user.VIP = 3;
             }
-            if (userPoint >= 1200 && userPoint < 2400) // tu 1200 den 2399
+            if (userPoint >= 600 && userPoint < 800) // tu 1200 den 2399
             {
                 user.VIP = 4;
             }
-            if (userPoint >= 2400) // tu 2400 tro len
+            if (userPoint >= 800) // tu 2400 tro len
             {
                 user.VIP = 5;
             }

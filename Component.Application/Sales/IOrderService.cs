@@ -1,4 +1,4 @@
-﻿using Component.Data.Entities;
+﻿ using Component.Data.Entities;
 using Component.ViewModels.Common;
 using Component.ViewModels.Sales.Bills;
 using Component.ViewModels.Sales.Orders;
