@@ -697,7 +697,7 @@ namespace Component.Application.Sales
             foreach (var item in orderDetail.Items)
             {
                 var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == item.ProductId);
-                if (product.Stock <= item.Quantity)
+                if (product.Stock < item.Quantity)
                 {
                     return new ApiErrorResult<string>("Order confirm failed!");
                 }

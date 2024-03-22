@@ -11,6 +11,7 @@ namespace Component.ViewModels.System.Users
     {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
+        [DataType(DataType.Date)]
         public DateTime? Dob { get; set; }
         public string? Avatar { get; set; }
         public string? PhoneNumber { get; set; }
