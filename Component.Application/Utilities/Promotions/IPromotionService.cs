@@ -7,7 +7,6 @@ namespace Component.Application.Utilities.Promotions
     public interface IPromotionService
     {
         Task<List<PromotionVm>> GetAll(string keyword);
-        Task<PagedResult<PromotionVm>> GetAllPaging(GetPromotionPagingRequest request);
         Task<PromotionVm> GetById(int id);
         Task<ApiResult<PromotionVm>> GetByPromotionCode(string code);
         Task<Promotion> Create(PromotionCreateRequest request);
@@ -16,5 +15,6 @@ namespace Component.Application.Utilities.Promotions
         Task UpdateStockOfVoucher(int voucherId);
         Task<int> UpdateStatus(int voucherId);
         Task<int> UpdateStatusOnly(UpdateStatusOnlyRequest request);
+        //Task<PagedResult<PromotionVm>> GetAllPaging(GetPromotionPagingRequest request);
     }
 }

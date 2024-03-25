@@ -26,13 +26,6 @@ namespace Component.ManagerAPIs.Controllers
             return Ok(Locations);
         }
 
-        [HttpGet("paging")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] GetLocationPagingRequest request)
-        {
-            var Locations = await _LocationService.GetAllPaging(request);
-            return Ok(Locations);
-        }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -97,5 +90,13 @@ namespace Component.ManagerAPIs.Controllers
                 return BadRequest();
             } 
         }
+
+        /*
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetLocationPagingRequest request)
+        {
+            var Locations = await _LocationService.GetAllPaging(request);
+            return Ok(Locations);
+        }*/
     }
 }

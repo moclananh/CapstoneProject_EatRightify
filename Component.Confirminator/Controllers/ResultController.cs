@@ -60,13 +60,6 @@ namespace Component.ConfirminatorAPIs.Controllers
             }
         }
 
-        [HttpGet("paging")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] ResultPagingRequest request)
-        {
-            var products = await _aiService.GetAllPaging(request);
-            return Ok(products);
-        }
-
         [HttpGet("getAll")]
         public async Task<IActionResult> GetAll(string? keyword, ResultStatus? status)
         {
@@ -111,5 +104,12 @@ namespace Component.ConfirminatorAPIs.Controllers
             }
             return Ok(result);
         }
+
+        /* [HttpGet("paging")]
+         public async Task<IActionResult> GetAllPaging([FromQuery] ResultPagingRequest request)
+         {
+             var products = await _aiService.GetAllPaging(request);
+             return Ok(products);
+         }*/
     }
 }

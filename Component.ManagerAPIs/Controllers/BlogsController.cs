@@ -1,9 +1,6 @@
-﻿using Component.Application.Catalog.Categories;
-using Component.Application.Utilities.Blogs;
-using Component.ViewModels.Catalog.Categories;
+﻿using Component.Application.Utilities.Blogs;
 using Component.ViewModels.Utilities.Blogs;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Component.ManagerAPIs.Controllers
@@ -25,13 +22,6 @@ namespace Component.ManagerAPIs.Controllers
         public async Task<IActionResult> GetAll()
         {
             var blogs = await _blogService.GetAll();
-            return Ok(blogs);
-        }
-
-        [HttpGet("paging")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] GetBlogPagingRequest request)
-        {
-            var blogs = await _blogService.GetAllPaging(request);
             return Ok(blogs);
         }
 
@@ -79,7 +69,8 @@ namespace Component.ManagerAPIs.Controllers
             {
                 var affectedResult = await _blogService.Update(request);
                 return Ok();
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest();
             }
@@ -103,5 +94,13 @@ namespace Component.ManagerAPIs.Controllers
             var blogs = await _blogService.TotalView();
             return Ok(blogs);
         }
+
+        /* [HttpGet("paging")]
+         public async Task<IActionResult> GetAllPaging([FromQuery] GetBlogPagingRequest request)
+         {
+             var blogs = await _blogService.GetAllPaging(request);
+             return Ok(blogs);
+         }
+ */
     }
 }

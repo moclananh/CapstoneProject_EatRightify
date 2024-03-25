@@ -8,8 +8,7 @@ namespace Component.ManagerAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    /*    [Authorize(Policy = "ManagerPolicy")]*/
-    [AllowAnonymous]
+    [Authorize(Policy = "ManagerPolicy")]
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
@@ -25,13 +24,6 @@ namespace Component.ManagerAPIs.Controllers
         {
             var products = await _categoryService.GetAll(keyword);
             return Ok(products);
-        }
-
-        [HttpGet("paging")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] GetCategoryPagingRequest request)
-        {
-            var categories = await _categoryService.GetAllPaging(request);
-            return Ok(categories);
         }
 
         [HttpGet("{id}")]
@@ -83,5 +75,13 @@ namespace Component.ManagerAPIs.Controllers
                 return BadRequest();
             return Ok();
         }
+
+        /*[HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetCategoryPagingRequest request)
+        {
+            var categories = await _categoryService.GetAllPaging(request);
+            return Ok(categories);
+        }
+*/
     }
 }

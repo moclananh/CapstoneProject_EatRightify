@@ -1,10 +1,6 @@
-﻿using Component.Application.Utilities.Blogs;
-using Component.Application.Utilities.Promotions;
-using Component.Data.Entities;
-using Component.ViewModels.Utilities.Blogs;
+﻿using Component.Application.Utilities.Promotions;
 using Component.ViewModels.Utilities.Promotions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Component.ManagerAPIs.Controllers
@@ -20,13 +16,6 @@ namespace Component.ManagerAPIs.Controllers
             IPromotionService promotionService)
         {
             _promotionService = promotionService;
-        }
-
-        [HttpGet("paging")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] GetPromotionPagingRequest request)
-        {
-            var promotions = await _promotionService.GetAllPaging(request);
-            return Ok(promotions);
         }
 
         [HttpGet("getAll")]
@@ -108,5 +97,12 @@ namespace Component.ManagerAPIs.Controllers
                 return BadRequest();
             return Ok();
         }
+
+        /*[HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetPromotionPagingRequest request)
+        {
+            var promotions = await _promotionService.GetAllPaging(request);
+            return Ok(promotions);
+        }*/
     }
 }

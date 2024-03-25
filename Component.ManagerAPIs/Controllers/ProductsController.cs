@@ -20,13 +20,6 @@ namespace Component.ManagerAPIs.Controllers
             _productService = productService;
         }
 
-        [HttpGet("paging")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request)
-        {
-            var products = await _productService.GetAllPaging(request);
-            return Ok(products);
-        }
-
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll([FromQuery] GetAllProductRequest request)
         {
@@ -44,7 +37,7 @@ namespace Component.ManagerAPIs.Controllers
         }
 
         [HttpGet("GetSumOfCost")]
-        public async Task<IActionResult> GetSumOfCost([FromQuery]DateTime? startDate,[FromQuery]DateTime? endDate)
+        public async Task<IActionResult> GetSumOfCost([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
         {
             var result = await _productService.SumOfCost(startDate, endDate);
             return Ok(result);
@@ -55,14 +48,6 @@ namespace Component.ManagerAPIs.Controllers
         public async Task<IActionResult> GetFeaturedProducts(int take)
         {
             var products = await _productService.GetFeaturedProducts(take);
-            return Ok(products);
-        }
-
-        [HttpGet("latest/{languageId}/{take}")]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetLatestProducts(int take, string languageId)
-        {
-            var products = await _productService.GetLatestProducts(languageId, take);
             return Ok(products);
         }
 
@@ -106,79 +91,13 @@ namespace Component.ManagerAPIs.Controllers
             return Ok();
         }
 
-        [HttpDelete("{productId}")]        
+        [HttpDelete("{productId}")]
         public async Task<IActionResult> Delete(int productId)
         {
             var affectedResult = await _productService.Delete(productId);
             if (affectedResult == 0)
                 return BadRequest();
             return Ok();
-        }
-
-        [HttpPatch("{productId}/{newPrice}")]
-        public async Task<IActionResult> UpdatePrice(int productId, decimal newPrice)
-        {
-            var isSuccessful = await _productService.UpdatePrice(productId, newPrice);
-            if (isSuccessful)
-                return Ok();
-
-            return BadRequest();
-        }
-
-        //Images
-        [HttpPost("{productId}/images")]
-        public async Task<IActionResult> CreateImage(int productId, [FromBody] ProductImageCreateRequest request)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var imageId = await _productService.AddImage(productId, request);
-            if (imageId == 0)
-                return BadRequest();
-
-            var result = await _productService.GetImageById(imageId);
-
-            return Ok();
-        }
-
-        [HttpPut("{productId}/images/{imageId}")]
-        public async Task<IActionResult> UpdateImage(int imageId, [FromBody] ProductImageUpdateRequest request)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var result = await _productService.UpdateImage(imageId, request);
-            if (result == 0)
-                return BadRequest();
-
-            return Ok();
-        }
-
-        [HttpDelete("{productId}/images/{imageId}")]
-        public async Task<IActionResult> RemoveImage(int imageId)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var result = await _productService.RemoveImage(imageId);
-            if (result == 0)
-                return BadRequest();
-
-            return Ok();
-        }
-
-        [HttpGet("images/{imageId}")]
-        public async Task<IActionResult> GetImageById(int imageId)
-        {
-            var image = await _productService.GetImageById(imageId);
-            if (image != null)
-            {
-                return Ok(image);
-            }
-            else return BadRequest();
         }
 
         [HttpPut("{id}/categories")]
@@ -202,5 +121,86 @@ namespace Component.ManagerAPIs.Controllers
             var view = await _productService.TotalView();
             return Ok(view);
         }
+
+     /* [HttpPatch("{productId}/{newPrice}")]
+         public async Task<IActionResult> UpdatePrice(int productId, decimal newPrice)
+         {
+             var isSuccessful = await _productService.UpdatePrice(productId, newPrice);
+             if (isSuccessful)
+                 return Ok();
+
+             return BadRequest();
+         }*/
+
+      /* [HttpPost("{productId}/images")]
+                 public async Task<IActionResult> CreateImage(int productId, [FromBody] ProductImageCreateRequest request)
+                 {
+                     if (!ModelState.IsValid)
+                     {
+                         return BadRequest(ModelState);
+                     }
+                     var imageId = await _productService.AddImage(productId, request);
+                     if (imageId == 0)
+                         return BadRequest();
+
+                     var result = await _productService.GetImageById(imageId);
+
+                     return Ok();
+                 }*/
+
+         /* [HttpPut("{productId}/images/{imageId}")]
+                 public async Task<IActionResult> UpdateImage(int imageId, [FromBody] ProductImageUpdateRequest request)
+                 {
+                     if (!ModelState.IsValid)
+                     {
+                         return BadRequest(ModelState);
+                     }
+                     var result = await _productService.UpdateImage(imageId, request);
+                     if (result == 0)
+                         return BadRequest();
+
+                     return Ok();
+                 }*/
+
+         /*[HttpDelete("{productId}/images/{imageId}")]
+                public async Task<IActionResult> RemoveImage(int imageId)
+                {
+                    if (!ModelState.IsValid)
+                    {
+                        return BadRequest(ModelState);
+                    }
+                    var result = await _productService.RemoveImage(imageId);
+                    if (result == 0)
+                        return BadRequest();
+
+                    return Ok();
+                }*/
+
+        /*  [HttpGet("images/{imageId}")]
+                  public async Task<IActionResult> GetImageById(int imageId)
+                  {
+                      var image = await _productService.GetImageById(imageId);
+                      if (image != null)
+                      {
+                          return Ok(image);
+                      }
+                      else return BadRequest();
+                  }*/
+
+                /*  [HttpGet("paging")]
+          public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request)
+          {
+              var products = await _productService.GetAllPaging(request);
+              return Ok(products);
+          }*/
+
+                /* [HttpGet("latest/{languageId}/{take}")]
+           [AllowAnonymous]
+           public async Task<IActionResult> GetLatestProducts(int take, string languageId)
+           {
+               var products = await _productService.GetLatestProducts(languageId, take);
+               return Ok(products);
+           }
+        */
     }
 }

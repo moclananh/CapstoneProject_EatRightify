@@ -23,13 +23,6 @@ namespace Component.UserAPIs.Controllers
             return Ok(products);
         }
 
-        [HttpGet("paging")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] GetCategoryPagingRequest request)
-        {
-            var categories = await _categoryService.GetAllPaging(request);
-            return Ok(categories);
-        }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -37,6 +30,11 @@ namespace Component.UserAPIs.Controllers
             return Ok(category);
         }
 
-
+        /* [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetCategoryPagingRequest request)
+        {
+            var categories = await _categoryService.GetAllPaging(request);
+            return Ok(categories);
+        }*/
     }
 }

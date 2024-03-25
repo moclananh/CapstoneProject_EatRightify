@@ -79,16 +79,6 @@ namespace Component.UserAPIs.Controllers
             return Ok(od); // Return the order with a 200 OK status code.
         }
 
-        [HttpGet("GetBillHistory/{userId}")]
-        [Authorize]
-        public async Task<IActionResult> GetBillHistory(Guid userId)
-        {
-            var billhistory = await _orderService.BillHistory(userId);
-            if (billhistory == null)
-                return BadRequest("Cannot find bill");
-            return Ok(billhistory);
-        }
-
         [HttpGet("GetBillDetails/{id}")]
         [Authorize]
         public async Task<IActionResult> GetBillDetails(int id)
@@ -191,5 +181,15 @@ namespace Component.UserAPIs.Controllers
                 return BadRequest($"Failed to create VNPay payment URL: {ex.Message}");
             }
         }
+
+        /*   [HttpGet("GetBillHistory/{userId}")]
+        [Authorize]
+        public async Task<IActionResult> GetBillHistory(Guid userId)
+        {
+            var billhistory = await _orderService.BillHistory(userId);
+            if (billhistory == null)
+                return BadRequest("Cannot find bill");
+            return Ok(billhistory);
+        }*/
     }
 } 

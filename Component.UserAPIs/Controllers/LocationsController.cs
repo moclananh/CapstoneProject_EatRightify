@@ -1,8 +1,5 @@
 ﻿using Component.Application.Utilities.Locations;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Component.ViewModels.Utilities.Blogs;
-using Component.ViewModels.Utilities.Locations;
 
 namespace Component.UserAPIs.Controllers
 {
@@ -15,14 +12,6 @@ namespace Component.UserAPIs.Controllers
             ILocationService locationService)
         {
             _locationService = locationService;
-        }
-
-
-        [HttpGet("paging")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] GetLocationPagingRequest request)
-        {
-            var location = await _locationService.GetAllPaging(request);
-            return Ok(location);
         }
 
         [HttpGet("getAllLocation")]
@@ -42,6 +31,12 @@ namespace Component.UserAPIs.Controllers
             }
             return Ok(location);
         }
+
+        /*    [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetLocationPagingRequest request)
+        {
+            var location = await _locationService.GetAllPaging(request);
+            return Ok(location);
+        }*/
     }
-    
 }

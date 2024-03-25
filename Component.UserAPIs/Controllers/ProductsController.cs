@@ -1,12 +1,10 @@
 ﻿using Component.Application.Catalog.Products;
-using Component.ViewModels.Catalog.ProductImages;
 using Component.ViewModels.Catalog.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Component.UserAPIs.Controllers
 {
-
     //api/products
     [Route("api/[controller]")]
     [ApiController]
@@ -22,7 +20,7 @@ namespace Component.UserAPIs.Controllers
 
         [HttpGet("GetAllProductActive")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAllProductActive([FromQuery]GetAllProductRequest request)
+        public async Task<IActionResult> GetAllProductActive([FromQuery] GetAllProductRequest request)
         {
             var products = await _productService.GetAllProductActive(request);
             return Ok(products);
@@ -33,13 +31,6 @@ namespace Component.UserAPIs.Controllers
         public async Task<IActionResult> getProductForAI()
         {
             var products = await _productService.GetProductForAI();
-            return Ok(products);
-        }
-
-        [HttpGet("paging")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request)
-        {
-            var products = await _productService.GetAllPaging(request);
             return Ok(products);
         }
 
@@ -60,14 +51,6 @@ namespace Component.UserAPIs.Controllers
             return Ok(products);
         }
 
-        [HttpGet("latest/{languageId}/{take}")]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetLatestProducts(int take, string languageId)
-        {
-            var products = await _productService.GetLatestProducts(languageId, take);
-            return Ok(products);
-        }
-
         [HttpPut("AddViewcount")]
         [AllowAnonymous]
         public async Task<IActionResult> AddViewcount(int productId)
@@ -79,8 +62,24 @@ namespace Component.UserAPIs.Controllers
             }
             catch (Exception e)
             {
-               return BadRequest(e.Message);
+                return BadRequest(e.Message);
             }
         }
+
+
+        /*  [HttpGet("latest/{languageId}/{take}")]
+          [AllowAnonymous]
+          public async Task<IActionResult> GetLatestProducts(int take, string languageId)
+          {
+              var products = await _productService.GetLatestProducts(languageId, take);
+              return Ok(products);
+          }*/
+
+        /*  [HttpGet("paging")]
+      public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request)
+      {
+          var products = await _productService.GetAllPaging(request);
+          return Ok(products);
+      }*/
     }
 }

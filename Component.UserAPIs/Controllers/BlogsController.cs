@@ -1,7 +1,5 @@
 ﻿using Component.Application.Utilities.Blogs;
-using Component.ViewModels.Utilities.Blogs;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Component.UserAPIs.Controllers
@@ -22,14 +20,6 @@ namespace Component.UserAPIs.Controllers
         public async Task<IActionResult> GetAllBlogActive()
         {
             var blogs = await _blogService.GetAllBlogActive();
-            return Ok(blogs);
-        }
-
-
-        [HttpGet("paging")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] GetBlogPagingRequest request)
-        {
-            var blogs = await _blogService.GetAllPaging(request);
             return Ok(blogs);
         }
 
@@ -58,6 +48,11 @@ namespace Component.UserAPIs.Controllers
                 return BadRequest(e.Message);
             }
         }
-
+                /* [HttpGet("paging")]
+         public async Task<IActionResult> GetAllPaging([FromQuery] GetBlogPagingRequest request)
+         {
+             var blogs = await _blogService.GetAllPaging(request);
+             return Ok(blogs);
+         }*/
     }
 }

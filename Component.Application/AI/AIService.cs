@@ -3,24 +3,15 @@ using Component.Application.Utilities.Mail;
 using Component.Data.EF;
 using Component.Data.Entities;
 using Component.Data.Enums;
+using Component.Utilities.Constants;
 using Component.Utilities.Exceptions;
 using Component.ViewModels.AI;
-using Component.ViewModels.Catalog.Products;
 using Component.ViewModels.Common;
 using Component.ViewModels.System.Users;
-using Component.ViewModels.Utilities.Promotions;
-using MailKit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using Org.BouncyCastle.Crypto.Prng;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace Component.Application.AI
 {
@@ -199,10 +190,10 @@ namespace Component.Application.AI
             return result;
         }
 
-
-        private const string ResultApiBaseUrl = "https://erscus.azurewebsites.net/api/UserDetail";
-        private const string ProductApiBaseUrl = "https://erscus.azurewebsites.net/api/Products/getProductForAI";
-        private const string LinkProduct = "https://erscus.azurewebsites.net/api/Products/";
+        private const string URL = SystemConstants.URLForAI.LinkUrl;
+        private const string ResultApiBaseUrl = URL+"UserDetail";
+        private const string ProductApiBaseUrl = URL+"Products/getProductForAI";
+        private const string LinkProduct = URL+"Products/";
         public static async Task<string> GetResultByUserIdAsync(Guid userId)
         {
             using (HttpClient client = new HttpClient())

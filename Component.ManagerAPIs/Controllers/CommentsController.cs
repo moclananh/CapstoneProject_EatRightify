@@ -1,7 +1,5 @@
 ﻿using Component.Application.Utilities.Comments;
-using Component.ViewModels.Utilities.Comments;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Component.ManagerAPIs.Controllers
@@ -26,14 +24,6 @@ namespace Component.ManagerAPIs.Controllers
             return Ok(item);
         }
 
-
-        [HttpGet("paging")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] GetCommentPagingRequest request)
-        {
-            var comments = await _commentService.GetAllCommentByProductIdPaging(request);
-            return Ok(comments);
-        }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -54,5 +44,12 @@ namespace Component.ManagerAPIs.Controllers
                 return BadRequest();
             return Ok();
         }
+
+        /*  [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetCommentPagingRequest request)
+        {
+            var comments = await _commentService.GetAllCommentByProductIdPaging(request);
+            return Ok(comments);
+        }*/
     }
 }

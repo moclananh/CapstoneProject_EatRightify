@@ -26,13 +26,6 @@ namespace Component.UserAPIs.Controllers
             return Ok(item);
         }
 
-        [HttpGet("paging")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] GetCommentPagingRequest request)
-        {
-            var comments = await _commentService.GetAllCommentByProductIdPaging(request);
-            return Ok(comments);
-        }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -107,6 +100,13 @@ namespace Component.UserAPIs.Controllers
                 return BadRequest();
             return Ok();
         }
+
+        /* [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetCommentPagingRequest request)
+        {
+            var comments = await _commentService.GetAllCommentByProductIdPaging(request);
+            return Ok(comments);
+        }*/
     }
 }
 

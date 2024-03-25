@@ -37,7 +37,7 @@ namespace Component.AdminAPIs.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
-            
+
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
@@ -91,14 +91,6 @@ namespace Component.AdminAPIs.Controllers
                 return BadRequest(result);
             }
             return Ok(result);
-        }
-
-        //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
-        [HttpGet("paging")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request)
-        {
-            var products = await _userService.GetUsersPaging(request);
-            return Ok(products);
         }
 
         [HttpGet("GetAll")]
@@ -209,5 +201,13 @@ namespace Component.AdminAPIs.Controllers
 
             return Ok(response);
         }
+
+        /* //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request)
+        {
+            var products = await _userService.GetUsersPaging(request);
+            return Ok(products);
+        }*/
     }
 }

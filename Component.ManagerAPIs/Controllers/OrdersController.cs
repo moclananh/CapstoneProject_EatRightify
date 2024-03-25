@@ -20,13 +20,6 @@ namespace Component.ManagerAPIs.Controllers
             _orderService = productService;
         }
 
-        [HttpGet("paging")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] OrderPagingRequest request)
-        {
-            var categories = await _orderService.GetAllPaging(request);
-            return Ok(categories);
-        }
-
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll([FromQuery] string? keyword)
         {
@@ -49,14 +42,6 @@ namespace Component.ManagerAPIs.Controllers
             return Ok(item);
         }
 
-        [HttpGet("GetOrderDetailPagingRequest")]
-        public async Task<IActionResult> GetOrderDetailPagingRequest([FromQuery] OrderDetailPagingRequest request)
-        {
-            var categories = await _orderService.GetOrderDetailPagingRequest(request);
-            return Ok(categories);
-        }
-
-
         [HttpGet("{orderId}")]
         public async Task<IActionResult> GetById(int orderId)
         {
@@ -66,25 +51,6 @@ namespace Component.ManagerAPIs.Controllers
             return Ok(product);
         }
 
-        /*    [HttpPut("{orderId}")]
-            public async Task<IActionResult> UpdateStatus([FromRoute] int orderId, [FromBody] UpdateStatusRequest request)
-            {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-                request.OrderId = orderId;
-                try
-                {
-                    var affectedResult = await _orderService.UpdateStatus(request);
-                    return Ok();
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest();
-                }
-
-            }*/
         [HttpPut("CancelOrderRequest")]
         public async Task<IActionResult> CancelOrderRequest(CancelOrderRequest request)
         {
@@ -146,5 +112,39 @@ namespace Component.ManagerAPIs.Controllers
                 return BadRequest("Cannot find Order");
             return Ok(product);
         }
+
+        /*    [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] OrderPagingRequest request)
+        {
+            var categories = await _orderService.GetAllPaging(request);
+            return Ok(categories);
+        }*/
+
+
+       /*    [HttpPut("{orderId}")]
+                public async Task<IActionResult> UpdateStatus([FromRoute] int orderId, [FromBody] UpdateStatusRequest request)
+                {
+                    if (!ModelState.IsValid)
+                    {
+                        return BadRequest(ModelState);
+                    }
+                    request.OrderId = orderId;
+                    try
+                    {
+                        var affectedResult = await _orderService.UpdateStatus(request);
+                        return Ok();
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest();
+                    }
+                }*/
+
+       /*   [HttpGet("GetOrderDetailPagingRequest")]
+       public async Task<IActionResult> GetOrderDetailPagingRequest([FromQuery] OrderDetailPagingRequest request)
+       {
+           var categories = await _orderService.GetOrderDetailPagingRequest(request);
+           return Ok(categories);
+       }*/
     }
 }

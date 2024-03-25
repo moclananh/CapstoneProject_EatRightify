@@ -22,8 +22,13 @@ namespace Component.Utilities.Constants
 
         public class ProductSettings
         {
-            public const int NumberOfFeaturedProducts = 4; //stupid skip() func not understand distince. no hieu rang neu assign mutil cate thi bay nhiu product, nen skip mat cac sp cu
+            public const int NumberOfFeaturedProducts = 4; 
             public const int NumberOfLatestProducts = 6;
+        }
+
+        public class URLForAI
+        {
+            public const string LinkUrl = "https://erscus.azurewebsites.net/api/";
         }
 
        /* public class ProductConstants
