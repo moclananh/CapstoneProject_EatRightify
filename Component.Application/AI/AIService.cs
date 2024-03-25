@@ -200,9 +200,9 @@ namespace Component.Application.AI
         }
 
 
-        private const string ResultApiBaseUrl = "https://eatright2.azurewebsites.net/api/UserDetail";
-        private const string ProductApiBaseUrl = "https://eatright2.azurewebsites.net/api/Products/getProductForAI";
-        private const string LinkProduct = "https://eatright2.azurewebsites.net/api/Products/";
+        private const string ResultApiBaseUrl = "https://erscus.azurewebsites.net/api/UserDetail";
+        private const string ProductApiBaseUrl = "https://erscus.azurewebsites.net/api/Products/getProductForAI";
+        private const string LinkProduct = "https://erscus.azurewebsites.net/api/Products/";
         public static async Task<string> GetResultByUserIdAsync(Guid userId)
         {
             using (HttpClient client = new HttpClient())
