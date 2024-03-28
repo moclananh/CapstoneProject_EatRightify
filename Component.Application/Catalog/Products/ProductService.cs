@@ -574,7 +574,7 @@ namespace Component.Application.Catalog.Products
                         from pi in ppi.DefaultIfEmpty()
                         join c in _context.Categories on pic.CategoryId equals c.Id into picc
                         from c in picc.DefaultIfEmpty()
-                        where p.IsFeatured == true
+                        where p.IsFeatured == true && p.Status == Data.Enums.Status.Active
                         select new { p, pt, pic, pi };
 
             var data = await query.OrderByDescending(x => x.p.DateCreated).Take(take)
