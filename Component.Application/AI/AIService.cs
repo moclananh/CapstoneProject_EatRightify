@@ -193,7 +193,7 @@ namespace Component.Application.AI
         private const string URL = SystemConstants.URLForAI.LinkUrl;
         private const string ResultApiBaseUrl = URL+"UserDetail";
         private const string ProductApiBaseUrl = URL+"Products/getProductForAI";
-        private const string LinkProduct = URL+"Products/";
+        private const string LinkProduct = SystemConstants.URLForAI.LinkProduct;
         public static async Task<string> GetResultByUserIdAsync(Guid userId)
         {
             using (HttpClient client = new HttpClient())

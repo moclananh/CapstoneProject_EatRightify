@@ -12,6 +12,8 @@ namespace Component.ViewModels.Sales.Orders
     {
         public DateTime OrderDate { get; set; }
         public OrderStatus Status { get; set; }
+        public string? CancelDescription { set; get; }
+        public string? RefundDescription { set; get; }
         public List<T> Items { set; get; }
     }
 }

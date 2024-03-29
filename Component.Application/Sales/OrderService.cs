@@ -3,6 +3,7 @@ using Component.Application.Utilities.Mail;
 using Component.Data.EF;
 using Component.Data.Entities;
 using Component.Data.Enums;
+using Component.Utilities.Constants;
 using Component.Utilities.Exceptions;
 using Component.ViewModels.Common;
 using Component.ViewModels.Sales.Bills;
@@ -349,12 +350,16 @@ namespace Component.Application.Sales
 
             var status = query.Select(x => x.o.Status).FirstOrDefault();
             var orderDate = query.Select(x => x.o.OrderDate).FirstOrDefault();
+            var cancelDescription = query.Select(x => x.o.CancelDescription).FirstOrDefault();
+            var refundDescription = query.Select(x => x.o.RefundDescription).FirstOrDefault();
             // Assuming you have an enum defined for OrderStatus
             var result = new CheckOrderResult<CheckOrderByCodeVm>
             {
                 Status = status,
                 Items = distinctProducts,
-                OrderDate = orderDate
+                OrderDate = orderDate,
+                CancelDescription = cancelDescription,
+                RefundDescription = refundDescription
             };
 
             return result;
@@ -495,11 +500,15 @@ namespace Component.Application.Sales
 
             var status = query.Select(x => x.o.Status).FirstOrDefault();
             var orderDate = query.Select(x => x.o.OrderDate).FirstOrDefault();
+            var cancelDescription = query.Select(x => x.o.CancelDescription).FirstOrDefault();
+            var refundDescription = query.Select(x => x.o.RefundDescription).FirstOrDefault();
             var result = new CheckOrderResult<OrderDetailView>
             {
                 Status = status,
                 Items = item,
-                OrderDate = orderDate
+                OrderDate = orderDate,
+                RefundDescription = refundDescription,
+                CancelDescription = cancelDescription,
             };
 
             return result;
@@ -622,7 +631,6 @@ namespace Component.Application.Sales
               .Where(o => o.Id == request.OrderId)
               .OrderByDescending(o => o.OrderDate)
               .FirstOrDefaultAsync();
-
             var subject = "[ERS] - Thank you for shopping";
             var body = $@"
                         <html>
@@ -662,7 +670,7 @@ namespace Component.Application.Sales
                                         Your order is pending, we will contact you via the phone number you provided to confirm the order in the next 6 hours, 
                                         please check your phone regularly. </p>
                                     <p>This is your Order Code: <strong>{latestOrder.OrderCode}</strong></p>
-                                    <p>You can use it to check the order status <a href='http://localhost:3000/customerPage/check-order'>in here</a>.</p>
+                                    <p>You can use it to check the order status <a href='https://graduation-thesis-fe-ver02-ln6f-c132wibfg.vercel.app/customerPage/check-order'>in here</a>.</p>
                                 </div>
                             </div>
                         </body>

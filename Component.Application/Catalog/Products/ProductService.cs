@@ -769,6 +769,7 @@ namespace Component.Application.Catalog.Products
                         from c in picc.DefaultIfEmpty()
                         join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
                         from pi in ppi.DefaultIfEmpty()
+                        where p.Status == Data.Enums.Status.Active
                         select new ProductVm()
                         {
                             Id = p.Id,
