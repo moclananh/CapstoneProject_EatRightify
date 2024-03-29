@@ -352,6 +352,7 @@ namespace Component.Application.Sales
             var orderDate = query.Select(x => x.o.OrderDate).FirstOrDefault();
             var cancelDescription = query.Select(x => x.o.CancelDescription).FirstOrDefault();
             var refundDescription = query.Select(x => x.o.RefundDescription).FirstOrDefault();
+            var totalPrice = query.Select(x => x.o.TotalPriceOfOrder).FirstOrDefault();
             // Assuming you have an enum defined for OrderStatus
             var result = new CheckOrderResult<CheckOrderByCodeVm>
             {
@@ -359,7 +360,8 @@ namespace Component.Application.Sales
                 Items = distinctProducts,
                 OrderDate = orderDate,
                 CancelDescription = cancelDescription,
-                RefundDescription = refundDescription
+                RefundDescription = refundDescription,
+                TotalPrice = totalPrice,
             };
 
             return result;
@@ -502,6 +504,7 @@ namespace Component.Application.Sales
             var orderDate = query.Select(x => x.o.OrderDate).FirstOrDefault();
             var cancelDescription = query.Select(x => x.o.CancelDescription).FirstOrDefault();
             var refundDescription = query.Select(x => x.o.RefundDescription).FirstOrDefault();
+            var totalPrice = query.Select(x => x.o.TotalPriceOfOrder).FirstOrDefault();
             var result = new CheckOrderResult<OrderDetailView>
             {
                 Status = status,
@@ -509,6 +512,7 @@ namespace Component.Application.Sales
                 OrderDate = orderDate,
                 RefundDescription = refundDescription,
                 CancelDescription = cancelDescription,
+                TotalPrice = totalPrice,
             };
 
             return result;

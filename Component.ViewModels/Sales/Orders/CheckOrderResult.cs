@@ -14,6 +14,7 @@ namespace Component.ViewModels.Sales.Orders
         public OrderStatus Status { get; set; }
         public string? CancelDescription { set; get; }
         public string? RefundDescription { set; get; }
+        public decimal? TotalPrice { get; set; }
         public List<T> Items { set; get; }
     }
 }
