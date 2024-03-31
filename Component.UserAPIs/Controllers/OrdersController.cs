@@ -1,5 +1,6 @@
 ﻿using Component.Application.Catalog.Products;
 using Component.Application.Sales;
+using Component.Application.System.Users;
 using Component.ViewModels.Common;
 using Component.ViewModels.Sales.Orders;
 using Microsoft.AspNetCore.Authorization;
@@ -16,11 +17,13 @@ namespace Component.UserAPIs.Controllers
     {
         private readonly IOrderService _orderService;
         private readonly IProductService _productService;
+        private readonly IUserService _userService;
         public OrdersController(
-            IOrderService orderService, IProductService productService)
+            IOrderService orderService, IProductService productService, IUserService userService)
         {
             _orderService = orderService;
             _productService = productService;
+            _userService = userService;
         }
 
         public class CustomErrorDetails : ProblemDetails
@@ -126,6 +129,9 @@ namespace Component.UserAPIs.Controllers
             if (order.Status == Data.Enums.OrderStatus.Success)
             {
                 await _orderService.RefundOrderRequest(request);
+                await _orderService.ReloadAccumylatedPoint(order.UserId, order.TotalPriceOfOrder);
+                var user = await _userService.GetById(order.UserId);
+                await _orderService.Vip(order.UserId, (int)user.ResultObj.AccumulatedPoints);
                 var orderDetail = await _orderService.GetOrderDetail(request.OrderId);
                 // xu ly re-stock
                 foreach (var item in orderDetail.Items)

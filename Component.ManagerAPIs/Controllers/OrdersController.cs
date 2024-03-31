@@ -74,7 +74,8 @@ namespace Component.ManagerAPIs.Controllers
                 {
                     return BadRequest(result);
                 }
-                return Ok(order);
+                await _orderService.AccumulatedPoints(order.UserId, order.TotalPriceOfOrder);
+                return Ok();    
             }
             return NoContent();
         }

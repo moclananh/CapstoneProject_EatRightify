@@ -110,7 +110,7 @@ namespace Component.Application.Sales
                     await _context.SaveChangesAsync();
 
                     // Commit the transaction
-                    var test = await AccumulatedPoints(request.UserId.ToString(), orderPrice);
+                   // var test = await AccumulatedPoints(request.UserId, orderPrice);
                     transaction.Commit();
                     /*Console.WriteLine("Vip: " + vip);
                     Console.WriteLine("Gia goc: " + originalPrice.ToString());
@@ -403,9 +403,9 @@ namespace Component.Application.Sales
                return totalPrice; // gia tien da giam gia cua 1 san pham
            }
    */
-        public async Task<decimal> AccumulatedPoints(string uid, decimal price)
+        public async Task<decimal> AccumulatedPoints(Guid uid, decimal price)
         {
-            var user = await _userManager.FindByIdAsync(uid);
+            var user = await _userManager.FindByIdAsync(uid.ToString());
             if (user.UserName.Equals("guest"))
             {
                 return 0;
@@ -421,9 +421,9 @@ namespace Component.Application.Sales
             return userPoint;
         }
 
-        public async Task<int> Vip(string uid, int point)
+        public async Task<int> Vip(Guid uid, int point)
         {
-            var user = await _userManager.FindByIdAsync(uid);
+            var user = await _userManager.FindByIdAsync(uid.ToString());
             var userPoint = point;
             if (userPoint >= 500 && userPoint < 800)
             {
@@ -444,6 +444,10 @@ namespace Component.Application.Sales
             if (userPoint >= 2500) 
             {
                 user.VIP = 5;
+            }
+            if (userPoint < 500)
+            {
+                user.VIP = 0;
             }
             return await _context.SaveChangesAsync();
         }
@@ -761,6 +765,19 @@ namespace Component.Application.Sales
             vnpay.AddRequestData("vnp_TxnRef", orderId.ToString());
             string paymentUrl = vnpay.CreateRequestUrl(vnpaymentUrl, vnp_HashSecret);
             return paymentUrl;
+        }
+
+        public async Task<decimal> ReloadAccumylatedPoint(Guid uid, decimal price)
+        {
+            var user = await _userManager.FindByIdAsync(uid.ToString());
+            if (user.UserName.Equals("guest"))
+            {
+                return 0;
+            }
+            var priceReload = price * 0.0001m;
+            user.AccumulatedPoints -= priceReload;
+            await _context.SaveChangesAsync();
+            return priceReload;
         }
     }
 }

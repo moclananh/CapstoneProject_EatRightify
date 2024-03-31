@@ -14,8 +14,9 @@ namespace Component.Application.Sales
         Task<List<OrderVm>> GetAllOrderByOrderStatus(GetOrderByOrderStatusRequest request);
         Task<List<OrderVm>> GetUserOrderHistoryByOrderCode(GetUserOrderHistoryByOrderStatusRequest request);
         Task<CheckOrderResult<OrderDetailView>> GetOrderDetail(int id);
-        Task<decimal> AccumulatedPoints(string uid, decimal price);
-        Task<int> Vip(string uid, int point); 
+        Task<decimal> AccumulatedPoints(Guid uid, decimal price);
+        Task<decimal> ReloadAccumylatedPoint(Guid uid, decimal price);
+        Task<int> Vip(Guid uid, int point); 
         Task<decimal> TotalProfit (DateTime? startDate, DateTime? endDate);
         Task<int> CancelOrderRequest(CancelOrderRequest request);
         Task<int> RefundOrderRequest(CancelOrderRequest request);
