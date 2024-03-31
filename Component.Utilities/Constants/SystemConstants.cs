@@ -29,7 +29,7 @@ namespace Component.Utilities.Constants
         public class URLForAI
         {
             public const string LinkUrl = "https://erscus.azurewebsites.net/api/";
-            public const string LinkProduct = "https://graduation-thesis-fe-ver02-ln6f-c132wibfg.vercel.app/customerPage/product/product-detail/";
+            public const string LinkProduct = "https://eatrightify-system.vercel.app/customerPage/product/product-detail/";
         }
 
 

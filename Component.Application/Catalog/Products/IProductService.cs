@@ -14,7 +14,7 @@ namespace Component.Application.Catalog.Products
         Task<bool> UpdateStock(int productId, int addedQuantity);
         Task AddViewcount(int productId);
         Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request);
-        Task<List<ProductVm>> GetFeaturedProducts(int take);
+        Task<List<ProductVm>> GetFeaturedProducts();
         Task<List<ProductVm>> GetAll(GetAllProductRequest request);
         Task<List<ProductVm>> GetAllProductActive(GetAllProductRequest request);
         Task<List<ProductVm>> GetProductForAI();

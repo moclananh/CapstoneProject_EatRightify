@@ -43,11 +43,11 @@ namespace Component.UserAPIs.Controllers
             return Ok(product);
         }
 
-        [HttpGet("featured/{take}")]
+        [HttpGet("featured")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetFeaturedProducts(int take)
+        public async Task<IActionResult> GetFeaturedProducts()
         {
-            var products = await _productService.GetFeaturedProducts(take);
+            var products = await _productService.GetFeaturedProducts();
             return Ok(products);
         }
 

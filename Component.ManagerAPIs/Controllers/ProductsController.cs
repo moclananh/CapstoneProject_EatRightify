@@ -43,14 +43,6 @@ namespace Component.ManagerAPIs.Controllers
             return Ok(result);
         }
 
-        [HttpGet("featured/{languageId}/{take}")]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetFeaturedProducts(int take)
-        {
-            var products = await _productService.GetFeaturedProducts(take);
-            return Ok(products);
-        }
-
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] ProductCreateRequest request)
         {

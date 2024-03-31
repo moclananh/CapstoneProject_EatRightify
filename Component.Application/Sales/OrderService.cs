@@ -425,23 +425,23 @@ namespace Component.Application.Sales
         {
             var user = await _userManager.FindByIdAsync(uid);
             var userPoint = point;
-            if (userPoint >= 100 && userPoint < 200) // tu 100 den 299
+            if (userPoint >= 500 && userPoint < 800)
             {
                 user.VIP = 1;
             }
-            if (userPoint >= 200 && userPoint < 400) // tu 300 den 599
+            if (userPoint >= 800 && userPoint < 1200) 
             {
                 user.VIP = 2;
             }
-            if (userPoint >= 400 && userPoint < 600) // tu 600 den 1199
+            if (userPoint >= 1200 && userPoint < 1800) 
             {
                 user.VIP = 3;
             }
-            if (userPoint >= 600 && userPoint < 800) // tu 1200 den 2399
+            if (userPoint >= 1800 && userPoint < 2500) 
             {
                 user.VIP = 4;
             }
-            if (userPoint >= 800) // tu 2400 tro len
+            if (userPoint >= 2500) 
             {
                 user.VIP = 5;
             }
@@ -602,12 +602,13 @@ namespace Component.Application.Sales
                         join od in _context.OrderDetails on o.Id equals od.OrderId
                         join p in _context.Products on od.ProductId equals p.Id
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+                        where o.Status == OrderStatus.Success
                         select new { o, od, p, pt };
 
             //2. filter
             if (startDate != null && endDate != null)
             {
-                query = query.Where(x => x.o.OrderDate >= startDate && x.o.OrderDate <= endDate);
+                query = query.Where(x => x.o.OrderDate >= startDate && x.o.OrderDate <= endDate.Value.AddDays(1));
             }
 
             //3. Compute total price and total cost
@@ -674,7 +675,7 @@ namespace Component.Application.Sales
                                         Your order is pending, we will contact you via the phone number you provided to confirm the order in the next 6 hours, 
                                         please check your phone regularly. </p>
                                     <p>This is your Order Code: <strong>{latestOrder.OrderCode}</strong></p>
-                                    <p>You can use it to check the order status <a href='https://graduation-thesis-fe-ver02-ln6f-c132wibfg.vercel.app/customerPage/check-order'>in here</a>.</p>
+                                    <p>You can use it to check the order status <a href='https://eatrightify-system.vercel.app/customerPage/check-order'>in here</a>.</p>
                                 </div>
                             </div>
                         </body>
