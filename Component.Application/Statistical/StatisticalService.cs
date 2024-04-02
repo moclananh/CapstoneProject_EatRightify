@@ -264,12 +264,14 @@ namespace Component.Application.Statistical
                         join od in _context.OrderDetails on o.Id equals od.OrderId
                         join p in _context.Products on od.ProductId equals p.Id
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+                        where o.Status == Data.Enums.OrderStatus.Success
                         select new { o, od, p, pt };
 
             //2. filter
             if (startDate != null && endDate != null)
             {
-                query = query.Where(x => x.o.OrderDate >= startDate && x.o.OrderDate <= endDate);
+               
+                query = query.Where(x => x.o.OrderDate >= startDate && x.o.OrderDate <= endDate.Value.AddDays(1));
             }
 
             //3. Compute total price and total cost

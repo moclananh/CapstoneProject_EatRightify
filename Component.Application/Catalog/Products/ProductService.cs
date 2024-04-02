@@ -565,7 +565,7 @@ namespace Component.Application.Catalog.Products
 
         public async Task<List<ProductVm>> GetFeaturedProducts()
         {
-            var query = (from p in _context.Products
+            var query = await (from p in _context.Products
                          join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                          join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic
                          from pic in ppic.DefaultIfEmpty()
@@ -594,11 +594,9 @@ namespace Component.Application.Catalog.Products
                             IsFeatured = x.p.IsFeatured,
                             Status = x.p.Status,
                             ThumbnailImage = x.pi.ImagePath
-                        }).Distinct();
+                        }).Distinct().Take(4).ToListAsync();
 
-            var data = await query.Take(4).ToListAsync();
-
-            return data;
+            return query;
         }
 
 
