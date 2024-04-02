@@ -575,7 +575,6 @@ namespace Component.Application.Catalog.Products
                          from c in picc.DefaultIfEmpty()
                          where p.IsFeatured == true && p.Status == Data.Enums.Status.Active
                          select new { p, pt, pic, pi })
-                        .OrderByDescending(x => x.p.DateCreated)
                         .Select(x => new ProductVm()
                         {
                             Id = x.p.Id,
@@ -594,9 +593,9 @@ namespace Component.Application.Catalog.Products
                             IsFeatured = x.p.IsFeatured,
                             Status = x.p.Status,
                             ThumbnailImage = x.pi.ImagePath
-                        }).Distinct().Take(4).ToListAsync();
-
-            return query;
+                        }).Distinct().ToListAsync();
+            var result = query.OrderByDescending(x => x.Id).Take(4).ToList();
+            return result;
         }
 
 
