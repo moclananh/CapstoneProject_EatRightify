@@ -566,8 +566,8 @@ namespace Component.Application.System.Users
 
             user = new AppUser()
             {
-                FirstName = request.UserName,
-                LastName = request.Email,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
                 Dob = request.Dob,
                 PhoneNumber = request.PhoneNumber,
                 Avatar = request.Avatar,
