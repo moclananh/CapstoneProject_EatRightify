@@ -32,7 +32,7 @@ namespace Component.Application.Statistical
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join pimg in _context.ProductImages on p.Id equals pimg.ProductId
                         where (!startDate.HasValue || o.OrderDate >= startDate) &&
-                      (!endDate.HasValue || o.OrderDate <= endDate)
+                      (!endDate.HasValue || o.OrderDate <= endDate) && ( o.Status == Data.Enums.OrderStatus.Success)
                         group new { od, pt, pimg } by new
                         {
                             od.ProductId,
@@ -205,7 +205,7 @@ namespace Component.Application.Statistical
                         join p in _context.Products on od.ProductId equals p.Id
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join pimg in _context.ProductImages on p.Id equals pimg.ProductId
-                        where (o.OrderDate >= request.StartDate && o.OrderDate <= request.EndDate)
+                        where (o.OrderDate >= request.StartDate && o.OrderDate <= request.EndDate) && (o.Status == Data.Enums.OrderStatus.Success)
                         group new { od, pt, pimg } by new
                         {
                             od.ProductId,
