@@ -22,7 +22,7 @@ EatRightify is a web-based application focused on promoting healthy eating habit
 - [Plagiarism Report](https://drive.google.com/file/d/1aPAv7JU6o0lZfKMWGu9sdWFrynAKATH3/view?usp=drive_link)
 - [Technical Documentation](https://drive.google.com/file/d/1N8YdZKDf9lAvPRqE2xmRQLSFDt0520oq/view?usp=drive_link)
 - [Video Demo](https://www.youtube.com/watch?v=7QB05Ykqvxw)
-- More details: [My Profolio]([https://www.youtube.com/watch?v=7QB05Ykqvxw](https://mlananhhdev.wixsite.com/mlananhh/post/eatrightify-system))
+- More details: [My Portfolio](https://mlananhhdev.wixsite.com/mlananhh/post/eatrightify-system)
 
 ## Installation
 1. Clone the repository from GitHub.
