@@ -11,8 +11,8 @@ EatRightify is a web-based application focused on promoting healthy eating habit
 - **Communication and Feedback**: Integrated chat support and comment system for user interaction.
 
 ## Technical Details
-- **Frontend**: Developed with Qt/QML 6 and JavaScript for intuitive user interfaces.
-- **Backend**: Built with C++ and WebSocket technology for real-time interactions.
+- **Frontend**: Next.Js, Taildwinds CSS
+- **Backend**: ASP .NET Core 
 - **Database**: SQL Server for efficient data handling.
 - **Deployment**: Hosted on Azure, ensuring scalability and reliability.
 
